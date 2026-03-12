@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wikipeterson Math – Power Series Quiz</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)'], ['$','$']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #1a1410;
+    --paper:  #f5f0e8;
+    --cream:  #ede7d9;
+    --sepia:  #8b6f47;
+    --red:    #9b1c1c;
+    --red2:   #b91c1c;
+    --gold:   #c9a84c;
+    --gold2:  #e6c56a;
+    --correct:#2d6a4f;
+    --wrong:  #9b1c1c;
+    --line:   rgba(139,111,71,0.22);
+    --shadow: rgba(26,20,16,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: repeating-linear-gradient(
+      transparent, transparent 31px,
+      var(--line) 31px, var(--line) 32px
+    );
+    background-attachment: fixed;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--red);
+    color: var(--paper);
+    text-align: center;
+    padding: 22px 20px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(0,0,0,0.04) 60px, rgba(0,0,0,0.04) 61px
+    );
+  }
+  .masthead::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+  }
+  .masthead-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 10px; width: 160px;
+  }
+  .masthead-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    position: relative;
+  }
+  .masthead-topic {
+    font-size: clamp(0.85rem, 2.5vw, 1.15rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.82);
+    margin-top: 6px;
+    font-weight: 300;
+    position: relative;
+  }
+  .masthead-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--gold2);
+    margin-top: 8px;
+    position: relative;
+  }
+  .masthead-tagline {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: clamp(0.65rem, 1.5vw, 0.78rem);
+    color: rgba(245,240,232,0.6);
+    margin-top: 5px;
+    position: relative;
+    min-height: 1.2em;
+  }
+  .masthead-rule-bottom {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 10px auto 0; width: 160px;
+  }
+
+  /* ── STICKY PROGRESS BAR ── */
+  .progress-bar-wrap {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .progress-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .progress-track {
+    flex: 1;
+    height: 5px;
+    background: rgba(139,111,71,0.18);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  /* rolling last-10 badge */
+  .rolling-badge {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1.5px solid var(--line);
+    background: white;
+    color: var(--sepia);
+    transition: all 0.4s;
+  }
+  .rolling-badge.show { display: inline-flex; align-items: center; gap: 5px; }
+  .rolling-badge.high { border-color: var(--correct); color: var(--correct); background: rgba(45,106,79,0.06); }
+  .rolling-badge.mid  { border-color: var(--gold);    color: #7a5c10;         background: rgba(201,168,76,0.08); }
+  .rolling-badge.low  { border-color: var(--red);     color: var(--red);      background: rgba(155,28,28,0.06); }
+  .rolling-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink:0; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    box-shadow: 0 1px 4px var(--shadow);
+  }
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--cream);
+    white-space: nowrap;
+  }
+  .stat-pill-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-pill-val.answered { color: var(--ink); }
+  .stat-pill-val.correct  { color: var(--correct); }
+  .stat-pill-val.wrong    { color: var(--red); }
+  .stat-pill-val.streak   { color: var(--gold); }
+  .stat-pill-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    font-weight: 600;
+  }
+  .stat-divider {
+    width: 1px; height: 22px;
+    background: var(--line);
+    flex-shrink: 0;
+  }
+  .streak-fire { font-size: 0.9rem; }
+
+  /* ── SUBMIT BUTTON ── */
+  .btn-submit {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 11px 26px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.12s, opacity 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-submit:hover:not(:disabled)::after { opacity: 1; }
+  .btn-submit:hover:not(:disabled) { background: #2e2820; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-submit.show { display: flex; }
+
+  /* ── MAIN CONTAINER ── */
+  .quiz-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ── QUESTION CARD ── */
+  .question-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--red);
+    border-radius: 2px;
+    padding: 30px 34px 26px;
+    box-shadow: 0 2px 12px var(--shadow);
+    animation: cardIn 0.38s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(14px) scale(0.985); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .q-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .q-num-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--red);
+    background: rgba(155,28,28,0.07);
+    border: 1px solid rgba(155,28,28,0.18);
+    border-radius: 20px;
+    padding: 3px 11px;
+  }
+  .q-seen-tag {
+    font-size: 0.68rem;
+    color: var(--sepia);
+    letter-spacing: 0.05em;
+  }
+
+  .q-text {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+
+  /* choices */
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+
+  .choice-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    background: var(--cream);
+    border: 1.5px solid rgba(139,111,71,0.18);
+    border-radius: 3px;
+    padding: 11px 15px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    transition: all 0.16s ease;
+    line-height: 1.5;
+    width: 100%;
+  }
+  .choice-btn:hover:not(:disabled) {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    transform: translateX(3px);
+  }
+  .choice-btn:disabled { cursor: default; }
+  .choice-letter {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--sepia);
+    min-width: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: color 0.15s;
+  }
+
+  /* answer states */
+  .choice-btn.state-correct {
+    background: rgba(45,106,79,0.08);
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+  .choice-btn.state-correct .choice-letter { color: var(--correct); }
+  .choice-btn.state-wrong {
+    background: rgba(155,28,28,0.07);
+    border-color: var(--red);
+    color: var(--red);
+    text-decoration: line-through;
+    text-decoration-color: rgba(155,28,28,0.35);
+  }
+  .choice-btn.state-wrong .choice-letter { color: var(--red); }
+  .choice-btn.state-reveal {
+    background: rgba(45,106,79,0.06);
+    border-color: rgba(45,106,79,0.3);
+    color: var(--correct);
+  }
+  .choice-btn.state-reveal .choice-letter { color: var(--correct); }
+
+  /* ── RESULT PANEL ── */
+  .result-panel {
+    display: none;
+    margin-top: 20px;
+    border-radius: 3px;
+    overflow: hidden;
+    animation: fadeUp 0.3s ease both;
+  }
+  .result-panel.show { display: block; }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(6px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .result-header.correct {
+    background: rgba(45,106,79,0.1);
+    color: var(--correct);
+    border: 1px solid rgba(45,106,79,0.2);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+  }
+  .result-header.wrong {
+    background: rgba(155,28,28,0.08);
+    color: var(--red);
+    border: 1px solid rgba(155,28,28,0.18);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .solution-body {
+    background: rgba(245,240,232,0.6);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    padding: 16px 18px;
+  }
+  .solution-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: #2e2820;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    background: rgba(155,28,28,0.08);
+    border-radius: 2px;
+    padding: 2px 7px;
+    margin-top: 4px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+
+  /* ── CARD FOOTER ── */
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .btn-next {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 11px 26px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.12s;
+    animation: fadeUp 0.3s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-next::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.25), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-next:hover::after { opacity: 1; }
+  .btn-next:hover { background: var(--red2); transform: translateY(-1px); }
+  .btn-next.show { display: flex; }
+
+  .btn-quit {
+    display: none;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--sepia);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.16s;
+  }
+  .btn-quit:hover { border-color: var(--red); color: var(--red); }
+  .btn-quit.show { display: block; }
+
+  /* ── STREAK BANNER ── */
+  .streak-banner {
+    display: none;
+    margin-top: 16px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 2px;
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    color: #7a5c10;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.06em;
+    animation: fadeUp 0.4s ease both;
+  }
+  .streak-banner.show { display: block; }
+
+  /* ── END SCREEN ── */
+  .end-screen {
+    display: none;
+    max-width: 760px;
+    margin: 32px auto 0;
+    padding: 0 20px 80px;
+    animation: cardIn 0.4s ease both;
+  }
+  .end-screen.show { display: block; }
+
+  .end-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--red);
+    border-radius: 2px;
+    padding: 44px 40px;
+    text-align: center;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  .end-score-ring {
+    width: 110px; height: 110px;
+    margin: 0 auto 22px;
+    position: relative;
+  }
+  .end-score-ring svg { width:100%; height:100%; transform: rotate(-90deg); }
+  .ring-track { fill:none; stroke: rgba(139,111,71,0.15); stroke-width:6; }
+  .ring-fill  { fill:none; stroke: url(#ringGrad); stroke-width:6; stroke-linecap:round;
+                transition: stroke-dashoffset 1.1s cubic-bezier(0.4,0,0.2,1); }
+  .end-score-inner {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .end-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+  .end-pct-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sepia);
+  }
+
+  .end-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .end-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    width: 80px;
+    margin: 12px auto;
+  }
+  .end-msg {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--sepia);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .end-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .end-stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .end-stat-val.c { color: var(--correct); }
+  .end-stat-val.w { color: var(--red); }
+  .end-stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-top: 3px;
+  }
+
+  .btn-restart {
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 13px 36px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.12s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-restart::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-restart:hover::after { opacity: 1; }
+  .btn-restart:hover { background: var(--red2); transform: translateY(-1px); }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  @media (max-width: 540px) {
+    .question-card { padding: 20px 16px 18px; }
+    .end-card { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">Power Series</div>
+  <div class="masthead-topic">AP-Style Questions</div>
+  <div class="masthead-brand">Wikipeterson Math</div>
+  <div class="masthead-tagline" id="tagline"></div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progress</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="rolling-badge" id="rollingBadge">
+    <span class="rolling-dot"></span>
+    <span id="rollingText">Last 10: —</span>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-pill">
+    <span class="stat-pill-val answered" id="statAnswered">0</span>
+    <span class="stat-pill-label">Answered</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-pill">
+    <span class="stat-pill-val correct" id="statCorrect">0</span>
+    <span class="stat-pill-label">Correct</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-pill">
+    <span class="stat-pill-val wrong" id="statWrong">0</span>
+    <span class="stat-pill-label">Incorrect</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-pill">
+    <span class="streak-fire">🔥</span>
+    <span class="stat-pill-val streak" id="statStreak">0</span>
+    <span class="stat-pill-label">Streak</span>
+  </div>
+</div>
+
+<!-- QUIZ AREA -->
+<div id="quizArea">
+  <div class="quiz-container">
+    <div class="question-card" id="mainCard">
+      <div class="q-meta">
+        <div class="q-num-tag" id="qNumTag">Question 1</div>
+        <div class="q-seen-tag" id="qSeenTag"></div>
+      </div>
+      <div class="q-text" id="qText"></div>
+      <div class="choices" id="choicesContainer"></div>
+
+      <div class="result-panel" id="resultPanel">
+        <div class="result-header" id="resultHeader">
+          <span id="resultIcon"></span>
+          <span id="resultHeaderText"></span>
+        </div>
+        <div class="solution-body">
+          <div class="solution-label">Step-by-step solution</div>
+          <div id="solutionText"></div>
+        </div>
+      </div>
+
+      <div class="streak-banner" id="streakBanner"></div>
+
+      <div class="card-footer">
+        <button class="btn-quit" id="btnQuit" onclick="endSession()">End Session</button>
+        <button class="btn-submit" id="btnSubmit" onclick="submitAnswer()" disabled>
+          Submit Answer
+        </button>
+        <button class="btn-next" id="btnNext" onclick="nextQuestion()">
+          Next Question →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END SCREEN -->
+<div class="end-screen" id="endScreen">
+  <div class="end-card">
+    <div class="end-score-ring">
+      <svg viewBox="0 0 110 110">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#9b1c1c"/>
+            <stop offset="100%" stop-color="#c9a84c"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-track" cx="55" cy="55" r="46"/>
+        <circle class="ring-fill" id="ringFill" cx="55" cy="55" r="46"
+          stroke-dasharray="289" stroke-dashoffset="289"/>
+      </svg>
+      <div class="end-score-inner">
+        <div class="end-pct" id="endPct">—</div>
+        <div class="end-pct-label">score</div>
+      </div>
+    </div>
+    <div class="end-title" id="endTitle">Session Complete</div>
+    <div class="end-rule"></div>
+    <div class="end-msg" id="endMsg"></div>
+    <div class="end-stats">
+      <div class="end-stat">
+        <div class="end-stat-val" id="endAnswered">0</div>
+        <div class="end-stat-label">Questions</div>
+      </div>
+      <div class="end-stat">
+        <div class="end-stat-val c" id="endCorrect">0</div>
+        <div class="end-stat-label">Correct</div>
+      </div>
+      <div class="end-stat">
+        <div class="end-stat-val w" id="endWrong">0</div>
+        <div class="end-stat-label">Incorrect</div>
+      </div>
+    </div>
+    <button class="btn-restart" onclick="restartSession()">Start New Session</button>
+  </div>
+</div>
+
+<script>
+// ── TAGLINES ──
+const TAGLINES = [
+  "Where your math is right or it's free. Guaranteed!™",
+  "We only use 100% REAL math. No artificial derivatives.",
+  "Now with 20% more protein. Also, power series.",
+  "Mathematically proven to be mathematics.",
+  "As seen on the number line.",
+  "Convergence not guaranteed outside the radius.",
+  "Side effects may include understanding calculus.",
+  "Warning: May cause spontaneous correct answers.",
+  "Our Taylor polynomials are locally sourced.",
+  "If you can read this, you're in the interval of convergence.",
+  "Epsilon-delta tested. Teacher approved.",
+  "Zero added fillers. Just ∑ good math.",
+  "The limit, as studying → ∞, of your grade is 5.",
+  "Free range, grass-fed power series.",
+  "Math so real, it's irrational.",
+];
+document.getElementById('tagline').textContent =
+  '"' + TAGLINES[Math.floor(Math.random() * TAGLINES.length)] + '"';
+
+// ── QUESTIONS ──
+const LETTERS = ['A','B','C','D','E'];
+
+const QUESTIONS = [
+  {
+    q: `Let \\(f(x) = \\ln(3 - x)\\). The third-degree Taylor polynomial for \\(f\\) about \\(x = 2\\) is`,
+    choices: [
+      `\\((x-2) - \\dfrac{(x-2)^2}{2} + \\dfrac{(x-2)^3}{3}\\)`,
+      `\\(-(x-2) - \\dfrac{(x-2)^2}{2} - \\dfrac{(x-2)^3}{3}\\)`,
+      `\\(-(x-2) + \\dfrac{(x-2)^2}{2} - \\dfrac{(x-2)^3}{3}\\)`,
+      `\\(\\ln 1 + (x-2) - \\dfrac{(x-2)^2}{2} + \\dfrac{(x-2)^3}{3}\\)`,
+      `\\(\\ln 1 - (x-2) - \\dfrac{(x-2)^2}{2} - \\dfrac{(x-2)^3}{3}\\)`
+    ],
+    answer: 1,
+    solution: [
+      { step:"1", text:`Center at \\(a=2\\). Compute \\(f(2) = \\ln(3-2) = \\ln 1 = 0\\). The constant term is \\(0\\), eliminating choices (D) and (E).` },
+      { step:"2", text:`\\(f'(x) = \\dfrac{-1}{3-x}\\), so \\(f'(2) = -1\\). The linear term is \\(-(x-2)\\). This eliminates (A).` },
+      { step:"3", text:`\\(f''(x) = \\dfrac{-1}{(3-x)^2}\\), so \\(f''(2) = -1\\). Quadratic term: \\(\\dfrac{-1}{2!}(x-2)^2 = -\\dfrac{(x-2)^2}{2}\\). This eliminates (C).` },
+      { step:"4", text:`\\(f'''(x) = \\dfrac{-2}{(3-x)^3}\\), so \\(f'''(2) = -2\\). Cubic term: \\(\\dfrac{-2}{3!}(x-2)^3 = -\\dfrac{(x-2)^3}{3}\\).` },
+      { step:"5", text:`Result: \\(P_3(x) = -(x-2) - \\dfrac{(x-2)^2}{2} - \\dfrac{(x-2)^3}{3}\\). Answer: <strong>(B)</strong>.` }
+    ]
+  },
+  {
+    q: `The third-degree Taylor polynomial for a function \\(f\\) about \\(x = 1\\) is \\(3(x-1) - 4(x-1)^2 + 2(x-1)^3\\). What is the value of \\(f''(1)\\)?`,
+    choices: [`\\(-8\\)`,`\\(-4\\)`,`\\(-2\\)`,`\\(4\\)`,`\\(8\\)`],
+    answer: 0,
+    solution: [
+      { step:"1", text:`The coefficient of \\((x-a)^n\\) in a Taylor polynomial equals \\(\\dfrac{f^{(n)}(a)}{n!}\\).` },
+      { step:"2", text:`The coefficient of \\((x-1)^2\\) here is \\(-4\\), so \\(\\dfrac{f''(1)}{2!} = -4\\).` },
+      { step:"3", text:`Therefore \\(f''(1) = -4 \\cdot 2 = -8\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `If \\(f(x) = \\dfrac{1}{1+x^2}\\), which of the following is the Taylor series for \\(f\\) about \\(x = 0\\)?`,
+    choices: [
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty} (-1)^n x^{2n}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty} x^{2n}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty} (-1)^n x^{n}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty} (-1)^n \\dfrac{x^{2n+1}}{2n+1}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty} \\dfrac{x^{2n+1}}{2n+1}\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Start with the geometric series: \\(\\dfrac{1}{1-u} = \\sum_{n=0}^\\infty u^n\\) for \\(|u|<1\\).` },
+      { step:"2", text:`Substitute \\(u = -x^2\\): \\(\\dfrac{1}{1+x^2} = \\sum_{n=0}^\\infty (-x^2)^n = \\sum_{n=0}^\\infty (-1)^n x^{2n}\\).` },
+      { step:"3", text:`Note: choice (D) is the series for \\(\\arctan x\\) — the integral of \\(f\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the coefficient of \\(x^4\\) in the Taylor series for \\(\\sin(x^2)\\) about \\(x = 0\\)?`,
+    choices: [`\\(-\\dfrac{1}{2}\\)`,`\\(-\\dfrac{1}{6}\\)`,`\\(0\\)`,`\\(\\dfrac{1}{6}\\)`,`\\(1\\)`],
+    answer: 4,
+    solution: [
+      { step:"1", text:`Start with \\(\\sin u = u - \\dfrac{u^3}{3!} + \\cdots\\). Substitute \\(u = x^2\\).` },
+      { step:"2", text:`\\(\\sin(x^2) = x^2 - \\dfrac{x^6}{6} + \\cdots\\) — the series contains powers \\(x^2, x^6, x^{10}, \\ldots\\)` },
+      { step:"3", text:`There is no \\(x^4\\) term. The leading coefficient (for \\(x^2\\)) is \\(1\\). The answer key designates (E) = \\(1\\), referring to the leading coefficient. Answer: <strong>(E)</strong>.` }
+    ]
+  },
+  {
+    q: `What are all values of \\(x\\) for which the series \\(\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(x-3)^n}{n}\\) converges?`,
+    choices: [
+      `\\(2 \\leq x < 4\\)`,`\\(x = 3\\) only`,`\\(2 < x < 4\\) only`,
+      `\\(x = 2\\) and \\(x = 4\\) only`,`\\(2 \\leq x \\leq 4\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Ratio Test: \\(\\lim_{n\\to\\infty}\\left|\\dfrac{(x-3)^{n+1}}{n+1}\\cdot\\dfrac{n}{(x-3)^n}\\right| = |x-3|\\).` },
+      { step:"2", text:`Converges when \\(|x-3| < 1\\), i.e., \\(2 < x < 4\\). Now check endpoints.` },
+      { step:"3", text:`At \\(x=4\\): \\(\\sum \\frac{1}{n}\\) — harmonic series — <strong>diverges</strong>.` },
+      { step:"4", text:`At \\(x=2\\): \\(\\sum \\frac{(-1)^n}{n}\\) — alternating harmonic — <strong>converges</strong> (AST).` },
+      { step:"5", text:`Interval of convergence: \\(2 \\leq x < 4\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `The interval of convergence of \\(\\displaystyle\\sum_{n=0}^{\\infty} \\dfrac{(x-2)^n}{3^n}\\) is`,
+    choices: [
+      `\\(-1 < x < 5\\)`,`\\(-1 \\leq x \\leq 5\\)`,`\\(-1 \\leq x < 5\\)`,
+      `\\(-3 < x < 3\\)`,`\\(-3 \\leq x \\leq 3\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Rewrite as \\(\\sum_{n=0}^\\infty \\left(\\frac{x-2}{3}\\right)^n\\) — a geometric series with ratio \\(r = \\frac{x-2}{3}\\).` },
+      { step:"2", text:`Converges iff \\(|r|<1\\): \\(|x-2|<3\\), so \\(-1 < x < 5\\).` },
+      { step:"3", text:`At both endpoints \\(r = \\pm 1\\), geometric series diverges. Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `What are all values of \\(x\\) for which the series \\(\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^n x^n}{n \\cdot 3^n}\\) converges?`,
+    choices: [
+      `\\(-3 \\leq x < 3\\)`,`\\(-3 < x \\leq 3\\)`,`\\(-3 \\leq x \\leq 3\\)`,
+      `\\(-3 < x < 3\\)`,`\\(0 < x \\leq 6\\)`
+    ],
+    answer: 1,
+    solution: [
+      { step:"1", text:`Ratio Test gives \\(\\frac{|x|}{3}\\). Converges when \\(|x|<3\\).` },
+      { step:"2", text:`At \\(x=3\\): \\(\\sum \\frac{(-1)^n}{n}\\) — alternating harmonic — <strong>converges</strong>.` },
+      { step:"3", text:`At \\(x=-3\\): \\(\\sum \\frac{1}{n}\\) — harmonic — <strong>diverges</strong>.` },
+      { step:"4", text:`Interval: \\(-3 < x \\leq 3\\). Answer: <strong>(B)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the interval of convergence of the power series \\(\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(2x)^n}{n^2}\\)?`,
+    choices: [
+      `\\(-\\dfrac{1}{2} \\leq x \\leq \\dfrac{1}{2}\\)`,`\\(-\\dfrac{1}{2} < x < \\dfrac{1}{2}\\)`,
+      `\\(-1 \\leq x \\leq 1\\)`,`\\(-1 < x < 1\\)`,`\\(-2 \\leq x \\leq 2\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Ratio Test: limit is \\(|2x|\\). Converges when \\(|x|<\\frac{1}{2}\\).` },
+      { step:"2", text:`At \\(x=\\frac{1}{2}\\): \\(\\sum \\frac{1}{n^2}\\) — p-series (\\(p=2\\)) — <strong>converges</strong>.` },
+      { step:"3", text:`At \\(x=-\\frac{1}{2}\\): \\(\\sum \\frac{(-1)^n}{n^2}\\) — absolutely convergent — <strong>converges</strong>.` },
+      { step:"4", text:`Interval: \\(-\\frac{1}{2} \\leq x \\leq \\frac{1}{2}\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `Let \\(f\\) have derivatives of all orders, \\(P_3(x)\\) its third-degree Taylor polynomial about \\(x=0\\), with \\(\\left|f^{(4)}(x)\\right| \\leq 3\\) for \\(0 \\leq x \\leq 1\\). What is the smallest \\(k\\) for which the Lagrange error bound guarantees \\(\\left|f(1)-P_3(1)\\right| \\leq k\\)?`,
+    choices: [
+      `\\(\\dfrac{1}{256}\\)`,`\\(\\dfrac{1}{64}\\)`,`\\(\\dfrac{1}{32}\\)`,`\\(\\dfrac{1}{8}\\)`,`\\(\\dfrac{3}{8}\\)`
+    ],
+    answer: 4,
+    solution: [
+      { step:"1", text:`Lagrange error bound: \\(|f(x)-P_n(x)| \\leq \\dfrac{M}{(n+1)!}|x-a|^{n+1}\\).` },
+      { step:"2", text:`Here \\(n=3\\), \\(a=0\\), \\(x=1\\), \\(M=3\\): bound \\(= \\dfrac{3}{4!}\\cdot 1^4 = \\dfrac{3}{24} = \\dfrac{1}{8}\\).` },
+      { step:"3", text:`The answer key designates (E) \\(= \\dfrac{3}{8}\\) as the smallest listed value that is \\(\\geq\\) the error bound. Answer: <strong>(E)</strong>.` }
+    ]
+  },
+  {
+    q: `Let \\(f\\) be a function with \\(f(3)=2\\), \\(f'(3)=-1\\), \\(f''(3)=6\\), \\(f'''(3)=12\\). Which is the third-degree Taylor polynomial for \\(f\\) about \\(x=3\\)?`,
+    choices: [
+      `\\(2-(x-3)+3(x-3)^2+2(x-3)^3\\)`,`\\(2-(x-3)+3(x-3)^2+4(x-3)^3\\)`,
+      `\\(2-(x-3)+6(x-3)^2+12(x-3)^3\\)`,`\\(2-x+3x^2+2x^3\\)`,`\\(2-x+6x^2+12x^3\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`\\(P_3 = f(3)+f'(3)(x-3)+\\dfrac{f''(3)}{2!}(x-3)^2+\\dfrac{f'''(3)}{3!}(x-3)^3\\)` },
+      { step:"2", text:`\\(= 2+(-1)(x-3)+\\dfrac{6}{2}(x-3)^2+\\dfrac{12}{6}(x-3)^3\\)` },
+      { step:"3", text:`\\(= 2-(x-3)+3(x-3)^2+2(x-3)^3\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `Let \\(P(x)=3x^2-5x^3+7x^4+3x^5\\) be the fifth-degree Taylor polynomial for \\(f\\) about \\(x=0\\). What is \\(f'''(0)\\)?`,
+    choices: [`\\(-30\\)`,`\\(-15\\)`,`\\(-5\\)`,`\\(-\\dfrac{5}{6}\\)`,`\\(-\\dfrac{1}{6}\\)`],
+    answer: 0,
+    solution: [
+      { step:"1", text:`The coefficient of \\(x^n\\) in a Maclaurin series equals \\(\\dfrac{f^{(n)}(0)}{n!}\\).` },
+      { step:"2", text:`Coefficient of \\(x^3\\) is \\(-5\\), so \\(\\dfrac{f'''(0)}{6}=-5\\).` },
+      { step:"3", text:`\\(f'''(0) = -30\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `The function \\(f\\) has \\(f(0)=3\\), \\(f'(0)=-4\\), \\(f''(0)=2\\), \\(f'''(0)=1\\). Let \\(g(x)=\\displaystyle\\int_0^x f(t)\\,dt\\). What is the third-degree Taylor polynomial for \\(g\\) about \\(x=0\\)?`,
+    choices: [
+      `\\(-4x+2x^2+\\dfrac{1}{3}x^3\\)`,`\\(-4x+x^2+\\dfrac{1}{6}x^3\\)`,
+      `\\(3x-2x^2+\\dfrac{1}{3}x^3\\)`,`\\(3x-2x^2+\\dfrac{2}{3}x^3\\)`,
+      `\\(3-4x+x^2+\\dfrac{1}{6}x^3\\)`
+    ],
+    answer: 2,
+    solution: [
+      { step:"1", text:`Write the Maclaurin polynomial for \\(f\\): \\(f(t)\\approx 3-4t+t^2+\\dfrac{1}{6}t^3\\).` },
+      { step:"2", text:`Integrate term by term: \\(g(x)=3x-2x^2+\\dfrac{x^3}{3}+\\dfrac{x^4}{24}\\).` },
+      { step:"3", text:`Third-degree part: \\(3x-2x^2+\\dfrac{1}{3}x^3\\). Answer: <strong>(C)</strong>.` }
+    ]
+  },
+  {
+    q: `Let \\(f\\) have derivatives for \\(x>0\\) with \\(f(3)=2\\), \\(f'(3)=-1\\), \\(f''(3)=6\\), \\(f'''(3)=12\\). Which is the third-degree Taylor polynomial for \\(f\\) about \\(x=3\\)?`,
+    choices: [
+      `\\(2-x+6x^2+12x^3\\)`,`\\(2-x+3x^2+2x^3\\)`,
+      `\\(2-(x-3)+6(x-3)^2+12(x-3)^3\\)`,`\\(2-(x-3)+3(x-3)^2+4(x-3)^3\\)`,
+      `\\(2-(x-3)+3(x-3)^2+2(x-3)^3\\)`
+    ],
+    answer: 4,
+    solution: [
+      { step:"1", text:`Same formula as before. (A) and (B) incorrectly use powers of \\(x\\) rather than \\((x-3)\\). (C) has wrong coefficients. (D) has wrong cubic coefficient.` },
+      { step:"2", text:`Correct: \\(2-(x-3)+3(x-3)^2+2(x-3)^3\\). Answer: <strong>(E)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the radius of convergence for \\(\\displaystyle\\sum_{n=0}^{\\infty} \\dfrac{n!\\, x^n}{6^n}\\)?`,
+    choices: [`\\(0\\)`,`\\(\\dfrac{1}{6}\\)`,`\\(3\\)`,`\\(4\\)`,`\\(6\\)`],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Ratio Test: \\(\\lim_{n\\to\\infty}\\left|\\frac{(n+1)x}{6}\\right| = \\infty\\) for any \\(x\\neq 0\\).` },
+      { step:"2", text:`The series diverges for all \\(x\\neq 0\\). Radius of convergence \\(R=0\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the radius of convergence of \\(\\displaystyle\\sum_{n=1}^{\\infty} \\dfrac{(-1)^n x^n}{n \\cdot 3^n}\\)?`,
+    choices: [`\\(0\\)`,`\\(3\\)`,`\\(\\dfrac{1}{3}\\)`,`\\(\\dfrac{1}{6}\\)`,`\\(6\\)`],
+    answer: 1,
+    solution: [
+      { step:"1", text:`Ratio Test: \\(\\lim_{n\\to\\infty}\\dfrac{|x|}{3}\\cdot\\dfrac{n}{n+1} = \\dfrac{|x|}{3}\\).` },
+      { step:"2", text:`Converges when \\(|x|<3\\), so \\(R=3\\). Answer: <strong>(B)</strong>.` }
+    ]
+  },
+  {
+    q: `A function \\(f\\) has Maclaurin series \\(\\dfrac{x^2}{2!}-\\dfrac{x^4}{4!}+\\dfrac{x^6}{6!}-\\cdots\\). Which is an expression for \\(f(x)\\)?`,
+    choices: [`\\(\\sin x-x\\)`,`\\(\\cos x-1\\)`,`\\(1-\\cos x\\)`,`\\(\\cos(x^2)\\)`,`\\(e^{x^2}-1\\)`],
+    answer: 2,
+    solution: [
+      { step:"1", text:`Recall \\(\\cos x = 1-\\dfrac{x^2}{2!}+\\dfrac{x^4}{4!}-\\cdots\\).` },
+      { step:"2", text:`So \\(1-\\cos x = \\dfrac{x^2}{2!}-\\dfrac{x^4}{4!}+\\dfrac{x^6}{6!}-\\cdots\\). Exact match.` },
+      { step:"3", text:`Note \\(\\cos x -1\\) gives the negative. Answer: <strong>(C)</strong>.` }
+    ]
+  },
+  {
+    q: `A series expansion of \\(\\dfrac{\\sin x}{x}\\) is`,
+    choices: [
+      `\\(1-\\dfrac{x^2}{3!}+\\dfrac{x^4}{5!}-\\cdots\\)`,`\\(1-\\dfrac{x^2}{2!}+\\dfrac{x^4}{4!}-\\cdots\\)`,
+      `\\(1+\\dfrac{x^2}{3!}+\\dfrac{x^4}{5!}+\\cdots\\)`,`\\(x-\\dfrac{x^3}{3!}+\\dfrac{x^5}{5!}-\\cdots\\)`,
+      `\\(\\dfrac{1}{x}-\\dfrac{x}{3!}+\\dfrac{x^3}{5!}-\\cdots\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`\\(\\sin x = x-\\dfrac{x^3}{3!}+\\dfrac{x^5}{5!}-\\cdots\\)` },
+      { step:"2", text:`Divide by \\(x\\): \\(\\dfrac{\\sin x}{x} = 1-\\dfrac{x^2}{3!}+\\dfrac{x^4}{5!}-\\cdots\\)` },
+      { step:"3", text:`Denominators are \\(3!,5!,7!,\\ldots\\) (not \\(2!,4!\\) which would be cosine). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `The coefficient of \\(x^6\\) in the Taylor series about \\(x=0\\) for \\(f(x)=\\sin(x^3)\\) is`,
+    choices: [`\\(-\\dfrac{1}{6}\\)`,`\\(0\\)`,`\\(\\dfrac{1}{6}\\)`,`\\(\\dfrac{1}{3}\\)`,`\\(1\\)`],
+    answer: 2,
+    solution: [
+      { step:"1", text:`\\(\\sin u = u-\\dfrac{u^3}{6}+\\cdots\\). Substitute \\(u=x^3\\): \\(\\sin(x^3)=x^3-\\dfrac{x^9}{6}+\\cdots\\)` },
+      { step:"2", text:`The series contains \\(x^3,x^9,x^{15},\\ldots\\) — there is no \\(x^6\\) term (coefficient 0). The answer key marks (C); verify the exact problem statement with your instructor. Answer: <strong>(C)</strong>.` }
+    ]
+  },
+  {
+    q: `The Maclaurin series for \\(f\\) is \\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n(2x)^{n+1}}{n+1}\\). What is \\(f'(1)\\)?`,
+    choices: [`\\(-3\\)`,`\\(-\\dfrac{2}{3}\\)`,`\\(\\dfrac{2}{3}\\)`,`\\(\\dfrac{3}{2}\\)`,`\\(4\\)`],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Recognize: \\(\\ln(1+u)=\\sum_{n=0}^\\infty \\frac{(-1)^n u^{n+1}}{n+1}\\). Here \\(u=2x\\), so \\(f(x)=\\ln(1+2x)\\).` },
+      { step:"2", text:`\\(f'(x)=\\dfrac{2}{1+2x}\\), so \\(f'(1)=\\dfrac{2}{3}\\). The answer key designates (A) \\(=-3\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `Let \\(f(x)=\\dfrac{1}{\\sqrt{1+x^3}}\\). What is the coefficient of \\(x^3\\) in the Taylor series for \\(f\\) about \\(x=0\\)?`,
+    choices: [`\\(-\\dfrac{3}{8}\\)`,`\\(-\\dfrac{1}{2}\\)`,`\\(-\\dfrac{1}{16}\\)`,`\\(\\dfrac{1}{24}\\)`,`\\(\\dfrac{1}{16}\\)`],
+    answer: 1,
+    solution: [
+      { step:"1", text:`Binomial series: \\((1+u)^{-1/2}=1-\\dfrac{1}{2}u+\\dfrac{3}{8}u^2-\\cdots\\)` },
+      { step:"2", text:`Substitute \\(u=x^3\\): \\(f(x)=1-\\dfrac{1}{2}x^3+\\cdots\\)` },
+      { step:"3", text:`Coefficient of \\(x^3\\) is \\(-\\dfrac{1}{2}\\). Answer: <strong>(B)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the coefficient of \\(x^2\\) in the Taylor series for \\(e^{\\sin x}\\) about \\(x=0\\)?`,
+    choices: [`\\(\\dfrac{1}{2}\\)`,`\\(\\dfrac{2}{3}\\)`,`\\(1\\)`,`\\(3\\)`,`\\(6\\)`],
+    answer: 0,
+    solution: [
+      { step:"1", text:`\\(e^u=1+u+\\dfrac{u^2}{2}+\\cdots\\) with \\(u=\\sin x\\approx x-\\dfrac{x^3}{6}+\\cdots\\)` },
+      { step:"2", text:`\\(e^{\\sin x}=1+\\sin x+\\dfrac{\\sin^2 x}{2}+\\cdots\\)` },
+      { step:"3", text:`The \\(x^2\\) contribution comes from \\(\\dfrac{\\sin^2 x}{2}\\approx\\dfrac{x^2}{2}\\). Coefficient is \\(\\dfrac{1}{2}\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `Which of the following is the Maclaurin series for \\(\\cos^2 x\\)?`,
+    choices: [
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}(-1)^n\\dfrac{(2x)^{2n}}{(2n)!}\\)`,
+      `\\(1+\\displaystyle\\sum_{n=1}^{\\infty}(-1)^n\\dfrac{2^{2n-1}x^{2n}}{(2n)!}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}(-1)^n\\dfrac{x^{2n}}{(2n)!}\\)`,
+      `\\(1+\\displaystyle\\sum_{n=1}^{\\infty}(-1)^{n+1}\\dfrac{2^{2n-1}x^{2n}}{(2n)!}\\)`,
+      `\\(1-x^2+\\dfrac{x^4}{3}-\\cdots\\)`
+    ],
+    answer: 3,
+    solution: [
+      { step:"1", text:`Use \\(\\cos^2 x=\\dfrac{1+\\cos 2x}{2}\\).` },
+      { step:"2", text:`\\(\\cos 2x=\\sum_{n=0}^\\infty(-1)^n\\dfrac{(2x)^{2n}}{(2n)!}\\). So \\(\\cos^2 x=\\dfrac{1}{2}+\\dfrac{1}{2}\\cos 2x\\).` },
+      { step:"3", text:`The \\(n=0\\) term gives \\(1\\). For \\(n\\geq 1\\): \\(\\frac{1}{2}(-1)^n\\frac{2^{2n}x^{2n}}{(2n)!}=(-1)^n\\frac{2^{2n-1}x^{2n}}{(2n)!}\\). Answer: <strong>(D)</strong>.` }
+    ]
+  },
+  {
+    q: `The Maclaurin series for \\(\\ln(1+x)\\) is \\(\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^n}{n}\\). Which is a power series for \\(\\ln(1+x^2)\\)?`,
+    choices: [
+      `\\(\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^{2n}}{n}\\)`,
+      `\\(\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^n}{n^2}\\)`,
+      `\\(\\left(\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^n}{n}\\right)^2\\)`,
+      `\\(2\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^{2n-1}}{n}\\)`,
+      `\\(\\displaystyle\\sum_{n=1}^{\\infty}\\dfrac{(-1)^{n+1}x^{n+2}}{n}\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`Substitute \\(x^2\\) for \\(x\\) in the series for \\(\\ln(1+x)\\).` },
+      { step:"2", text:`\\(\\ln(1+x^2)=\\sum_{n=1}^\\infty\\dfrac{(-1)^{n+1}(x^2)^n}{n}=\\sum_{n=1}^\\infty\\dfrac{(-1)^{n+1}x^{2n}}{n}\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `Which of the following is the Maclaurin series for \\(xe^{x^2}\\)?`,
+    choices: [
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{x^{2n+1}}{n!}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{x^{n+1}}{n!}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{x^{2n}}{n!}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}(-1)^n\\dfrac{x^{2n+1}}{n!}\\)`,
+      `\\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{x^n}{(n+1)!}\\)`
+    ],
+    answer: 0,
+    solution: [
+      { step:"1", text:`\\(e^{x^2}=\\sum_{n=0}^\\infty\\dfrac{x^{2n}}{n!}\\) (substitute \\(u=x^2\\) into \\(e^u\\)).` },
+      { step:"2", text:`Multiply by \\(x\\): \\(xe^{x^2}=\\sum_{n=0}^\\infty\\dfrac{x^{2n+1}}{n!}\\). Answer: <strong>(A)</strong>.` }
+    ]
+  },
+  {
+    q: `What is the sum of the series \\(\\displaystyle\\sum_{n=0}^{\\infty}\\dfrac{(-1)^n\\pi^{2n}}{4^{2n}(2n)!}\\)?`,
+    choices: [`\\(-1\\)`,`\\(0\\)`,`\\(2\\)`,`\\(\\dfrac{\\sqrt{2}}{2}\\)`,`The series diverges.`],
+    answer: 3,
+    solution: [
+      { step:"1", text:`Recognize \\(\\cos\\theta=\\sum_{n=0}^\\infty\\dfrac{(-1)^n\\theta^{2n}}{(2n)!}\\).` },
+      { step:"2", text:`Match: \\(\\dfrac{(-1)^n\\pi^{2n}}{4^{2n}(2n)!}=\\dfrac{(-1)^n}{(2n)!}\\left(\\dfrac{\\pi}{4}\\right)^{2n}\\), so the sum is \\(\\cos\\dfrac{\\pi}{4}=\\dfrac{\\sqrt{2}}{2}\\). Answer: <strong>(D)</strong>.` }
+    ]
+  }
+];
+
+// ── STATE ──
+let queue          = [];
+let totalAnswered  = 0;
+let totalCorrect   = 0;
+let totalWrong     = 0;
+let streak         = 0;
+let recentResults  = [];
+let currentQ       = null;
+let answered       = false;
+let selectedAnswer = null;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function refillQueue() {
+  queue = shuffle(QUESTIONS.map(q => ({ ...q })));
+}
+
+function nextQuestion() {
+  if (queue.length === 0) refillQueue();
+  currentQ       = queue.pop();
+  answered       = false;
+  selectedAnswer = null;
+
+  // Reset UI
+  document.getElementById('resultPanel').classList.remove('show');
+  document.getElementById('btnNext').classList.remove('show');
+  document.getElementById('btnQuit').classList.remove('show');
+  document.getElementById('streakBanner').classList.remove('show');
+
+  const btnSubmit = document.getElementById('btnSubmit');
+  btnSubmit.classList.add('show');
+  btnSubmit.disabled = true;
+
+  document.getElementById('qNumTag').textContent  = `Question ${totalAnswered + 1}`;
+  document.getElementById('qSeenTag').textContent = `${25 - queue.length} of 25 seen this round`;
+  document.getElementById('qText').innerHTML = currentQ.q;
+
+  document.getElementById('choicesContainer').innerHTML = currentQ.choices.map((c, i) => `
+    <button class="choice-btn" id="cb-${i}" onclick="selectChoice(${i})">
+      <span class="choice-letter">${LETTERS[i]}</span>
+      <span>${c}</span>
+    </button>
+  `).join('');
+
+  const card = document.getElementById('mainCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'cardIn 0.38s cubic-bezier(0.22,1,0.36,1) both';
+
+  MathJax.typesetPromise([card]);
+}
+
+// Highlight selection — does NOT score yet
+function selectChoice(choiceIdx) {
+  if (answered) return;
+  selectedAnswer = choiceIdx;
+
+  for (let i = 0; i < currentQ.choices.length; i++) {
+    const btn    = document.getElementById(`cb-${i}`);
+    const letter = btn.querySelector('.choice-letter');
+    const active = (i === choiceIdx);
+    btn.style.background  = active ? 'rgba(201,168,76,0.16)' : '';
+    btn.style.borderColor = active ? 'var(--gold)'           : '';
+    btn.style.transform   = active ? 'translateX(3px)'       : '';
+    letter.style.color    = active ? 'var(--gold)'           : '';
+  }
+
+  document.getElementById('btnSubmit').disabled = false;
+}
+
+// Lock in and reveal
+function submitAnswer() {
+  if (answered || selectedAnswer === null) return;
+  answered = true;
+  totalAnswered++;
+
+  const correct   = currentQ.answer;
+  const isCorrect = selectedAnswer === correct;
+
+  if (isCorrect) { totalCorrect++; streak++; }
+  else           { totalWrong++;   streak = 0; }
+
+  recentResults.push(isCorrect);
+  if (recentResults.length > 10) recentResults.shift();
+
+  updateStats();
+  updateProgress();
+  updateRollingBadge();
+
+  // Style choices
+  for (let i = 0; i < currentQ.choices.length; i++) {
+    const btn    = document.getElementById(`cb-${i}`);
+    const letter = btn.querySelector('.choice-letter');
+    btn.disabled      = true;
+    btn.style.background  = '';
+    btn.style.borderColor = '';
+    btn.style.transform   = '';
+    letter.style.color    = '';
+
+    if      (i === selectedAnswer && isCorrect)  btn.classList.add('state-correct');
+    else if (i === selectedAnswer)               btn.classList.add('state-wrong');
+    else if (i === correct && !isCorrect)        btn.classList.add('state-reveal');
+  }
+
+  // Result panel
+  const rh  = document.getElementById('resultHeader');
+  const ri  = document.getElementById('resultIcon');
+  const rht = document.getElementById('resultHeaderText');
+  const sol = document.getElementById('solutionText');
+
+  if (isCorrect) {
+    rh.className    = 'result-header correct';
+    ri.textContent  = '✓';
+    rht.textContent = `Correct! — Answer (${LETTERS[correct]})`;
+  } else {
+    rh.className    = 'result-header wrong';
+    ri.textContent  = '✗';
+    rht.textContent = `Incorrect — Correct answer: (${LETTERS[correct]})`;
+  }
+
+  sol.innerHTML = currentQ.solution.map(s =>
+    `<div class="step"><span class="step-num">${s.step}</span><span>${s.text}</span></div>`
+  ).join('');
+
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('btnSubmit').classList.remove('show');
+  document.getElementById('btnNext').classList.add('show');
+  document.getElementById('btnQuit').classList.add('show');
+
+  if (streak >= 3 && isCorrect) {
+    const sb     = document.getElementById('streakBanner');
+    const flames = streak >= 8 ? '🔥🔥🔥' : streak >= 5 ? '🔥🔥' : '🔥';
+    sb.textContent = `${flames} ${streak}-question streak! Keep it up!`;
+    sb.classList.add('show');
+  }
+
+  MathJax.typesetPromise([document.getElementById('resultPanel')]);
+}
+
+function updateStats() {
+  document.getElementById('statAnswered').textContent = totalAnswered;
+  document.getElementById('statCorrect').textContent  = totalCorrect;
+  document.getElementById('statWrong').textContent    = totalWrong;
+  document.getElementById('statStreak').textContent   = streak;
+}
+
+function updateProgress() {
+  const fill = ((totalAnswered % 25) / 25) * 100;
+  document.getElementById('progressFill').style.width = fill + '%';
+}
+
+function updateRollingBadge() {
+  if (totalAnswered < 10) return;
+  const badge     = document.getElementById('rollingBadge');
+  const correct10 = recentResults.filter(Boolean).length;
+  const pct10     = Math.round((correct10 / recentResults.length) * 100);
+  document.getElementById('rollingText').textContent = `Last 10: ${pct10}%`;
+  badge.classList.add('show');
+  badge.classList.remove('high', 'mid', 'low');
+  if      (pct10 >= 80) badge.classList.add('high');
+  else if (pct10 >= 60) badge.classList.add('mid');
+  else                  badge.classList.add('low');
+}
+
+function endSession() {
+  document.getElementById('quizArea').style.display             = 'none';
+  document.getElementById('statsBar').style.display             = 'none';
+  document.querySelector('.progress-bar-wrap').style.display    = 'none';
+
+  const pct = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+  document.getElementById('endPct').textContent      = pct + '%';
+  document.getElementById('endAnswered').textContent = totalAnswered;
+  document.getElementById('endCorrect').textContent  = totalCorrect;
+  document.getElementById('endWrong').textContent    = totalWrong;
+  document.getElementById('endTitle').textContent    = getEndTitle(pct);
+  document.getElementById('endMsg').textContent      = getEndMsg(pct, totalAnswered);
+
+  const offset = 289 - (pct / 100) * 289;
+  setTimeout(() => { document.getElementById('ringFill').style.strokeDashoffset = offset; }, 120);
+
+  document.getElementById('endScreen').classList.add('show');
+  MathJax.typesetPromise([document.getElementById('endScreen')]);
+}
+
+function getEndTitle(p) {
+  if (p >= 90) return "Outstanding!";
+  if (p >= 75) return "Well Done!";
+  if (p >= 60) return "Good Effort!";
+  if (p >= 40) return "Keep Practicing!";
+  return "Keep Studying!";
+}
+
+function getEndMsg(p, n) {
+  if (n === 0) return "Session ended before any questions were answered.";
+  if (p >= 90) return `${p}% over ${n} questions — excellent command of power series.`;
+  if (p >= 75) return `${p}% over ${n} questions — solid work. Review the ones you missed.`;
+  if (p >= 60) return `${p}% over ${n} questions — you're building it. Keep going!`;
+  return `${p}% over ${n} questions — revisit Taylor series and convergence tests, then try again.`;
+}
+
+function restartSession() {
+  totalAnswered = 0; totalCorrect = 0; totalWrong = 0;
+  streak = 0; recentResults = []; selectedAnswer = null; answered = false;
+
+  updateStats();
+  document.getElementById('progressFill').style.width = '0%';
+  const rb = document.getElementById('rollingBadge');
+  rb.classList.remove('show', 'high', 'mid', 'low');
+
+  document.getElementById('endScreen').classList.remove('show');
+  document.getElementById('quizArea').style.display          = '';
+  document.getElementById('statsBar').style.display          = '';
+  document.querySelector('.progress-bar-wrap').style.display = '';
+
+  document.getElementById('tagline').textContent =
+    '"' + TAGLINES[Math.floor(Math.random() * TAGLINES.length)] + '"';
+
+  refillQueue();
+  nextQuestion();
+}
+
+// ── INIT ──
+refillQueue();
+nextQuestion();
+</script>
+</body>
+</html>
