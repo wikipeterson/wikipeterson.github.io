@@ -143,6 +143,8 @@
   .toast.err{border-color:var(--red);color:var(--red);}
   .divider{height:1px;background:var(--line);margin:1.5rem 0;}
   .text-muted{font-size:12px;color:var(--sepia);font-style:italic;}
+  .picks-toggle-btn{background:none;border:1px solid var(--line);color:var(--sepia);font-family:'Source Serif 4',serif;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px;cursor:pointer;white-space:nowrap;transition:all 0.15s;}
+  .picks-toggle-btn:hover{border-color:var(--red);color:var(--red);}
   .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin 0.7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
   .loading-row{display:flex;align-items:center;gap:0.6rem;padding:1.5rem;color:var(--sepia);font-size:14px;font-style:italic;}
@@ -212,6 +214,7 @@
     </div>
   </div>
 
+  <div id="deadline-notice" style="display:none;background:rgba(155,28,28,0.06);border:1px solid rgba(155,28,28,0.25);border-radius:2px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:14px;color:var(--red);font-style:italic"></div>
   <div id="validation-msg" class="validation-bar error">
     <div class="dot"></div><span id="validation-text">Pick all 63 games to submit</span>
   </div>
@@ -223,12 +226,13 @@
 
 <!-- LEADERBOARD TAB -->
 <div id="tab-leaderboard" class="container" style="display:none">
-  <div class="section-header"><h2>Leaderboard</h2><p>Live rankings. Scores appear after actual results are entered.</p></div>
+  <div class="section-header"><h2>Leaderboard</h2><p id="lb-subtitle">Live rankings. Scores appear after actual results are entered.</p></div>
   <div class="contest-toggle">
     <button class="contest-btn active" onclick="setLbContest('mens',this)">Men's Tournament</button>
     <button class="contest-btn" onclick="setLbContest('womens',this)">Women's Tournament</button>
   </div>
-  <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+    <span id="lb-updated" style="font-size:12px;color:var(--sepia);font-style:italic"></span>
     <button class="btn btn-outline btn-sm" onclick="renderLeaderboard()">↻ Refresh</button>
   </div>
   <div id="leaderboard-content"></div>
@@ -416,20 +420,37 @@ const ROUND_SIZES=[32,16,8,4,2,1];
 // ── BRACKET RENDERING ────────────────────────────────────────────────────────
 function renderBracket(){
   const state=bracketState[currentContest];
-  renderRoundTabs(state);
-  renderRound(state, currentRound);
+  const closed=isPastDeadline(currentContest);
+
+  // Show/hide deadline notice
+  const notice=document.getElementById('deadline-notice');
+  const submitBtn=document.getElementById('submit-btn');
+  const clearBtn=document.querySelector('#tab-enter .btn-outline');
+  if(closed){
+    const dl=getDeadline(currentContest);
+    notice.style.display='block';
+    notice.textContent=`Entries for the ${currentContest==='mens'?"Men's":"Women's"} contest closed at noon on ${dl.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}. The bracket is shown in read-only mode.`;
+    submitBtn.style.display='none';
+    if(clearBtn) clearBtn.style.display='none';
+  } else {
+    notice.style.display='none';
+    submitBtn.style.display='';
+    if(clearBtn) clearBtn.style.display='';
+  }
+
+  renderRoundTabs(state, closed);
+  renderRound(state, currentRound, closed);
   updateProgress(state);
-  updateValidation(state);
+  if(!closed) updateValidation(state);
 }
 
-function renderRoundTabs(state){
+function renderRoundTabs(state, closed){
   const el=document.getElementById('round-tabs');
   el.innerHTML=ROUND_NAMES.map((name,i)=>{
     const size=ROUND_SIZES[i];
     const picked=(state.picks[i]||[]).filter(p=>p!==null&&p!==undefined).length;
     const complete=picked===size;
     const active=i===currentRound;
-    // Disable rounds beyond what's possible
     const reachable=i===0||(state.picks[i-1]||[]).filter(p=>p!=null).length===ROUND_SIZES[i-1];
     return `<button class="round-tab${active?' active':''}${complete?' complete':''}" onclick="switchRound(${i})" ${!reachable&&!active?'style="opacity:0.4;cursor:not-allowed"':''}>${name}</button>`;
   }).join('');
@@ -442,7 +463,7 @@ function switchRound(r){
   renderBracket();
 }
 
-function renderRound(state, round){
+function renderRound(state, round, closed){
   const matchups=state.matchups[round]||[];
   const picks=state.picks[round]||[];
   const el=document.getElementById('matchup-area');
@@ -452,7 +473,6 @@ function renderRound(state, round){
     return;
   }
 
-  // Group into sets of 8 (one region per round 0-3, all together for F4/Champ)
   const groupSize=round<4?8:matchups.length;
   const regionNames=round<4?getRegions(currentContest).map(r=>r.name):[''];
   let html='';
@@ -472,7 +492,9 @@ function renderRound(state, round){
       } else {
         const sel=pick===ti;
         const elim=pick!==null&&pick!==undefined&&pick!==ti;
-        html+=`<div class="matchup-team${sel?' selected':''}${elim?' eliminated':''}" onclick="makePick(${round},${mi},${ti})">
+        const clickAttr=closed?'':`onclick="makePick(${round},${mi},${ti})"`;
+        const extraStyle=closed?'cursor:default':'';
+        html+=`<div class="matchup-team${sel?' selected':''}${elim?' eliminated':''}" ${clickAttr} style="${extraStyle}">
           <span class="team-seed-badge">${team.seed}</span>
           <span class="team-name">${team.name}</span>
         </div>`;
@@ -617,6 +639,16 @@ function setLbContest(c,btn){
   document.querySelectorAll('#tab-leaderboard .contest-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
   renderLeaderboard();
 }
+// ── DEADLINES ────────────────────────────────────────────────────────────────
+// Noon ET on the respective days
+const MENS_DEADLINE   = new Date('2026-03-19T12:00:00-04:00');
+const WOMENS_DEADLINE = new Date('2026-03-20T12:00:00-04:00');
+
+function getDeadline(contest){ return contest==='womens'?WOMENS_DEADLINE:MENS_DEADLINE; }
+function isPastDeadline(contest){ return new Date()>=getDeadline(contest); }
+function picksVisible(contest){ return isPastDeadline(contest); }
+let _lbRows=[], _lbActual=null, _lbContest='mens';
+
 async function renderLeaderboard(){
   const con=document.getElementById('leaderboard-content');
   con.innerHTML='<div class="loading-row"><div class="spinner"></div> Loading...</div>';
@@ -631,19 +663,79 @@ async function renderLeaderboard(){
       return{...e,score,tb};
     });
     if(actual) rows.sort((a,b)=>a.score!==b.score?a.score-b.score:(a.tb!=null&&b.tb!=null?a.tb-b.tb:0));
+    _lbRows=rows; _lbActual=actual; _lbContest=lbContest;
     const minScore=actual?Math.min(...rows.map(r=>r.score)):null;
-    let html=`<div class="form-section" style="padding:0;overflow:hidden"><table class="lb-table"><thead><tr><th>#</th><th>Name</th><th>Score</th><th>Tiebreaker</th><th>Submitted</th></tr></thead><tbody>`;
+    const showPicks=picksVisible(lbContest);
+    const colCount=showPicks?6:5;
+    let html=`<div class="form-section" style="padding:0;overflow:hidden"><table class="lb-table"><thead><tr><th>#</th><th>Name</th><th>Score</th><th>Tiebreaker</th><th>Submitted</th>${showPicks?'<th></th>':''}</tr></thead><tbody>`;
     rows.forEach((r,i)=>{
       const rank=i+1, rc=rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'rank-other';
       const sh=r.score!=null?`<span class="score-cell ${r.score===minScore?'low':''}">${r.score}</span>`:`<span style="color:var(--sepia);font-size:12px;font-style:italic">pending</span>`;
       const tb=r.tb!=null?`<span class="tiebreaker-cell">±${r.tb} pts</span>`:r.tiebreaker?`<span class="tiebreaker-cell">${r.tiebreaker} (pred)</span>`:`<span style="color:var(--sepia);font-size:12px">—</span>`;
       const date=new Date(r.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-      html+=`<tr class="${rc}"><td><div class="rank-badge">${rank}</div></td><td>${r.name}</td><td>${sh}</td><td>${tb}</td><td style="font-size:12px;color:var(--sepia)">${date}</td></tr>`;
+      html+=`<tr class="${rc}" id="lb-row-${i}">
+        <td><div class="rank-badge">${rank}</div></td>
+        <td style="font-weight:600">${r.name}</td>
+        <td>${sh}</td><td>${tb}</td>
+        <td style="font-size:12px;color:var(--sepia)">${date}</td>
+        ${showPicks?`<td><button class="picks-toggle-btn" onclick="togglePicks(${i})" id="ptb-${i}">View picks</button></td>`:''}
+      </tr>
+      ${showPicks?`<tr id="lb-picks-${i}" style="display:none"><td colspan="${colCount}" style="padding:0;background:var(--cream)"><div id="lb-picks-inner-${i}" style="padding:1rem 1.25rem"></div></td></tr>`:''}`;
     });
     html+=`</tbody></table></div>`;
     if(!actual) html+=`<p class="text-muted" style="margin-top:0.75rem">Scores appear after admin enters actual results.</p>`;
     con.innerHTML=html;
+
+    // Update timestamp
+    const tsEl=document.getElementById('lb-updated');
+    if(tsEl) tsEl.textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
   }catch(e){con.innerHTML='<div class="empty-state">Could not load data.</div>';}
+}
+
+function togglePicks(i){
+  const row=document.getElementById(`lb-picks-${i}`);
+  const btn=document.getElementById(`ptb-${i}`);
+  const isOpen=row.style.display!=='none';
+  if(isOpen){ row.style.display='none'; btn.textContent='View picks'; return; }
+  row.style.display='';
+  btn.textContent='Hide picks';
+  renderPicksPanel(i);
+}
+
+function renderPicksPanel(i){
+  const r=_lbRows[i];
+  const teams=getTeams(_lbContest);
+  const actual=_lbActual;
+  const el=document.getElementById(`lb-picks-inner-${i}`);
+
+  // Group teams by predicted wins (descending) — show as round labels
+  const roundLabels=['Champion (6W)','Final Four (5W)','Elite Eight (4W)','Sweet 16 (3W)','Round of 32 (2W)','Round of 64 (1W)'];
+  const byWins=[6,5,4,3,2,1];
+
+  let html='<div style="display:flex;flex-wrap:wrap;gap:1.25rem">';
+  byWins.forEach((w,ri)=>{
+    const picked=teams.filter((_,ti)=>r.wins[ti]===w);
+    if(!picked.length) return;
+    html+=`<div style="min-width:140px">
+      <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sepia);font-weight:600;margin-bottom:0.4rem">${roundLabels[ri]}</div>`;
+    picked.forEach(t=>{
+      const ti=teams.findIndex(x=>x.name===t.name&&x.seed===t.seed);
+      const actualWins=actual?actual.wins[ti]:null;
+      let accent='';
+      if(actualWins!==null){
+        if(actualWins===w) accent='color:var(--correct);font-weight:600';
+        else if(actualWins<w) accent='color:var(--red);text-decoration:line-through;opacity:0.6';
+        else accent='color:var(--correct);font-weight:600';
+      }
+      html+=`<div style="font-size:13px;padding:0.2rem 0;${accent}"><span style="font-size:11px;color:var(--sepia);margin-right:4px">${t.seed}</span>${t.name}</div>`;
+    });
+    html+='</div>';
+  });
+  html+='</div>';
+  if(actual){
+    html+=`<div style="font-size:11px;color:var(--sepia);margin-top:0.75rem;font-style:italic">Green = correct prediction · Strikethrough = eliminated earlier than predicted</div>`;
+  }
+  el.innerHTML=html;
 }
 
 // ── ADMIN ────────────────────────────────────────────────────────────────────
