@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCAA Least Squares Prediction Contest 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #1a1410;
+    --paper:  #f5f0e8;
+    --cream:  #ede7d9;
+    --sepia:  #8b6f47;
+    --red:    #9b1c1c;
+    --red2:   #b91c1c;
+    --gold:   #c9a84c;
+    --gold2:  #e6c56a;
+    --correct:#2d6a4f;
+    --wrong:  #9b1c1c;
+    --line:   rgba(139,111,71,0.22);
+    --shadow: rgba(26,20,16,0.10);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Source Serif 4',Georgia,serif;
+    background-color:var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);
+    background-attachment:fixed;
+  }
+
+  /* MASTHEAD */
+  .hero {
+    background:var(--red);
+    color:var(--paper);
+    text-align:center;
+    padding:22px 20px 18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px);
+  }
+  .hero::after {
+    content:'';
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:4px;
+    background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));
+  }
+  .hero-rule { height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 10px; width:160px; position:relative; }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.2rem,6vw,3.8rem);
+    font-weight:900;
+    letter-spacing:0.02em;
+    line-height:1.1;
+    position:relative;
+    color:var(--paper);
+  }
+  .hero-sub {
+    font-size:clamp(0.85rem,2.5vw,1.15rem);
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:rgba(245,240,232,0.82);
+    margin-top:6px;
+    font-weight:300;
+    position:relative;
+  }
+  .hero-brand {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(0.85rem,2vw,1.05rem);
+    font-weight:700;
+    letter-spacing:0.08em;
+    color:var(--gold2);
+    margin-top:8px;
+    position:relative;
+  }
+  .hero-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto 0; width:160px; position:relative; }
+  .deadlines {
+    display:inline-flex; gap:1.5rem;
+    background:rgba(0,0,0,0.15);
+    border:1px solid rgba(201,168,76,0.3);
+    border-radius:2px;
+    padding:0.6rem 1.25rem;
+    flex-wrap:wrap; justify-content:center;
+    margin-top:12px;
+    position:relative;
+  }
+  .deadline-item { font-size:12px; color:rgba(245,240,232,0.75); font-family:'Source Serif 4',serif; }
+  .deadline-item strong { color:var(--gold2); font-weight:600; display:block; font-size:13px; }
+
+  /* TABS */
+  .tabs { display:flex; border-bottom:2px solid var(--line); background:white; overflow-x:auto; scrollbar-width:none; box-shadow:0 1px 4px var(--shadow); }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab {
+    padding:0.85rem 1.75rem; font-size:0.78rem; font-weight:600;
+    color:var(--sepia); cursor:pointer; border-bottom:3px solid transparent;
+    white-space:nowrap; transition:all 0.15s; background:none;
+    border-top:none; border-left:none; border-right:none;
+    font-family:'Source Serif 4',serif;
+    letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .tab:hover { color:var(--ink); }
+  .tab.active { color:var(--red); border-bottom-color:var(--red); }
+
+  /* LAYOUT */
+  .container { max-width:860px; margin:0 auto; padding:2rem 1.25rem 4rem; }
+  .section-header { margin-bottom:1.75rem; }
+  .section-header h2 {
+    font-family:'Playfair Display',serif;
+    font-size:1.9rem; font-weight:700;
+    color:var(--ink); margin-bottom:0.25rem;
+  }
+  .section-header p { font-size:14px; color:var(--sepia); font-style:italic; }
+
+  /* CARDS */
+  .rules-card,.form-section {
+    background:white;
+    border:1px solid var(--line);
+    border-top:4px solid var(--red);
+    border-radius:2px;
+    padding:1.5rem;
+    margin-bottom:1.25rem;
+    box-shadow:0 2px 12px var(--shadow);
+  }
+  .rules-card h3,.form-section-title {
+    font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--sepia); font-weight:600; margin-bottom:0.9rem;
+    padding-bottom:0.65rem; border-bottom:1px solid var(--line);
+    font-family:'Source Serif 4',serif;
+  }
+  .rules-card p,.rules-card li { font-size:14px; color:var(--ink); line-height:1.75; }
+  .rules-card ul { padding-left:1.25rem; }
+  .rules-card li { margin-bottom:0.4rem; }
+  .rules-card strong { color:var(--red); font-weight:600; }
+
+  /* FORM ELEMENTS */
+  .field { margin-bottom:1.1rem; }
+  .field label { display:block; font-size:0.72rem; font-weight:600; color:var(--sepia); margin-bottom:0.35rem; letter-spacing:0.08em; text-transform:uppercase; }
+  .field input,.field select {
+    width:100%; background:var(--cream);
+    border:1.5px solid var(--line);
+    border-radius:2px; padding:0.6rem 0.85rem;
+    color:var(--ink); font-family:'Source Serif 4',serif; font-size:14px;
+    transition:border-color 0.15s; -webkit-appearance:none;
+  }
+  .field input:focus,.field select:focus { outline:none; border-color:var(--sepia); }
+  .field input::placeholder { color:rgba(139,111,71,0.4); }
+  .field-hint { font-size:11px; color:var(--sepia); margin-top:0.3rem; font-style:italic; }
+  .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+  @media(max-width:500px) { .field-grid { grid-template-columns:1fr; } }
+
+  /* BRACKET GRID */
+  .bracket-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.5rem; margin-top:0.75rem; }
+  .team-entry {
+    display:flex; align-items:center; gap:0.6rem;
+    background:var(--cream); border:1px solid var(--line);
+    border-radius:2px; padding:0.45rem 0.75rem;
+  }
+  .team-seed { font-family:'Playfair Display',serif; font-size:11px; color:var(--sepia); min-width:20px; font-weight:700; }
+  .team-name-label { font-size:13px; color:var(--ink); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .wins-input {
+    width:44px !important; text-align:center;
+    padding:0.3rem 0.35rem !important;
+    font-family:'Playfair Display',serif !important;
+    font-size:13px !important; font-weight:700 !important;
+    background:white !important; border:1.5px solid var(--line) !important;
+    border-radius:2px !important; color:var(--red) !important;
+  }
+  .wins-input:focus { border-color:var(--sepia) !important; outline:none !important; }
+
+  /* VALIDATION */
+  .validation-bar {
+    background:var(--cream); border:1px solid var(--line);
+    border-radius:2px; padding:0.75rem 1rem; margin-bottom:1rem;
+    font-size:13px; display:flex; align-items:center; gap:0.6rem;
+    font-family:'Source Serif 4',serif;
+  }
+  .validation-bar.ok { border-color:rgba(45,106,79,0.4); color:var(--correct); background:rgba(45,106,79,0.05); }
+  .validation-bar.error { border-color:rgba(155,28,28,0.3); color:var(--red); background:rgba(155,28,28,0.04); }
+  .dot { width:8px; height:8px; border-radius:50%; background:currentColor; flex-shrink:0; }
+
+  /* BUTTONS */
+  .btn {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    padding:11px 26px; border-radius:2px;
+    font-family:'Source Serif 4',serif; font-size:0.82rem; font-weight:600;
+    cursor:pointer; transition:all 0.15s; border:none;
+    letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .btn-primary { background:var(--red); color:var(--paper); position:relative; overflow:hidden; }
+  .btn-primary::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(201,168,76,0.25),transparent); opacity:0; transition:opacity 0.2s; }
+  .btn-primary:hover::after { opacity:1; }
+  .btn-primary:hover { background:var(--red2); transform:translateY(-1px); }
+  .btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+  .btn-outline { background:none; border:1px solid var(--line); color:var(--sepia); }
+  .btn-outline:hover { border-color:var(--red); color:var(--red); }
+  .btn-danger { background:transparent; border:1px solid rgba(155,28,28,0.3); color:var(--red); font-size:12px; padding:0.4rem 0.85rem; }
+  .btn-danger:hover { background:rgba(155,28,28,0.06); }
+  .btn-sm { padding:8px 16px; font-size:0.75rem; }
+
+  /* LEADERBOARD */
+  .lb-table { width:100%; border-collapse:collapse; }
+  .lb-table th {
+    font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--sepia); text-align:left; padding:0.6rem 0.75rem;
+    border-bottom:2px solid var(--line); font-weight:600;
+    font-family:'Source Serif 4',serif;
+  }
+  .lb-table td { padding:0.85rem 0.75rem; font-size:14px; border-bottom:1px solid var(--line); color:var(--ink); }
+  .lb-table tr:last-child td { border-bottom:none; }
+  .lb-table tr.rank-1 td { background:rgba(201,168,76,0.07); }
+  .rank-badge {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%;
+    font-family:'Playfair Display',serif; font-size:12px; font-weight:700;
+  }
+  .rank-1 .rank-badge { background:var(--gold); color:var(--ink); }
+  .rank-2 .rank-badge { background:rgba(139,111,71,0.2); color:var(--ink); }
+  .rank-3 .rank-badge { background:rgba(139,111,71,0.12); color:var(--sepia); }
+  .rank-other .rank-badge { background:var(--cream); color:var(--sepia); border:1px solid var(--line); }
+  .score-cell { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:var(--ink); }
+  .score-cell.low { color:var(--correct); }
+  .tiebreaker-cell { font-size:12px; color:var(--sepia); font-style:italic; }
+  .empty-state { text-align:center; padding:3rem 1rem; color:var(--sepia); font-size:14px; font-style:italic; }
+  .empty-state .icon { font-size:2.5rem; margin-bottom:0.75rem; opacity:0.4; }
+
+  /* NOTICES */
+  .admin-notice {
+    background:rgba(155,28,28,0.05); border:1px solid rgba(155,28,28,0.2);
+    border-radius:2px; padding:1rem 1.25rem; font-size:13px;
+    color:var(--red); margin-bottom:1.5rem; font-style:italic;
+  }
+
+  /* CONTEST TOGGLE */
+  .contest-toggle { display:flex; gap:0.5rem; margin-bottom:1.75rem; }
+  .contest-btn {
+    flex:1; padding:0.65rem; border-radius:2px; font-size:0.75rem; font-weight:600;
+    cursor:pointer; border:1.5px solid var(--line); background:var(--cream);
+    color:var(--sepia); font-family:'Source Serif 4',serif;
+    transition:all 0.15s; text-align:center; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .contest-btn.active { background:white; border-color:var(--red); color:var(--red); }
+
+  /* TOAST */
+  .toast {
+    position:fixed; bottom:2rem; left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:white; border:1px solid var(--correct); color:var(--correct);
+    padding:0.75rem 1.5rem; border-radius:2px; font-size:14px; font-weight:600;
+    transition:transform 0.3s ease; z-index:100; white-space:nowrap;
+    box-shadow:0 2px 12px var(--shadow); font-family:'Source Serif 4',serif;
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+  .toast.err { border-color:var(--red); color:var(--red); }
+
+  .divider { height:1px; background:var(--line); margin:1.5rem 0; }
+  .text-muted { font-size:12px; color:var(--sepia); font-style:italic; }
+
+  /* ENTRY CARDS */
+  .entry-card { background:var(--cream); border:1px solid var(--line); border-radius:2px; padding:1rem 1.25rem; margin-bottom:0.75rem; }
+  .entry-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; }
+  .entry-name { font-size:15px; font-weight:700; font-family:'Playfair Display',serif; color:var(--ink); }
+  .entry-meta { font-size:11px; color:var(--sepia); margin-top:0.1rem; font-style:italic; }
+  .wins-pills { display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .wins-pill {
+    background:white; border:1px solid var(--line); border-radius:2px;
+    padding:0.2rem 0.5rem; font-size:11px; color:var(--sepia);
+    font-family:'Source Serif 4',serif;
+  }
+  .wins-pill span { color:var(--red); font-weight:600; }
+
+  /* SPINNER */
+  .spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--line); border-top-color:var(--red); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-row { display:flex; align-items:center; gap:0.6rem; padding:1.5rem; color:var(--sepia); font-size:14px; font-style:italic; }
+
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:var(--cream); }
+  ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-rule"></div>
+  <h1>NCAA Least Squares</h1>
+  <p class="hero-sub">March Madness 2026 · Prediction Contest</p>
+  <div class="hero-brand">Wikipeterson</div>
+  <div class="hero-rule-bottom"></div>
+  <div class="deadlines">
+    <div class="deadline-item"><strong>Men's Deadline</strong>Thu Mar 19 · Noon</div>
+    <div class="deadline-item"><strong>Women's Deadline</strong>Fri Mar 20 · Noon</div>
+    <div class="deadline-item"><strong>Entry Fee</strong>Free · Bragging rights only</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('enter',this)">Enter Predictions</button>
+  <button class="tab" onclick="showTab('leaderboard',this)">Leaderboard</button>
+  <button class="tab" onclick="showTab('rules',this)">Rules</button>
+  <button class="tab" onclick="showTab('admin',this)">Admin</button>
+</div>
+
+<!-- ENTER -->
+<div id="tab-enter" class="container">
+
+  <div class="section-header">
+    <h2>Submit Your Bracket</h2>
+    <p>Enter predicted wins for each team. Total must equal exactly 63.</p>
+  </div>
+  <div class="contest-toggle">
+    <button class="contest-btn active" onclick="setContest('mens',this)">Men's Tournament</button>
+    <button class="contest-btn" onclick="setContest('womens',this)">Women's Tournament</button>
+  </div>
+  <div class="form-section">
+    <div class="form-section-title">Your Info</div>
+    <div class="field-grid">
+      <div class="field"><label>Your Name</label><input type="text" id="entrant-name" placeholder="Full name"></div>
+      <div class="field"><label>Email (optional)</label><input type="email" id="entrant-email" placeholder="for results notification"></div>
+    </div>
+  </div>
+  <div class="form-section">
+    <div class="form-section-title">Predicted Wins Per Team</div>
+    <p class="text-muted" style="margin-bottom:1rem">Enter 0–6 wins per team. Total must equal <strong style="color:var(--cream)">63</strong>.</p>
+    <div id="bracket-grid" class="bracket-grid"></div>
+  </div>
+  <div id="validation-msg" class="validation-bar error">
+    <div class="dot"></div><span id="validation-text">Total predicted wins: 0 / 63</span>
+  </div>
+  <div class="form-section">
+    <div class="form-section-title">Tiebreaker</div>
+    <div class="field">
+      <label>Predicted total points in the championship game (both teams combined)</label>
+      <input type="number" id="tiebreaker" placeholder="e.g. 147" min="0" max="300" style="max-width:180px">
+      <div class="field-hint">Only used to break ties</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+    <button class="btn btn-primary" id="submit-btn" onclick="submitEntry()" disabled>Submit Predictions</button>
+    <button class="btn btn-outline" onclick="clearForm()">Clear</button>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div id="tab-leaderboard" class="container" style="display:none">
+  <div class="section-header"><h2>Leaderboard</h2><p>Live rankings. Scores appear after admin enters actual results.</p></div>
+  <div class="contest-toggle">
+    <button class="contest-btn active" onclick="setLbContest('mens',this)">Men's Tournament</button>
+    <button class="contest-btn" onclick="setLbContest('womens',this)">Women's Tournament</button>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+    <button class="btn btn-outline btn-sm" onclick="renderLeaderboard()">↻ Refresh</button>
+  </div>
+  <div id="leaderboard-content"></div>
+</div>
+
+<!-- RULES -->
+<div id="tab-rules" class="container" style="display:none">
+  <div class="section-header"><h2>Contest Rules</h2><p>Read carefully before submitting.</p></div>
+  <div class="rules-card"><h3>1 · Predictions</h3><p>Predict a winner for each of the <strong>63 games</strong> from the Round of 64 on. Also predict the <strong>total combined points</strong> in the championship game (tiebreaker).</p><br><p>For "First Four" winners, predict the number of post-First-Four wins. Your bracket must yield exactly 63 total wins, with one team having 6 wins.</p></div>
+  <div class="rules-card"><h3>2 · Scoring</h3><p>Your score is the <strong>sum over all 64 teams of (predicted wins − actual wins)²</strong>. A perfect bracket scores <strong>0</strong>. Lower is always better.</p><br><p>Example: predict Villanova wins 3, they win 6 → contribution is (6−3)² = <strong>9</strong>.</p></div>
+  <div class="rules-card"><h3>3 · Winner</h3><ul><li>Participant with <strong>lowest score wins</strong>.</li><li>Ties broken by <strong>closest championship game point total prediction</strong>.</li></ul></div>
+  <div class="rules-card"><h3>4 · Stakes & Deadlines</h3><ul><li>No entry fee. Winner gets <strong>bragging rights which never expire.</strong></li><li><strong>Men's:</strong> noon Thursday March 19, 2026.</li><li><strong>Women's:</strong> noon Friday March 20, 2026.</li><li>Separate contests, separate leaderboards.</li></ul></div>
+</div>
+
+<!-- ADMIN -->
+<div id="tab-admin" class="container" style="display:none">
+  <div class="section-header"><h2>Admin Panel</h2><p>Enter actual results and manage entries.</p></div>
+  <div class="admin-notice">⚠ For contest administrators only. Password required for writes.</div>
+  <div class="form-section">
+    <div class="form-section-title">Admin Password</div>
+    <div class="field">
+      <label>Password (set as ADMIN_PASSWORD in your Code.gs)</label>
+      <input type="password" id="admin-password" placeholder="enter password" style="max-width:260px">
+      <div class="field-hint">Default is: march2026</div>
+    </div>
+  </div>
+  <div class="contest-toggle">
+    <button class="contest-btn active" onclick="setAdminContest('mens',this)">Men's Tournament</button>
+    <button class="contest-btn" onclick="setAdminContest('womens',this)">Women's Tournament</button>
+  </div>
+  <div class="form-section">
+    <div class="form-section-title">Actual Results</div>
+    <p class="text-muted" style="margin-bottom:1rem">Enter actual wins per team after the tournament. Total must equal 63.</p>
+    <div id="admin-bracket-grid" class="bracket-grid"></div>
+    <div class="divider"></div>
+    <div class="field" style="max-width:260px">
+      <label>Actual Championship Game Total Points</label>
+      <input type="number" id="actual-tiebreaker" placeholder="e.g. 152" min="0" max="300">
+    </div>
+    <div id="admin-validation" class="validation-bar error" style="margin-top:1rem">
+      <div class="dot"></div><span id="admin-validation-text">Total: 0 / 63</span>
+    </div>
+    <button class="btn btn-primary" id="save-results-btn" style="margin-top:0.5rem" onclick="saveActualResults()">Save Results & Recalculate Scores</button>
+  </div>
+  <div class="form-section">
+    <div class="form-section-title">All Entries</div>
+    <div style="display:flex;gap:0.75rem;margin-bottom:1rem;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="loadAdminEntries()">↻ Refresh</button>
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()">Export CSV</button>
+    </div>
+    <div id="admin-entries-list"><div class="loading-row"><div class="spinner"></div> Loading entries...</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  PASTE YOUR APPS SCRIPT URL BELOW
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw12eOJSDfjtXkD17qN1fYtXA3GmDZf0gDfSW_Pb0pqX073_zQB1CZ56nJtQgv1k6gD/exec';
+// ══════════════════════════════════════════════
+
+const MENS_TEAMS = [
+  {seed:1,name:'Duke'},{seed:1,name:'Arizona'},{seed:1,name:'Michigan'},{seed:1,name:'Florida'},
+  {seed:2,name:'UConn'},{seed:2,name:'Purdue'},{seed:2,name:'Iowa St'},{seed:2,name:'Houston'},
+  {seed:3,name:'Michigan St'},{seed:3,name:'Gonzaga'},{seed:3,name:'Virginia'},{seed:3,name:'Illinois'},
+  {seed:4,name:'Kansas'},{seed:4,name:'Arkansas'},{seed:4,name:'Alabama'},{seed:4,name:'Nebraska'},
+  {seed:5,name:"St. John's"},{seed:5,name:'Wisconsin'},{seed:5,name:'Texas Tech'},{seed:5,name:'Vanderbilt'},
+  {seed:6,name:'Louisville'},{seed:6,name:'BYU'},{seed:6,name:'Tennessee'},{seed:6,name:'North Carolina'},
+  {seed:7,name:'UCLA'},{seed:7,name:'Miami FL'},{seed:7,name:'Kentucky'},{seed:7,name:"Saint Mary's"},
+  {seed:8,name:'Ohio St'},{seed:8,name:'Villanova'},{seed:8,name:'Georgia'},{seed:8,name:'Clemson'},
+  {seed:9,name:'TCU'},{seed:9,name:'Utah St'},{seed:9,name:'Saint Louis'},{seed:9,name:'Iowa'},
+  {seed:10,name:'UCF'},{seed:10,name:'Missouri'},{seed:10,name:'Santa Clara'},{seed:10,name:'Texas A&M'},
+  {seed:11,name:'South Florida'},{seed:11,name:'NC State'},{seed:11,name:'SMU'},{seed:11,name:'VCU'},
+  {seed:12,name:'N. Iowa'},{seed:12,name:'High Point'},{seed:12,name:'Akron'},{seed:12,name:'McNeese'},
+  {seed:13,name:'Cal Baptist'},{seed:13,name:'Hawaii'},{seed:13,name:'Hofstra'},{seed:13,name:'Troy'},
+  {seed:14,name:'N. Dakota St'},{seed:14,name:'Kennesaw St'},{seed:14,name:'Wright St'},{seed:14,name:'Penn'},
+  {seed:15,name:'Furman'},{seed:15,name:'Queens'},{seed:15,name:'Tennessee St'},{seed:15,name:'Idaho'},
+  {seed:16,name:'Siena'},{seed:16,name:'LIU'},{seed:16,name:'UMBC'},{seed:16,name:'Prairie View'}
+];
+
+const WOMENS_TEAMS = [
+  {seed:1,name:'UConn'},{seed:1,name:'UCLA'},{seed:1,name:'Texas'},{seed:1,name:'South Carolina'},
+  {seed:2,name:'Vanderbilt'},{seed:2,name:'West Virginia'},{seed:2,name:'TCU'},{seed:2,name:'Ohio St'},
+  {seed:3,name:'Ohio St W'},{seed:3,name:'LSU'},{seed:3,name:'Duke'},{seed:3,name:'Nebraska'},
+  {seed:4,name:'North Carolina'},{seed:4,name:'Indiana'},{seed:4,name:'Kansas St'},{seed:4,name:'Michigan'},
+  {seed:5,name:'Maryland'},{seed:5,name:'Louisville'},{seed:5,name:'Baylor'},{seed:5,name:'Oregon St'},
+  {seed:6,name:'Notre Dame'},{seed:6,name:'Gonzaga W'},{seed:6,name:'Colorado'},{seed:6,name:'Iowa St'},
+  {seed:7,name:'Illinois W'},{seed:7,name:'NC State W'},{seed:7,name:'Tennessee'},{seed:7,name:'Oklahoma'},
+  {seed:8,name:'Iowa St W'},{seed:8,name:'Virginia Tech'},{seed:8,name:'Creighton'},{seed:8,name:'Ole Miss'},
+  {seed:9,name:'Syracuse'},{seed:9,name:'Arizona'},{seed:9,name:'Minnesota'},{seed:9,name:'Penn St'},
+  {seed:10,name:'Colorado W'},{seed:10,name:'Georgia'},{seed:10,name:'South Florida'},{seed:10,name:'Richmond'},
+  {seed:11,name:'Fairfield'},{seed:11,name:'Marquette W'},{seed:11,name:'UCF W'},{seed:11,name:'Charleston'},
+  {seed:12,name:'Murray St'},{seed:12,name:'UC San Diego'},{seed:12,name:'Green Bay'},{seed:12,name:'James Madison'},
+  {seed:13,name:'W. Illinois'},{seed:13,name:'Stphn F Austin'},{seed:13,name:'Samford'},{seed:13,name:'Jacksonville'},
+  {seed:14,name:'Howard W'},{seed:14,name:'CS Bakersfield'},{seed:14,name:'Miami OH'},{seed:14,name:'Rhode Island'},
+  {seed:15,name:'High Point W'},{seed:15,name:'North Dakota'},{seed:15,name:'UTSA'},{seed:15,name:'Longwood'},
+  {seed:16,name:'UT-San Antonio'},{seed:16,name:'Portland St'},{seed:16,name:'SFA'},{seed:16,name:'Samford W'}
+];
+
+function getTeams(c){ return c==='womens'?WOMENS_TEAMS:MENS_TEAMS; }
+let currentContest='mens', adminContest='mens', lbContest='mens';
+
+function isConfigured(){ return APPS_SCRIPT_URL && APPS_SCRIPT_URL!=='YOUR_APPS_SCRIPT_URL_HERE'; }
+
+async function apiGet(params){
+  const url=APPS_SCRIPT_URL+'?'+new URLSearchParams(params);
+  const r=await fetch(url); return r.json();
+}
+async function apiPost(body){
+  const r=await fetch(APPS_SCRIPT_URL,{method:'POST',body:JSON.stringify(body)}); return r.json();
+}
+
+function buildBracketGrid(cid, contest, prefix, onchange){
+  const el=document.getElementById(cid); el.innerHTML='';
+  getTeams(contest).forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='team-entry';
+    d.innerHTML=`<span class="team-seed">${t.seed}</span><span class="team-name-label" title="${t.name}">${t.name}</span><input type="number" class="wins-input" id="${prefix}_wins_${i}" min="0" max="6" value="0" oninput="${onchange}()">`;
+    el.appendChild(d);
+  });
+}
+function getWinsArray(prefix, contest){
+  return getTeams(contest).map((_,i)=>{ const e=document.getElementById(`${prefix}_wins_${i}`); return e?parseInt(e.value)||0:0; });
+}
+function setWinsArray(prefix, contest, wins){
+  getTeams(contest).forEach((_,i)=>{ const e=document.getElementById(`${prefix}_wins_${i}`); if(e) e.value=wins[i]||0; });
+}
+
+function initEntryForm(){
+  buildBracketGrid('bracket-grid',currentContest,'entry','updateValidation');
+  updateValidation();
+}
+function updateValidation(){
+  const wins=getWinsArray('entry',currentContest);
+  const total=wins.reduce((a,b)=>a+b,0), maxW=Math.max(...wins);
+  const ok=total===63&&maxW<=6;
+  document.getElementById('validation-msg').className='validation-bar '+(ok?'ok':'error');
+  document.getElementById('validation-text').textContent=ok?`✓ Valid bracket — total: ${total}`:total!==63?`Total: ${total} / 63 (need exactly 63)`:`Max wins exceeded: ${maxW} (max is 6)`;
+  document.getElementById('submit-btn').disabled=!ok;
+}
+function setContest(c,btn){
+  currentContest=c;
+  document.querySelectorAll('#tab-enter .contest-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  initEntryForm();
+}
+async function submitEntry(){
+  if(!isConfigured()){showToast('Configure Apps Script URL first.',true);return;}
+  const name=document.getElementById('entrant-name').value.trim();
+  const email=document.getElementById('entrant-email').value.trim();
+  const tiebreaker=parseInt(document.getElementById('tiebreaker').value)||null;
+  const wins=getWinsArray('entry',currentContest);
+  if(!name){showToast('Please enter your name.',true);return;}
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true; btn.innerHTML='<div class="spinner"></div> Saving...';
+  try{
+    const res=await apiPost({action:'submitEntry',contest:currentContest,entry:{name,email,wins,tiebreaker,submitted:new Date().toISOString()}});
+    if(res.ok){showToast(`Entry saved for ${name}!`);clearForm();}
+    else{showToast('Error: '+res.error,true);btn.disabled=false;btn.textContent='Submit Predictions';}
+  }catch(e){showToast('Network error — check your Apps Script URL.',true);btn.disabled=false;btn.textContent='Submit Predictions';}
+}
+function clearForm(){
+  document.getElementById('entrant-name').value='';
+  document.getElementById('entrant-email').value='';
+  document.getElementById('tiebreaker').value='';
+  initEntryForm();
+  document.getElementById('submit-btn').textContent='Submit Predictions';
+}
+
+function calcScore(pred,actual){ return pred.reduce((s,p,i)=>{const d=p-(actual[i]||0);return s+d*d;},0); }
+
+function setLbContest(c,btn){
+  lbContest=c;
+  document.querySelectorAll('#tab-leaderboard .contest-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  renderLeaderboard();
+}
+async function renderLeaderboard(){
+  const con=document.getElementById('leaderboard-content');
+  con.innerHTML='<div class="loading-row"><div class="spinner"></div> Loading...</div>';
+  if(!isConfigured()){con.innerHTML='<div class="empty-state">Configure Apps Script URL to see leaderboard.</div>';return;}
+  try{
+    const [er,ar]=await Promise.all([apiGet({action:'getEntries',contest:lbContest}),apiGet({action:'getActual',contest:lbContest})]);
+    const entries=er.entries||[], actual=ar.actual||null;
+    if(!entries.length){con.innerHTML='<div class="empty-state"><div class="icon">🏀</div>No entries yet.</div>';return;}
+    let rows=entries.map(e=>{
+      const score=actual?calcScore(e.wins,actual.wins):null;
+      const tb=(actual&&actual.tiebreaker!=null&&e.tiebreaker!=null)?Math.abs(e.tiebreaker-actual.tiebreaker):null;
+      return{...e,score,tb};
+    });
+    if(actual) rows.sort((a,b)=>a.score!==b.score?a.score-b.score:(a.tb!=null&&b.tb!=null?a.tb-b.tb:0));
+    const minScore=actual?Math.min(...rows.map(r=>r.score)):null;
+    let html=`<div class="form-section" style="padding:0;overflow:hidden"><table class="lb-table"><thead><tr><th>#</th><th>Name</th><th>Score</th><th>Tiebreaker</th><th>Submitted</th></tr></thead><tbody>`;
+    rows.forEach((r,i)=>{
+      const rank=i+1, rc=rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'rank-other';
+      const sh=r.score!=null?`<span class="score-cell ${r.score===minScore?'low':''}">${r.score}</span>`:`<span style="color:var(--cream-dim);font-size:12px">pending</span>`;
+      const tb=r.tb!=null?`<span class="tiebreaker-cell">±${r.tb} pts</span>`:r.tiebreaker?`<span class="tiebreaker-cell">${r.tiebreaker} (pred)</span>`:`<span style="color:var(--cream-dim);font-size:12px">—</span>`;
+      const date=new Date(r.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      html+=`<tr class="${rc}"><td><div class="rank-badge">${rank}</div></td><td>${r.name}</td><td>${sh}</td><td>${tb}</td><td style="font-size:12px;color:var(--cream-dim)">${date}</td></tr>`;
+    });
+    html+=`</tbody></table></div>`;
+    if(!actual) html+=`<p class="text-muted" style="margin-top:0.75rem">Scores appear after admin enters actual results.</p>`;
+    con.innerHTML=html;
+  }catch(e){con.innerHTML='<div class="empty-state">Could not load data. Check your Apps Script URL.</div>';}
+}
+
+function setAdminContest(c,btn){
+  adminContest=c;
+  document.querySelectorAll('#tab-admin .contest-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  buildBracketGrid('admin-bracket-grid',adminContest,'admin','updateAdminValidation');
+  loadAdminActual(); loadAdminEntries();
+}
+function updateAdminValidation(){
+  const t=getWinsArray('admin',adminContest).reduce((a,b)=>a+b,0);
+  document.getElementById('admin-validation').className='validation-bar '+(t===63?'ok':'error');
+  document.getElementById('admin-validation-text').textContent=t===63?`✓ Valid — total: ${t}`:`Total: ${t} / 63`;
+}
+async function loadAdminActual(){
+  if(!isConfigured()) return;
+  try{
+    const r=await apiGet({action:'getActual',contest:adminContest});
+    if(r.actual){setWinsArray('admin',adminContest,r.actual.wins);document.getElementById('actual-tiebreaker').value=r.actual.tiebreaker||'';updateAdminValidation();}
+  }catch(e){}
+}
+async function saveActualResults(){
+  const pw=document.getElementById('admin-password').value;
+  if(!pw){showToast('Enter admin password first.',true);return;}
+  const wins=getWinsArray('admin',adminContest);
+  if(wins.reduce((a,b)=>a+b,0)!==63){showToast('Actual wins must total 63.',true);return;}
+  const tiebreaker=parseInt(document.getElementById('actual-tiebreaker').value)||null;
+  const btn=document.getElementById('save-results-btn');
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Saving...';
+  try{
+    const r=await apiPost({action:'saveActual',contest:adminContest,password:pw,actual:{wins,tiebreaker}});
+    if(r.ok) showToast('Results saved! Leaderboard updated.');
+    else showToast('Error: '+r.error,true);
+  }catch(e){showToast('Network error.',true);}
+  btn.disabled=false;btn.textContent='Save Results & Recalculate Scores';
+}
+async function loadAdminEntries(){
+  const con=document.getElementById('admin-entries-list');
+  con.innerHTML='<div class="loading-row"><div class="spinner"></div> Loading...</div>';
+  if(!isConfigured()){con.innerHTML='<div class="empty-state">Configure Apps Script URL first.</div>';return;}
+  try{
+    const r=await apiGet({action:'getEntries',contest:adminContest});
+    const entries=r.entries||[], teams=getTeams(adminContest);
+    if(!entries.length){con.innerHTML='<div class="empty-state">No entries yet.</div>';return;}
+    con.innerHTML=entries.map((e,i)=>{
+      const date=new Date(e.submitted).toLocaleString();
+      const pills=teams.map((t,j)=>e.wins[j]>0?`<span class="wins-pill">${t.name} <span>${e.wins[j]}W</span></span>`:'').filter(Boolean).join('');
+      return `<div class="entry-card"><div class="entry-card-header"><div><div class="entry-name">${e.name}</div><div class="entry-meta">${e.email||'no email'} · ${date} · TB: ${e.tiebreaker??'—'}</div></div><button class="btn btn-danger" onclick="deleteEntry(${i},'${e.name.replace(/'/g,"\\'")}')">Delete</button></div><div class="wins-pills">${pills}</div></div>`;
+    }).join('');
+  }catch(e){con.innerHTML='<div class="empty-state">Could not load entries.</div>';}
+}
+async function deleteEntry(idx,name){
+  const pw=document.getElementById('admin-password').value;
+  if(!pw){showToast('Enter admin password first.',true);return;}
+  if(!confirm(`Delete entry for "${name}"?`)) return;
+  try{
+    const r=await apiPost({action:'deleteEntry',contest:adminContest,password:pw,index:idx});
+    if(r.ok){showToast('Entry deleted.');loadAdminEntries();}
+    else showToast('Error: '+r.error,true);
+  }catch(e){showToast('Network error.',true);}
+}
+async function exportCSV(){
+  if(!isConfigured()){showToast('Configure Apps Script URL first.',true);return;}
+  const [er,ar]=await Promise.all([apiGet({action:'getEntries',contest:adminContest}),apiGet({action:'getActual',contest:adminContest})]);
+  const entries=er.entries||[], teams=getTeams(adminContest), actual=ar.actual||null;
+  if(!entries.length){showToast('No entries to export.',true);return;}
+  const header=['Name','Email','Tiebreaker','Score','Submitted',...teams.map(t=>`${t.name}(${t.seed})`)];
+  const rows=entries.map(e=>[e.name,e.email||'',e.tiebreaker||'',actual?calcScore(e.wins,actual.wins):'',e.submitted,...e.wins]);
+  const csv=[header,...rows].map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=`ncaa_lsq_${adminContest}_2026.csv`; a.click();
+}
+
+function showTab(name,btn){
+  ['enter','leaderboard','rules','admin'].forEach(t=>document.getElementById(`tab-${t}`).style.display='none');
+  document.getElementById(`tab-${name}`).style.display='block';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); if(btn) btn.classList.add('active');
+  if(name==='leaderboard') renderLeaderboard();
+  if(name==='admin'){buildBracketGrid('admin-bracket-grid',adminContest,'admin','updateAdminValidation');loadAdminActual();loadAdminEntries();}
+}
+
+function showToast(msg,isErr=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast'+(isErr?' err':'');
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+initEntryForm();
+</script>
+</body>
+</html>
