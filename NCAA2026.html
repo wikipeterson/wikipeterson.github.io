@@ -295,6 +295,8 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw12eOJSDfjtXkD
 // ── TEAM DATA ────────────────────────────────────────────────────────────────
 // Each region is 16 teams seeded 1-16. Matchup order: 1v16, 8v9, 5v12, 4v13, 6v11, 3v14, 7v10, 2v15
 // MENS: East, West, Midwest, South (4 regions × 16 = 64)
+// First Four results: Howard beat UMBC, Texas beat NC State,
+// Prairie View A&M beat Lehigh, Miami (OH) beat SMU
 const MENS_REGIONS = [
   { name:'East', teams:[
     {seed:1,name:'Duke'},{seed:16,name:'Siena'},
@@ -311,17 +313,17 @@ const MENS_REGIONS = [
     {seed:8,name:'Villanova'},{seed:9,name:'Utah St'},
     {seed:5,name:'Wisconsin'},{seed:12,name:'High Point'},
     {seed:4,name:'Arkansas'},{seed:13,name:'Hawaii'},
-    {seed:6,name:'BYU'},{seed:11,name:'NC State'},
+    {seed:6,name:'BYU'},{seed:11,name:'Texas'},
     {seed:3,name:'Gonzaga'},{seed:14,name:'Kennesaw St'},
     {seed:7,name:'Miami FL'},{seed:10,name:'Missouri'},
     {seed:2,name:'Purdue'},{seed:15,name:'Queens'}
   ]},
   { name:'Midwest', teams:[
-    {seed:1,name:'Michigan'},{seed:16,name:'UMBC'},
+    {seed:1,name:'Michigan'},{seed:16,name:'Howard'},
     {seed:8,name:'Georgia'},{seed:9,name:'Saint Louis'},
     {seed:5,name:'Texas Tech'},{seed:12,name:'Akron'},
     {seed:4,name:'Alabama'},{seed:13,name:'Hofstra'},
-    {seed:6,name:'Tennessee'},{seed:11,name:'SMU'},
+    {seed:6,name:'Tennessee'},{seed:11,name:'Miami OH'},
     {seed:3,name:'Virginia'},{seed:14,name:'Wright St'},
     {seed:7,name:'Kentucky'},{seed:10,name:'Santa Clara'},
     {seed:2,name:'Iowa St'},{seed:15,name:'Tennessee St'}
@@ -720,12 +722,11 @@ function renderPicksPanel(i){
       <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--sepia);font-weight:600;margin-bottom:0.4rem">${roundLabels[ri]}</div>`;
     picked.forEach(t=>{
       const ti=teams.findIndex(x=>x.name===t.name&&x.seed===t.seed);
-      const actualWins=actual?actual.wins[ti]:null;
+      const actualWins=actual&&ti>=0?actual.wins[ti]:null;
       let accent='';
       if(actualWins!==null){
-        if(actualWins===w) accent='color:var(--correct);font-weight:600';
-        else if(actualWins<w) accent='color:var(--red);text-decoration:line-through;opacity:0.6';
-        else accent='color:var(--correct);font-weight:600';
+        if(actualWins>=w) accent='color:var(--correct);font-weight:600'; // still alive or correct
+        else accent='color:var(--red);text-decoration:line-through;opacity:0.6'; // eliminated before predicted
       }
       html+=`<div style="font-size:13px;padding:0.2rem 0;${accent}"><span style="font-size:11px;color:var(--sepia);margin-right:4px">${t.seed}</span>${t.name}</div>`;
     });
