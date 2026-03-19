@@ -649,6 +649,29 @@ const WOMENS_DEADLINE = new Date('2026-03-20T12:00:00-04:00');
 function getDeadline(contest){ return contest==='womens'?WOMENS_DEADLINE:MENS_DEADLINE; }
 function isPastDeadline(contest){ return new Date()>=getDeadline(contest); }
 function picksVisible(contest){ return isPastDeadline(contest); }
+// Returns true if the round has fully completed based on today's date
+function roundComplete(contest, roundNum){
+  const now=new Date();
+  const mens=[
+    new Date('2026-03-21T00:00:00-04:00'),
+    new Date('2026-03-23T00:00:00-04:00'),
+    new Date('2026-03-28T00:00:00-04:00'),
+    new Date('2026-03-30T00:00:00-04:00'),
+    new Date('2026-04-05T00:00:00-04:00'),
+    new Date('2026-04-07T00:00:00-04:00'),
+  ];
+  const womens=[
+    new Date('2026-03-22T00:00:00-04:00'),
+    new Date('2026-03-24T00:00:00-04:00'),
+    new Date('2026-03-31T00:00:00-04:00'),
+    new Date('2026-04-01T00:00:00-04:00'),
+    new Date('2026-04-04T00:00:00-04:00'),
+    new Date('2026-04-06T00:00:00-04:00'),
+  ];
+  const dates=contest==='womens'?womens:mens;
+  return roundNum<dates.length&&now>=dates[roundNum];
+}
+
 let _lbRows=[], _lbActual=null, _lbContest='mens';
 
 async function renderLeaderboard(){
@@ -723,10 +746,19 @@ function renderPicksPanel(i){
     picked.forEach(t=>{
       const ti=teams.findIndex(x=>x.name===t.name&&x.seed===t.seed);
       const actualWins=actual&&ti>=0?actual.wins[ti]:null;
+      // roundNum for this prediction: w wins means they won w rounds (0-indexed round = w-1)
+      const predRound=w-1; // the last round they won
       let accent='';
       if(actualWins!==null){
-        if(actualWins>=w) accent='color:var(--correct);font-weight:600'; // still alive or correct
-        else accent='color:var(--red);text-decoration:line-through;opacity:0.6'; // eliminated before predicted
+        if(actualWins>=w){
+          accent='color:var(--correct);font-weight:600';
+        } else if(actualWins>0&&actualWins<w){
+          accent='color:var(--red);text-decoration:line-through;opacity:0.6';
+        } else if(actualWins===0&&roundComplete(_lbContest,0)){
+          // R64 is done and team won 0 games — they were eliminated in R64
+          accent='color:var(--red);text-decoration:line-through;opacity:0.6';
+        }
+        // else: actualWins===0 and R64 not done yet — neutral, haven't played
       }
       html+=`<div style="font-size:13px;padding:0.2rem 0;${accent}"><span style="font-size:11px;color:var(--sepia);margin-right:4px">${t.seed}</span>${t.name}</div>`;
     });
