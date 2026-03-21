@@ -734,8 +734,8 @@ function renderPicksPanel(i){
   const el=document.getElementById(`lb-picks-inner-${i}`);
 
   // Group teams by predicted wins (descending) — show as round labels
-  const roundLabels=['Champion (6W)','Final Four (5W)','Elite Eight (4W)','Sweet 16 (3W)','Round of 32 (2W)','Round of 64 (1W)'];
-  const byWins=[6,5,4,3,2,1];
+  const roundLabels=['Champion (6W)','Final Four (5W)','Elite Eight (4W)','Sweet 16 (3W)','Round of 32 (2W)','Round of 64 (1W)','First Round Exit (0W)'];
+  const byWins=[6,5,4,3,2,1,0];
 
   let html='<div style="display:flex;flex-wrap:wrap;gap:1.25rem">';
   byWins.forEach((w,ri)=>{
@@ -746,19 +746,17 @@ function renderPicksPanel(i){
     picked.forEach(t=>{
       const ti=teams.findIndex(x=>x.name===t.name&&x.seed===t.seed);
       const actualWins=actual&&ti>=0?actual.wins[ti]:null;
-      // roundNum for this prediction: w wins means they won w rounds (0-indexed round = w-1)
-      const predRound=w-1; // the last round they won
       let accent='';
       if(actualWins!==null){
-        if(actualWins>=w){
+        if(w===0){
+          // Predicted first round exit — green if they actually won 0, strikethrough if they won more
+          if(actualWins===0&&roundComplete(_lbContest,0)) accent='color:var(--correct);font-weight:600';
+          else if(actualWins>0) accent='color:var(--red);text-decoration:line-through;opacity:0.6';
+        } else if(actualWins>=w){
           accent='color:var(--correct);font-weight:600';
-        } else if(actualWins>0&&actualWins<w){
-          accent='color:var(--red);text-decoration:line-through;opacity:0.6';
-        } else if(actualWins===0&&roundComplete(_lbContest,0)){
-          // R64 is done and team won 0 games — they were eliminated in R64
+        } else if(roundComplete(_lbContest,actualWins)){
           accent='color:var(--red);text-decoration:line-through;opacity:0.6';
         }
-        // else: actualWins===0 and R64 not done yet — neutral, haven't played
       }
       html+=`<div style="font-size:13px;padding:0.2rem 0;${accent}"><span style="font-size:11px;color:var(--sepia);margin-right:4px">${t.seed}</span>${t.name}</div>`;
     });
