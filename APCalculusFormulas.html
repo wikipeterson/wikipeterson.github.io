@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Calculus BC Formulas — Wikipeterson</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    tags: 'none',
+    packages: {'[+]': ['boldsymbol']}
+  },
+  chtml: { scale: 1.15 },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1410;
+  --paper:  #f5f0e8;
+  --cream:  #ede7d9;
+  --sepia:  #8b6f47;
+  --red:    #9b1c1c;
+  --gold:   #c9a84c;
+  --gold2:  #e6c56a;
+  --line:   rgba(139,111,71,0.22);
+  --shadow: rgba(26,20,16,0.10);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--red);
+  color: var(--paper);
+  text-align: center;
+  padding: 22px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
+.masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
+.home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
+.home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
+.masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 10px; width:160px; }
+.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
+.masthead-topic       { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.82); margin-top:6px; font-weight:300; position:relative; }
+.masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:8px; position:relative; }
+.masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto 0; width:160px; }
+
+/* ── DOCUMENT ── */
+.doc {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 28px 100px;
+}
+
+/* ── TABLE OF CONTENTS ── */
+.toc {
+  background: white;
+  border-left: 4px solid var(--gold);
+  border-radius: 2px;
+  padding: 20px 24px;
+  margin-bottom: 52px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.toc h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 12px;
+}
+.toc ol {
+  list-style: decimal;
+  padding-left: 20px;
+  columns: 2;
+  column-gap: 32px;
+}
+.toc ol li { margin-bottom: 5px; break-inside: avoid; }
+.toc ol li a { font-size: 0.9rem; color: var(--red); text-decoration: none; transition: color .15s; }
+.toc ol li a:hover { color: var(--gold); }
+
+/* ── SECTIONS ── */
+.section {
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--red);
+  margin-bottom: 32px;
+  scroll-margin-top: 20px;
+}
+
+/* ── ENTRIES ── */
+.entry {
+  margin-bottom: 36px;
+}
+
+.entry-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.entry p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.entry p:last-child { margin-bottom: 0; }
+
+/* Display math gets generous vertical space */
+.entry .MJX-TEX, mjx-container[display="true"] {
+  margin: 14px 0 !important;
+}
+
+/* Sub-labels inside entries */
+.sublabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin: 14px 0 6px;
+}
+
+/* Note / caveat */
+.note {
+  font-size: 0.88rem;
+  color: var(--sepia);
+  font-style: italic;
+  margin-top: 8px;
+  padding-left: 14px;
+  border-left: 2px solid var(--gold);
+}
+
+/* Divider between entries within a section */
+.entry-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 28px 0;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  margin-top: 60px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--sepia);
+  font-style: italic;
+}
+.footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 12px; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+
+@media (max-width: 560px) {
+  .toc ol { columns: 1; }
+  .doc { padding: 32px 16px 80px; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">AP Calculus BC Formulas</div>
+  <div class="masthead-topic">Complete Reference Sheet</div>
+  <div class="masthead-brand">Wikipeterson Math</div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<div class="doc">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#precalc">Pre-Calc Essentials</a></li>
+      <li><a href="#limits">Limits &amp; Continuity</a></li>
+      <li><a href="#derivatives">Derivatives</a></li>
+      <li><a href="#appderiv">Applications of Derivatives</a></li>
+      <li><a href="#integrals">Integrals</a></li>
+      <li><a href="#appint">Applications of Integrals</a></li>
+      <li><a href="#diffeq">Differential Equations</a></li>
+      <li><a href="#parametric">Parametric &amp; Vectors</a></li>
+      <li><a href="#polar">Polar Curves</a></li>
+      <li><a href="#series">Sequences &amp; Series</a></li>
+    </ol>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       1. PRE-CALC ESSENTIALS
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="precalc">
+    <div class="section-title">1. Pre-Calc Essentials</div>
+
+    <div class="entry">
+      <div class="entry-title">Laws of Exponents</div>
+      <p>\[ a^m \cdot a^n = a^{m+n} \qquad \frac{a^m}{a^n} = a^{m-n} \qquad (a^m)^n = a^{mn} \]</p>
+      <p>\[ a^0 = 1 \qquad a^{-n} = \frac{1}{a^n} \qquad a^{1/n} = \sqrt[n]{a} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Laws of Logarithms</div>
+      <p>\[ \ln(ab) = \ln a + \ln b \qquad \ln\!\left(\frac{a}{b}\right) = \ln a - \ln b \qquad \ln(a^n) = n\ln a \]</p>
+      <p>\[ \ln(e^x) = x \qquad e^{\ln x} = x \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Reciprocal &amp; Quotient Identities</div>
+      <p>\[ \csc x = \frac{1}{\sin x} \qquad \sec x = \frac{1}{\cos x} \qquad \cot x = \frac{1}{\tan x} \]</p>
+      <p>\[ \tan x = \frac{\sin x}{\cos x} \qquad \cot x = \frac{\cos x}{\sin x} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Pythagorean Identities</div>
+      <p>\[ \sin^2 x + \cos^2 x = 1 \qquad 1 + \tan^2 x = \sec^2 x \qquad 1 + \cot^2 x = \csc^2 x \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Double Angle Identities</div>
+      <p>\[ \sin 2x = 2\sin x\cos x \]</p>
+      <p>\[ \cos 2x = \cos^2 x - \sin^2 x = 1 - 2\sin^2 x = 2\cos^2 x - 1 \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Half Angle Identities</div>
+      <p>\[ \sin^2 x = \frac{1 - \cos 2x}{2} \qquad \cos^2 x = \frac{1 + \cos 2x}{2} \]</p>
+      <div class="note">These appear constantly when integrating \(\sin^2 x\) and \(\cos^2 x\).</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Unit Circle — Key Values</div>
+      <div class="sublabel">Sine</div>
+      <p>\[ \sin 0 = 0 \quad \sin\frac{\pi}{6} = \frac{1}{2} \quad \sin\frac{\pi}{4} = \frac{\sqrt{2}}{2} \quad \sin\frac{\pi}{3} = \frac{\sqrt{3}}{2} \quad \sin\frac{\pi}{2} = 1 \]</p>
+      <div class="sublabel">Cosine</div>
+      <p>\[ \cos 0 = 1 \quad \cos\frac{\pi}{6} = \frac{\sqrt{3}}{2} \quad \cos\frac{\pi}{4} = \frac{\sqrt{2}}{2} \quad \cos\frac{\pi}{3} = \frac{1}{2} \quad \cos\frac{\pi}{2} = 0 \]</p>
+      <div class="sublabel">Tangent</div>
+      <p>\[ \tan 0 = 0 \quad \tan\frac{\pi}{6} = \frac{1}{\sqrt{3}} \quad \tan\frac{\pi}{4} = 1 \quad \tan\frac{\pi}{3} = \sqrt{3} \quad \tan\frac{\pi}{2} = \text{undef} \]</p>
+      <div class="note">For other quadrants: sine is positive in Q1 and Q2; cosine in Q1 and Q4; tangent in Q1 and Q3.</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       2. LIMITS & CONTINUITY
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="limits">
+    <div class="section-title">2. Limits &amp; Continuity</div>
+
+    <div class="entry">
+      <div class="entry-title">Definition of a Limit</div>
+      <p>\(\displaystyle\lim_{x \to c} f(x) = L\) means \(f(x)\) can be made arbitrarily close to \(L\) by taking \(x\) sufficiently close to \(c\) (but \(x \neq c\)).</p>
+      <p>The two-sided limit exists if and only if both one-sided limits exist and are equal:
+      \[\lim_{x \to c^-} f(x) = \lim_{x \to c^+} f(x) = L\]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Squeeze Theorem</div>
+      <p>If \(g(x) \leq f(x) \leq h(x)\) near \(c\) and \(\displaystyle\lim_{x\to c} g(x) = \lim_{x\to c} h(x) = L\), then \(\displaystyle\lim_{x\to c} f(x) = L\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Definition of Continuity</div>
+      <p>\(f\) is continuous at \(c\) if and only if all three conditions hold:</p>
+      <p>1) &ensp; \(f(c)\) is defined</p>
+      <p>2) &ensp; \(\displaystyle\lim_{x \to c} f(x)\) exists</p>
+      <p>3) &ensp; \(\displaystyle\lim_{x \to c} f(x) = f(c)\)</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Intermediate Value Theorem</div>
+      <p>If \(f\) is continuous on \([a, b]\) and \(k\) is any number between \(f(a)\) and \(f(b)\), then there exists at least one \(c\) in \((a, b)\) such that \(f(c) = k\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">L'Hôpital's Rule</div>
+      <p>If \(\displaystyle\lim_{x\to c}\dfrac{f(x)}{g(x)}\) produces the indeterminate form \(\dfrac{0}{0}\) or \(\dfrac{\infty}{\infty}\), then</p>
+      <p>\[ \lim_{x\to c}\frac{f(x)}{g(x)} = \lim_{x\to c}\frac{f'(x)}{g'(x)} \]</p>
+      <div class="note">provided the limit on the right exists.</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       3. DERIVATIVES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="derivatives">
+    <div class="section-title">3. Derivatives</div>
+
+    <div class="entry">
+      <div class="entry-title">Definition of the Derivative</div>
+      <p>\[ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \]</p>
+      <div class="sublabel">Alternative form at a point</div>
+      <p>\[ f'(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Basic Rules</div>
+      <p>\[ \frac{d}{dx}\left[x^n\right] = nx^{n-1} \qquad \frac{d}{dx}\left[c\right] = 0 \qquad \frac{d}{dx}\left[cf(x)\right] = cf'(x) \]</p>
+      <p>\[ \frac{d}{dx}\left[f \pm g\right] = f' \pm g' \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Product, Quotient &amp; Chain Rules</div>
+      <p>\[ \frac{d}{dx}\left[fg\right] = f'g + fg' \]</p>
+      <p>\[ \frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2} \]</p>
+      <p>\[ \frac{d}{dx}\left[f(g(x))\right] = f'(g(x))\cdot g'(x) \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Derivatives of Trigonometric Functions</div>
+      <p>\[ \frac{d}{dx}[\sin x] = \cos x \qquad \frac{d}{dx}[\cos x] = -\sin x \qquad \frac{d}{dx}[\tan x] = \sec^2 x \]</p>
+      <p>\[ \frac{d}{dx}[\cot x] = -\csc^2 x \qquad \frac{d}{dx}[\sec x] = \sec x\tan x \qquad \frac{d}{dx}[\csc x] = -\csc x\cot x \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Derivatives of Inverse Trigonometric Functions</div>
+      <p>\[ \frac{d}{dx}[\arcsin x] = \frac{1}{\sqrt{1-x^2}} \qquad \frac{d}{dx}[\arccos x] = \frac{-1}{\sqrt{1-x^2}} \qquad \frac{d}{dx}[\arctan x] = \frac{1}{1+x^2} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Derivatives of Exponential &amp; Logarithmic Functions</div>
+      <p>\[ \frac{d}{dx}\left[e^x\right] = e^x \qquad \frac{d}{dx}\left[a^x\right] = a^x \ln a \]</p>
+      <p>\[ \frac{d}{dx}[\ln x] = \frac{1}{x} \qquad \frac{d}{dx}[\log_a x] = \frac{1}{x\ln a} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Derivative of an Inverse Function</div>
+      <p>If \(g = f^{-1}\), then</p>
+      <p>\[ g'(x) = \frac{1}{f'(g(x))} \]</p>
+      <div class="note">Equivalently: \(\left(f^{-1}\right)'(a) = \dfrac{1}{f'\!\left(f^{-1}(a)\right)}\)</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Implicit Differentiation</div>
+      <p>Differentiate both sides with respect to \(x\). Whenever differentiating a \(y\)-term, apply the chain rule and multiply by \(\dfrac{dy}{dx}\). Then solve for \(\dfrac{dy}{dx}\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Logarithmic Differentiation</div>
+      <p>Take \(\ln\) of both sides, differentiate implicitly, then solve for \(y'\). Especially useful for expressions of the form \(y = f(x)^{g(x)}\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Linear Approximation</div>
+      <p>\[ f(x) \approx f(a) + f'(a)(x - a) \]</p>
+      <div class="note">This is the tangent line at \(x = a\), used to approximate \(f\) near \(a\).</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       4. APPLICATIONS OF DERIVATIVES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="appderiv">
+    <div class="section-title">4. Applications of Derivatives</div>
+
+    <div class="entry">
+      <div class="entry-title">Definition of \(e\)</div>
+      <p>\[ e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n \approx 2.71828\ldots \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Critical Numbers</div>
+      <p>\(c\) is a critical number of \(f\) if \(f'(c) = 0\) or \(f'(c)\) is undefined (with \(f(c)\) defined).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Rolle's Theorem</div>
+      <p>If \(f\) is continuous on \([a, b]\), differentiable on \((a, b)\), and \(f(a) = f(b)\), then there exists at least one \(c\) in \((a, b)\) with \(f'(c) = 0\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Mean Value Theorem</div>
+      <p>If \(f\) is continuous on \([a, b]\) and differentiable on \((a, b)\), then there exists \(c\) in \((a, b)\) such that</p>
+      <p>\[ f'(c) = \frac{f(b) - f(a)}{b - a} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">First Derivative Test</div>
+      <p>At a critical number \(c\) of \(f\):</p>
+      <p>If \(f'\) changes from \(-\) to \(+\) at \(c\) &nbsp;→&nbsp; <strong>relative minimum</strong></p>
+      <p>If \(f'\) changes from \(+\) to \(-\) at \(c\) &nbsp;→&nbsp; <strong>relative maximum</strong></p>
+      <p>No sign change &nbsp;→&nbsp; neither</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Second Derivative Test</div>
+      <p>If \(f'(c) = 0\):</p>
+      <p>\(f''(c) > 0\) &nbsp;→&nbsp; <strong>relative minimum</strong></p>
+      <p>\(f''(c) < 0\) &nbsp;→&nbsp; <strong>relative maximum</strong></p>
+      <p>\(f''(c) = 0\) &nbsp;→&nbsp; inconclusive; use First Derivative Test</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Concavity &amp; Inflection Points</div>
+      <p>\(f''(x) > 0\) on \(I\) &nbsp;→&nbsp; concave <strong>up</strong> on \(I\)</p>
+      <p>\(f''(x) < 0\) on \(I\) &nbsp;→&nbsp; concave <strong>down</strong> on \(I\)</p>
+      <p>An inflection point occurs at \(x = c\) if \(f''\) changes sign at \(c\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Related Rates</div>
+      <p>Write an equation relating two or more quantities. Differentiate both sides with respect to \(t\), applying the chain rule. Substitute known values and solve for the unknown rate.</p>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       5. INTEGRALS
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="integrals">
+    <div class="section-title">5. Integrals</div>
+
+    <div class="entry">
+      <div class="entry-title">Definition of the Definite Integral</div>
+      <p>\[ \int_a^b f(x)\,dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i^*)\,\Delta x \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Fundamental Theorem of Calculus — Part 1</div>
+      <p>If \(f\) is continuous on an interval containing \(a\), then for every \(x\) in that interval,</p>
+      <p>\[ \frac{d}{dx} \int_a^x f(t)\,dt = f(x) \]</p>
+      <div class="sublabel">Chain Rule Version</div>
+      <p>\[ \frac{d}{dx} \int_a^{g(x)} f(t)\,dt = f(g(x))\cdot g'(x) \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Fundamental Theorem of Calculus — Part 2</div>
+      <p>If \(F\) is any antiderivative of \(f\) on \([a, b]\), then</p>
+      <p>\[ \int_a^b f(x)\,dx = F(b) - F(a) \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Basic Antiderivatives</div>
+      <p>\[ \int x^n\,dx = \frac{x^{n+1}}{n+1} + C \quad (n \neq -1) \qquad \int \frac{1}{x}\,dx = \ln|x| + C \]</p>
+      <p>\[ \int e^x\,dx = e^x + C \qquad \int a^x\,dx = \frac{a^x}{\ln a} + C \]</p>
+      <p>\[ \int \sin x\,dx = -\cos x + C \qquad \int \cos x\,dx = \sin x + C \]</p>
+      <p>\[ \int \sec^2 x\,dx = \tan x + C \qquad \int \csc^2 x\,dx = -\cot x + C \]</p>
+      <p>\[ \int \sec x\tan x\,dx = \sec x + C \qquad \int \csc x\cot x\,dx = -\csc x + C \]</p>
+      <p>\[ \int \frac{dx}{\sqrt{1-x^2}} = \arcsin x + C \qquad \int \frac{dx}{1+x^2} = \arctan x + C \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">\(u\)-Substitution</div>
+      <p>Let \(u = g(x)\), so \(du = g'(x)\,dx\). Rewrite the integral in terms of \(u\), integrate, then back-substitute.</p>
+      <p>\[ \int f(g(x))\,g'(x)\,dx = \int f(u)\,du \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Integration by Parts</div>
+      <p>\[ \int u\,dv = uv - \int v\,du \]</p>
+      <div class="note">Choose \(u\) using LIATE: <strong>L</strong>ogarithm, <strong>I</strong>nverse trig, <strong>A</strong>lgebraic, <strong>T</strong>rig, <strong>E</strong>xponential.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Improper Integrals</div>
+      <p>Replace an infinite bound (or a discontinuity) with a limit:</p>
+      <p>\[ \int_a^{\infty} f(x)\,dx = \lim_{t\to\infty} \int_a^t f(x)\,dx \]</p>
+      <div class="note">The integral converges if the limit is finite; otherwise it diverges.</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       6. APPLICATIONS OF INTEGRALS
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="appint">
+    <div class="section-title">6. Applications of Integrals</div>
+
+    <div class="entry">
+      <div class="entry-title">Average Value of \(f\) on \([a,b]\)</div>
+      <p>\[ f_{\text{avg}} = \frac{1}{b-a}\int_a^b f(x)\,dx \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Area Between Curves</div>
+      <p>\[ A = \int_a^b \bigl[f(x) - g(x)\bigr]\,dx \]</p>
+      <div class="note">where \(f(x) \geq g(x)\) on \([a,b]\). If the curves cross, split the integral at each intersection.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Volume — Discs</div>
+      <p>\[ V = \pi \int_a^b \bigl[f(x)\bigr]^2\,dx \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Volume — Washers</div>
+      <p>\[ V = \pi \int_a^b \Bigl(\bigl[R(x)\bigr]^2 - \bigl[r(x)\bigr]^2\Bigr)\,dx \]</p>
+      <div class="note">\(R(x)\) = outer radius, \(r(x)\) = inner radius.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Volume — Cross Sections</div>
+      <p>\[ V = \int_a^b A(x)\,dx \]</p>
+      <div class="note">where \(A(x)\) is the area of the cross section perpendicular to the \(x\)-axis at \(x\).</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Arc Length</div>
+      <p>\[ L = \int_a^b \sqrt{1 + \bigl[f'(x)\bigr]^2}\,dx \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Motion Along a Line</div>
+      <p>Position \(s(t)\), velocity \(v(t) = s'(t)\), speed \(= |v(t)|\), acceleration \(a(t) = v'(t)\).</p>
+      <p>\[ \text{Displacement} = \int_a^b v(t)\,dt \]</p>
+      <p>\[ \text{Total distance} = \int_a^b |v(t)|\,dt \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Accumulation Functions</div>
+      <p>If \(F(x) = \displaystyle\int_a^x f(t)\,dt\), then \(F(x)\) gives the net accumulation of \(f\) from \(a\) to \(x\), and by FTC Part 1, \(F'(x) = f(x)\).</p>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       7. DIFFERENTIAL EQUATIONS
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="diffeq">
+    <div class="section-title">7. Differential Equations</div>
+
+    <div class="entry">
+      <div class="entry-title">Slope Fields</div>
+      <p>A slope field represents \(\dfrac{dy}{dx} = f(x,y)\) by drawing short line segments with slope \(f(x,y)\) at each point. Solution curves follow the flow of the field.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Euler's Method</div>
+      <p>Starting from \((x_0, y_0)\) with step size \(h\):</p>
+      <p>\[ y_{n+1} = y_n + h\cdot f(x_n,\, y_n) \]</p>
+      <div class="note">Smaller step size gives a more accurate approximation.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Separable Differential Equations</div>
+      <p>If \(\dfrac{dy}{dx} = f(x)\,g(y)\), separate and integrate:</p>
+      <p>\[ \int \frac{dy}{g(y)} = \int f(x)\,dx \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Exponential Growth &amp; Decay</div>
+      <p>If \(\dfrac{dy}{dt} = ky\), then</p>
+      <p>\[ y = y_0\,e^{kt} \]</p>
+      <div class="note">\(k > 0\): growth &ensp; \(k < 0\): decay</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Logistic Growth</div>
+      <p>\[ \frac{dP}{dt} = kP\!\left(1 - \frac{P}{M}\right) \]</p>
+      <div class="note">\(M\) = carrying capacity. Growth rate is greatest when \(P = \dfrac{M}{2}\).</div>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       8. PARAMETRIC & VECTORS
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="parametric">
+    <div class="section-title">8. Parametric Equations &amp; Vector Motion</div>
+
+    <div class="entry">
+      <div class="entry-title">Parametric Derivatives</div>
+      <p>\[ \frac{dy}{dx} = \frac{dy/dt}{dx/dt} \]</p>
+      <div class="sublabel">Second Derivative</div>
+      <p>\[ \frac{d^2y}{dx^2} = \frac{\dfrac{d}{dt}\!\left[\dfrac{dy}{dx}\right]}{dx/dt} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Arc Length — Parametric</div>
+      <p>\[ L = \int_a^b \sqrt{\left(\frac{dx}{dt}\right)^{\!2} + \left(\frac{dy}{dt}\right)^{\!2}}\,dt \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Vector Motion</div>
+      <p>Position: \(\vec{r}(t) = \langle x(t),\; y(t)\rangle\)</p>
+      <p>Velocity: \(\vec{v}(t) = \langle x'(t),\; y'(t)\rangle\)</p>
+      <p>Acceleration: \(\vec{a}(t) = \langle x''(t),\; y''(t)\rangle\)</p>
+      <p>\[ \text{Speed} = |\vec{v}(t)| = \sqrt{\bigl[x'(t)\bigr]^2 + \bigl[y'(t)\bigr]^2} \]</p>
+      <p>\[ \text{Distance traveled} = \int_a^b |\vec{v}(t)|\,dt \]</p>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       9. POLAR CURVES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="polar">
+    <div class="section-title">9. Polar Curves</div>
+
+    <div class="entry">
+      <div class="entry-title">Conversion</div>
+      <p>\[ x = r\cos\theta \qquad y = r\sin\theta \qquad r^2 = x^2 + y^2 \qquad \tan\theta = \frac{y}{x} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Derivative of a Polar Curve</div>
+      <p>\[ \frac{dy}{dx} = \frac{r'(\theta)\sin\theta + r(\theta)\cos\theta}{r'(\theta)\cos\theta - r(\theta)\sin\theta} \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Area Inside a Polar Curve</div>
+      <p>\[ A = \frac{1}{2}\int_\alpha^\beta \bigl[r(\theta)\bigr]^2\,d\theta \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Area Between Polar Curves</div>
+      <p>\[ A = \frac{1}{2}\int_\alpha^\beta \Bigl(\bigl[r_{\text{outer}}(\theta)\bigr]^2 - \bigl[r_{\text{inner}}(\theta)\bigr]^2\Bigr)\,d\theta \]</p>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       10. SEQUENCES & SERIES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="series">
+    <div class="section-title">10. Sequences &amp; Series</div>
+
+    <div class="entry">
+      <div class="entry-title">Convergence of a Sequence</div>
+      <p>A sequence \(\{a_n\}\) converges if \(\displaystyle\lim_{n\to\infty} a_n = L\) for some finite \(L\). Otherwise it diverges.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">nth Term Test (Divergence Test)</div>
+      <p>If \(\displaystyle\lim_{n\to\infty} a_n \neq 0\), then \(\displaystyle\sum a_n\) diverges.</p>
+      <div class="note">If \(\lim a_n = 0\), the test is inconclusive — the series may still diverge (e.g. the harmonic series).</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Geometric Series</div>
+      <p>\(\displaystyle\sum_{n=0}^{\infty} ar^n\) converges if \(|r| < 1\) and diverges if \(|r| \geq 1\).</p>
+      <p>\[ \sum_{n=0}^{\infty} ar^n = \frac{a}{1-r} \qquad (|r| < 1) \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">p-Series Test</div>
+      <p>\[ \sum_{n=1}^{\infty} \frac{1}{n^p} \begin{cases} \text{converges} & p > 1 \\ \text{diverges} & p \leq 1 \end{cases} \]</p>
+      <div class="note">The harmonic series \(\sum 1/n\) (\(p=1\)) diverges.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Comparison Test</div>
+      <p>For \(0 \leq a_n \leq b_n\): if \(\sum b_n\) converges then \(\sum a_n\) converges; if \(\sum a_n\) diverges then \(\sum b_n\) diverges.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Limit Comparison Test</div>
+      <p>If \(\displaystyle\lim_{n\to\infty}\dfrac{a_n}{b_n} = L\) where \(0 < L < \infty\), then \(\sum a_n\) and \(\sum b_n\) either both converge or both diverge.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Ratio Test</div>
+      <p>Let \(L = \displaystyle\lim_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|\).</p>
+      <p>\(L < 1\) &nbsp;→&nbsp; converges absolutely &ensp; \(L > 1\) &nbsp;→&nbsp; diverges &ensp; \(L = 1\) &nbsp;→&nbsp; inconclusive</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Alternating Series Test</div>
+      <p>\(\displaystyle\sum_{n=1}^\infty (-1)^n a_n\) converges if: (1) \(a_n > 0\), (2) \(a_n\) is decreasing, (3) \(\displaystyle\lim_{n\to\infty} a_n = 0\).</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Alternating Series Remainder</div>
+      <p>\[ |S - S_n| \leq |a_{n+1}| \]</p>
+      <div class="note">The error is bounded by the absolute value of the first neglected term.</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Absolute vs. Conditional Convergence</div>
+      <p><strong>Absolutely convergent:</strong> \(\sum |a_n|\) converges.</p>
+      <p><strong>Conditionally convergent:</strong> \(\sum a_n\) converges but \(\sum |a_n|\) diverges.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Power Series &amp; Radius of Convergence</div>
+      <p>A power series \(\displaystyle\sum_{n=0}^\infty c_n(x-a)^n\) has radius of convergence \(R\) found by the Ratio Test. The series converges for \(|x - a| < R\). Always check endpoints separately.</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Taylor &amp; Maclaurin Polynomials</div>
+      <p>\[ T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(c)}{k!}(x-c)^k \]</p>
+      <div class="note">A Maclaurin series is a Taylor series centered at \(c = 0\).</div>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Common Maclaurin Series</div>
+      <p>\[ e^x = \sum_{n=0}^{\infty}\frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots \qquad \text{(all } x\text{)} \]</p>
+      <p>\[ \sin x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots \qquad \text{(all } x\text{)} \]</p>
+      <p>\[ \cos x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots \qquad \text{(all } x\text{)} \]</p>
+      <p>\[ \frac{1}{1-x} = \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + x^3 + \cdots \qquad (|x| < 1) \]</p>
+      <p>\[ \ln(1+x) = \sum_{n=1}^{\infty}\frac{(-1)^{n+1}x^n}{n} = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots \qquad (-1 < x \leq 1) \]</p>
+      <p>\[ \arctan x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{2n+1} = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots \qquad (|x| \leq 1) \]</p>
+    </div>
+    <div class="entry-divider"></div>
+
+    <div class="entry">
+      <div class="entry-title">Lagrange Error Bound</div>
+      <p>\[ \left|R_n(x)\right| \leq \frac{M}{(n+1)!}\,|x - c|^{\,n+1} \]</p>
+      <div class="note">where \(M\) is the maximum value of \(\left|f^{(n+1)}\right|\) on the interval between \(x\) and \(c\). The remainder satisfies \(f(x) = T_n(x) + R_n(x)\).</div>
+    </div>
+
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-rule"></div>
+    wikipeterson.github.io
+  </div>
+
+</div>
+</body>
+</html>
