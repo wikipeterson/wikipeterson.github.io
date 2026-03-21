@@ -134,7 +134,13 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:va
   <button class="btn-restart" onclick="restart()">Start New Session</button>
 </div>
 <script>
-const TAGLINES=["Convergence not guaranteed outside the radius.","Side effects may include understanding calculus.","If you can read this, you're in the interval of convergence.","The limit, as studying → ∞, of your grade is 5.","Zero added fillers. Just ∑ good math.","Free range, grass-fed p-series.","Now with 20% more ratio test.","Epsilon-delta tested. Teacher approved.","Warning: May cause spontaneous correct answers.","Our alternating series are locally sourced.","Math so real, it's irrational.","The harmonic series called. It still diverges.","Mathematically proven to be mathematics.","We only use 100% REAL convergence tests.","As seen on the number line."];
+const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  if(data.taglines&&data.taglines.length){
+    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
+    document.getElementById('tagline').textContent=t;
+  }
+}).catch(()=>{});
 
 const QUESTIONS=[
 {q:`Which of the following statements about convergence of the series \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) is true?`,
@@ -341,7 +347,7 @@ solution:[{step:"1",text:`Rewrite: \\((-1)^n\\frac{B^{n+1}}{A^n}=B\\cdot(-1)^n\\
 let queue=[],answered=0,correct=0,wrong=0,streak=0,last10=[],selectedIdx=null,currentQ=null,submitted=false,seenCount=0;
 
 function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-function pickTagline(){document.getElementById('tagline').textContent=TAGLINES[Math.floor(Math.random()*TAGLINES.length)];}
+function pickTagline(){}
 
 function nextQuestion(){
   if(queue.length===0)queue=shuffle([...QUESTIONS]);

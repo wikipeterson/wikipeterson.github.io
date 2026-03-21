@@ -328,25 +328,24 @@
 </div>
 
 <script>
-const TAGLINES = [
-  "Where your math is right or it's free. Guaranteed!™",
-  "Mathematically proven to be mathematics.",
-  "Side effects may include understanding calculus.",
-  "The limit, as studying → ∞, of your grade is 5.",
-  "Epsilon-delta tested. Teacher approved.",
-  "More tools coming soon.",
-];
-document.getElementById('tagline').textContent =
-  '"' + TAGLINES[Math.floor(Math.random() * TAGLINES.length)] + '"';
+const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 
-// Random quote
-const APPS_URL = 'https://script.google.com/macros/s/AKfycbyLrjOaUzzUF6yBVHRPCfu2e5AzZANc_XlagYq9GnKeUmiuIBqr5uh5GD8dHJodN3s/exec';
-fetch(APPS_URL).then(r => r.json()).then(quotes => {
-  const q = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById('rqText').textContent = q.quote;
-  if (q.author) document.getElementById('rqAuthor').textContent = '— ' + q.author;
-  document.getElementById('quoteSection').style.display = 'block';
-}).catch(() => {});
+fetch(APPS_URL).then(r => r.json()).then(data => {
+  // Tagline
+  if (data.taglines && data.taglines.length) {
+    const t = data.taglines[Math.floor(Math.random() * data.taglines.length)];
+    document.getElementById('tagline').textContent = '"' + t + '"';
+  }
+  // Random quote
+  if (data.quotes && data.quotes.length) {
+    const q = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+    document.getElementById('rqText').textContent = q.quote;
+    if (q.author) document.getElementById('rqAuthor').textContent = '— ' + q.author;
+    document.getElementById('quoteSection').style.display = 'block';
+  }
+}).catch(() => {
+  document.getElementById('tagline').textContent = '"Mathematically proven to be mathematics."';
+});
 </script>
 </body>
 </html>

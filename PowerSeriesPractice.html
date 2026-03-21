@@ -306,24 +306,13 @@
 </div>
 
 <script>
-const TAGLINES = [
-  "Where your math is right or it's free. Guaranteed!™",
-  "We only use 100% REAL math. No artificial derivatives.",
-  "Now with 20% more protein. Also, power series.",
-  "Mathematically proven to be mathematics.",
-  "As seen on the number line.",
-  "Convergence not guaranteed outside the radius.",
-  "Side effects may include understanding calculus.",
-  "Warning: May cause spontaneous correct answers.",
-  "Our Taylor polynomials are locally sourced.",
-  "If you can read this, you're in the interval of convergence.",
-  "Epsilon-delta tested. Teacher approved.",
-  "Zero added fillers. Just ∑ good math.",
-  "The limit, as studying → ∞, of your grade is 5.",
-  "Free range, grass-fed power series.",
-  "Math so real, it's irrational.",
-];
-document.getElementById('tagline').textContent = '"' + TAGLINES[Math.floor(Math.random() * TAGLINES.length)] + '"';
+const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  if(data.taglines&&data.taglines.length){
+    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
+    document.getElementById('tagline').textContent='"'+t+'"';
+  }
+}).catch(()=>{});
 
 const LETTERS = ['A','B','C','D','E'];
 
@@ -467,7 +456,7 @@ function restartSession(){
   document.getElementById('quizArea').style.display='';
   document.getElementById('statsBar').style.display='';
   document.querySelector('.progress-bar-wrap').style.display='';
-  document.getElementById('tagline').textContent='"'+TAGLINES[Math.floor(Math.random()*TAGLINES.length)]+'"';
+  fetch(APPS_URL).then(r=>r.json()).then(data=>{if(data.taglines&&data.taglines.length){document.getElementById('tagline').textContent='"'+data.taglines[Math.floor(Math.random()*data.taglines.length)]+'"';}}).catch(()=>{});
   refillQueue();nextQuestion();
 }
 
