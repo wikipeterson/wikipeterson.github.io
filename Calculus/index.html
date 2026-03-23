@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wikipeterson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1410;
+  --paper:  #f5f0e8;
+  --cream:  #ede7d9;
+  --sepia:  #8b6f47;
+  --red:    #7A1518;
+  --red2:   #B31B1B;
+  --gold:   #F0B429;
+  --gold2:  #F5C842;
+  --line:   rgba(139,111,71,0.22);
+  --shadow: rgba(26,20,16,0.08);
+  --shadow2:rgba(26,20,16,0.14);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--red);
+  color: var(--paper);
+  text-align: center;
+  padding: 30px 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
+.masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
+.home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
+.home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
+.masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 12px; width:340px; position:relative; }
+.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,7vw,5rem); font-weight:900; letter-spacing:0.04em; line-height:1; position:relative; }
+.masthead-sub         { font-size:clamp(0.72rem,1.6vw,0.9rem); letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:8px; font-weight:300; position:relative; }
+.masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.78rem,1.6vw,0.9rem); font-weight:700; letter-spacing:0.1em; color:var(--gold2); margin-top:6px; position:relative; }
+.masthead-tagline     { font-style:italic; font-size:clamp(0.6rem,1.3vw,0.74rem); color:rgba(245,240,232,0.5); margin-top:5px; position:relative; min-height:1em; }
+.masthead-quote       { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.78rem,1.6vw,0.95rem); color:rgba(245,240,232,0.82); margin-top:10px; position:relative; letter-spacing:0.01em; line-height:1.5; }
+.masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:12px auto 0; width:340px; position:relative; }
+
+/* ── QUOTE STRIP ── */
+.quote-strip {
+  background: white;
+  border-bottom: 2px solid var(--line);
+  padding: 16px 28px;
+  display: none;
+}
+.quote-strip-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.qs-mark  { font-family:'Playfair Display',serif; font-size:3rem; line-height:0.65; color:var(--gold); opacity:0.3; flex-shrink:0; user-select:none; }
+.qs-text  { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.88rem,1.7vw,1.02rem); line-height:1.6; color:var(--ink); flex:1; }
+.qs-auth  { font-size:0.67rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sepia); font-weight:600; margin-top:5px; }
+.qs-link  { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sepia); text-decoration:none; opacity:0.4; flex-shrink:0; align-self:flex-end; transition:opacity .18s; }
+.qs-link:hover { opacity:1; color:var(--red); }
+
+/* ── PAGE ── */
+.page { max-width:980px; margin:0 auto; padding:36px 20px 90px; }
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-size:0.65rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:var(--sepia);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+.sec-label::before, .sec-label::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+.sec-label::before { background: linear-gradient(90deg, transparent, var(--line)); }
+
+/* ── FEATURE GRID ── */
+/* 2 big cards side by side */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 6px;
+  border-top: 4px solid var(--red);
+  box-shadow: 0 3px 16px var(--shadow2);
+  padding: 24px 24px 20px;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform .18s, box-shadow .18s, border-top-color .18s;
+  animation: rise .4s ease both;
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px var(--shadow2);
+  border-top-color: var(--gold);
+}
+@keyframes rise { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+.fc-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+}
+.fc-icon {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--red);
+  opacity: 0.18;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+.fc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.fc-desc {
+  font-size: 0.88rem;
+  color: var(--sepia);
+  line-height: 1.6;
+  font-style: italic;
+  flex: 1;
+}
+.fc-cta {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 600;
+  margin-top: 4px;
+  transition: letter-spacing .18s;
+}
+.feature-card:hover .fc-cta { letter-spacing: 0.14em; }
+.feature-card { position: relative; }
+
+/* ── SUPPORT GRID ── */
+/* 3 smaller cards */
+.support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.support-card {
+  background: white;
+  border-radius: 5px;
+  border-left: 3px solid var(--red);
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .16s, box-shadow .16s, border-left-color .16s;
+  animation: rise .4s ease both;
+}
+.support-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px var(--shadow2);
+  border-left-color: var(--gold);
+}
+.sc-row { display:flex; align-items:baseline; gap:8px; margin-bottom:5px; }
+.sc-icon { font-size:0.95rem; width:20px; flex-shrink:0; text-align:center; }
+.sc-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; line-height:1.2; }
+.sc-desc  { font-size:0.8rem; color:var(--sepia); font-style:italic; line-height:1.5; padding-left:28px; }
+
+/* ── LINK ROW ── */
+/* Compact horizontal strip of small links */
+.link-row-wrap {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 6px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 36px;
+}
+.mini-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.88rem;
+  border-right: 1px solid var(--line);
+  transition: color .15s, background .15s;
+  border-radius: 3px;
+}
+.mini-link:last-child { border-right: none; }
+.mini-link:hover { color: var(--red); background: rgba(155,28,28,0.04); }
+.mini-link-icon { font-size:0.9rem; opacity:0.7; }
+.mini-link-label { font-family:'Playfair Display',serif; font-weight:700; }
+.mini-link-arr { font-size:0.7rem; color:var(--sepia); opacity:0.4; transition:transform .15s, opacity .15s; }
+.mini-link:hover .mini-link-arr { transform:translateX(2px); opacity:0.8; }
+
+/* ── FOOTER ── */
+.site-footer { margin-top:12px; text-align:center; font-size:0.68rem; letter-spacing:0.1em; color:var(--sepia); font-style:italic; }
+.footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 10px; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+
+@media (max-width:640px) {
+  .feature-grid  { grid-template-columns:1fr; }
+  .support-grid  { grid-template-columns:1fr 1fr; }
+  .link-row-wrap { gap:4px; }
+  .mini-link     { border-right:none; }
+  .quote-strip   { padding:12px 14px; }
+  .qs-mark       { display:none; }
+}
+@media (max-width:420px) {
+  .support-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">Wikipeterson</div>
+  <div class="masthead-sub">AP Calculus BC &nbsp;·&nbsp; Math &amp; More</div>
+  <div class="masthead-brand">Haverford High School</div>
+  <div class="masthead-quote">&ldquo;When you&rsquo;re working on a math problem, you&rsquo;re really working on yourself.&rdquo; &mdash; S. Peterson</div>
+  <div class="masthead-tagline" id="tagline"></div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<!-- QUOTE STRIP -->
+<div class="quote-strip" id="quoteSection">
+  <div class="quote-strip-inner">
+    <div class="qs-mark">&ldquo;</div>
+    <div>
+      <div class="qs-text" id="rqText"></div>
+      <div class="qs-auth" id="rqAuthor"></div>
+    </div>
+    <a class="qs-link" href="/Quotes.html">All quotes →</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- CLASS LINKS — compact strip -->
+  <div class="sec-label">Class Links</div>
+  <div class="link-row-wrap" style="margin-bottom:36px;">
+    <a class="mini-link" href="https://docs.google.com/document/d/1JHyCOUCqScFYq5KlQxfWpbezVbvwYvgfJuhXQJZWODI/edit?tab=t.0" target="_blank" rel="noopener">
+      <span class="mini-link-icon">📅</span><span class="mini-link-label">Course Schedule</span><span class="mini-link-arr">→</span>
+    </a>
+    <a class="mini-link" href="https://myap.collegeboard.org/login" target="_blank" rel="noopener">
+      <span class="mini-link-icon">🏫</span><span class="mini-link-label">AP Classroom</span><span class="mini-link-arr">→</span>
+    </a>
+    <a class="mini-link" href="https://pollev.com/wikipeterson" target="_blank" rel="noopener">
+      <span class="mini-link-icon">📊</span><span class="mini-link-label">Poll Everywhere</span><span class="mini-link-arr">→</span>
+    </a>
+    <a class="mini-link" href="https://hhs.haverford.k12.pa.us/haverford-high-school/bell-schedules" target="_blank" rel="noopener">
+      <span class="mini-link-icon">🔔</span><span class="mini-link-label">Bell Schedules</span><span class="mini-link-arr">→</span>
+    </a>
+    <a class="mini-link" href="https://www.khanacademy.org/math/ap-calculus-bc" target="_blank" rel="noopener">
+      <span class="mini-link-icon">🟢</span><span class="mini-link-label">Khan Academy</span><span class="mini-link-arr">→</span>
+    </a>
+  </div>
+
+  <!-- AP CALCULUS PRACTICE -->
+  <div class="sec-label">AP Calculus Practice</div>
+  <div class="feature-grid" style="margin-bottom:36px;">
+
+    <a class="feature-card" href="PowerSeriesPractice.html" style="animation-delay:.05s">
+      <div class="fc-eyebrow">Quiz</div>
+      <div class="fc-icon">∑</div>
+      <div class="fc-title">Power Series Practice</div>
+      <div class="fc-desc">AP-style multiple choice on Taylor &amp; power series — step-by-step solutions, streak tracking, and a rolling accuracy score.</div>
+      <div class="fc-cta">Start practicing →</div>
+    </a>
+
+    <a class="feature-card" href="TestingSeries.html" style="animation-delay:.12s">
+      <div class="fc-eyebrow">Quiz</div>
+      <div class="fc-icon">∑</div>
+      <div class="fc-title">Testing Series</div>
+      <div class="fc-desc">Convergence &amp; divergence — comparison, ratio, alternating series tests and more. 40 questions with full solutions.</div>
+      <div class="fc-cta">Start practicing →</div>
+    </a>
+
+  </div>
+
+  <!-- AP CALCULUS RESOURCES -->
+  <div class="sec-label">AP Calculus Resources</div>
+  <div class="support-grid" style="margin-bottom:16px;">
+
+    <a class="support-card" href="APCalculusFormulas.html" style="animation-delay:.08s">
+      <div class="sc-row"><span class="sc-icon">∫</span><span class="sc-title">Formulas</span></div>
+      <div class="sc-desc">Complete reference — limits through Taylor series.</div>
+    </a>
+
+    <a class="support-card" href="APCalculusBCKeyConcepts.html" style="animation-delay:.14s">
+      <div class="sc-row"><span class="sc-icon">✓</span><span class="sc-title">Key Concepts Checklist</span></div>
+      <div class="sc-desc">Track every BC topic and skill before the exam.</div>
+    </a>
+
+    <a class="support-card" href="https://apstudents.collegeboard.org/getting-credit-placement/search-policies" target="_blank" rel="noopener" style="animation-delay:.20s">
+      <div class="sc-row"><span class="sc-icon">🎓</span><span class="sc-title">Will my school accept AP credit?</span></div>
+      <div class="sc-desc">Search College Board's credit policy database.</div>
+    </a>
+
+    <a class="support-card" href="https://haverford.instructure.com/courses/35477/pages/home" target="_blank" rel="noopener" style="animation-delay:.08s">
+      <div class="sc-row"><span class="sc-icon">📖</span><span class="sc-title">Textbook</span></div>
+      <div class="sc-desc">Finney et al. — Calculus: Graphical, Numerical, Algebraic. 5th ed.</div>
+    </a>
+
+    <a class="support-card" href="https://www.desmos.com/calculator" target="_blank" rel="noopener" style="animation-delay:.14s">
+      <div class="sc-row"><span class="sc-icon">📈</span><span class="sc-title">Desmos Calculator</span></div>
+      <div class="sc-desc">Free online graphing calculator.</div>
+    </a>
+
+    <a class="support-card" href="https://haverford.instructure.com/courses/35477/quizzes/250681" target="_blank" rel="noopener" style="animation-delay:.20s">
+      <div class="sc-row"><span class="sc-icon">🔒</span><span class="sc-title">Desmos Lockdown</span></div>
+      <div class="sc-desc">Locked calculator for use during exams.</div>
+    </a>
+
+    <a class="support-card" href="https://docs.google.com/document/d/1qNHmVeMnw81FfiX7W19IBVA9_-T0eHlg5sQaTDcMnhA/edit?tab=t.0" target="_blank" rel="noopener" style="animation-delay:.26s">
+      <div class="sc-row"><span class="sc-icon">📄</span><span class="sc-title">Calculus Handouts</span></div>
+      <div class="sc-desc">All class notes and handouts organized by section.</div>
+    </a>
+
+  </div>
+
+  <!-- MISC -->
+  <div class="sec-label">Misc</div>
+  <div class="support-grid">
+
+    <a class="support-card" href="/Quotes.html" style="animation-delay:.06s">
+      <div class="sc-row"><span class="sc-icon">❝</span><span class="sc-title">Quotes</span></div>
+      <div class="sc-desc">It's just like Dr. Peterson used to always say...</div>
+    </a>
+
+    <a class="support-card" href="/RecommendedReading.html" style="animation-delay:.12s">
+      <div class="sc-row"><span class="sc-icon">📚</span><span class="sc-title">Recommended Reading</span></div>
+      <div class="sc-desc">Books on probability, statistics, psychology, and learning.</div>
+    </a>
+
+    <a class="support-card" href="/NCAA2026.html" style="animation-delay:.18s">
+      <div class="sc-row"><span class="sc-icon">🏀</span><span class="sc-title">NCAA 2026</span></div>
+      <div class="sc-desc">Tournament bracket tracker.</div>
+    </a>
+
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-rule"></div>
+    wikipeterson.org — your math is right or it's free. Guaranteed!™
+    <br>We only use 100% REAL Math.
+  </div>
+</div>
+
+<script>
+const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+
+fetch(APPS_URL).then(r => r.json()).then(data => {
+  if (data.taglines && data.taglines.length) {
+    const t = data.taglines[Math.floor(Math.random() * data.taglines.length)];
+    document.getElementById('tagline').textContent = '"' + t + '"';
+  }
+  if (data.quotes && data.quotes.length) {
+    const q = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+    document.getElementById('rqText').textContent = q.quote;
+    if (q.author) document.getElementById('rqAuthor').textContent = '— ' + q.author;
+    document.getElementById('quoteSection').style.display = 'block';
+  }
+}).catch(() => {
+  document.getElementById('tagline').textContent = '"Mathematically proven to be mathematics."';
+});
+</script>
+</body>
+</html>

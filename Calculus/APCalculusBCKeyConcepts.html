@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Calculus BC Key Concepts — Wikipeterson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1410;
+  --paper:  #f5f0e8;
+  --cream:  #ede7d9;
+  --sepia:  #8b6f47;
+  --red:    #7A1518;
+  --red2:   #B31B1B;
+  --gold:   #F0B429;
+  --gold2:  #F5C842;
+  --line:   rgba(139,111,71,0.22);
+  --shadow: rgba(26,20,16,0.10);
+  --correct:#2d6a4f;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+
+/* MASTHEAD */
+.masthead { background:var(--red); color:var(--paper); text-align:center; padding:22px 20px 18px; position:relative; overflow:hidden; }
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
+.masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
+.home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
+.home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
+.masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 10px; width:160px; }
+.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.6rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
+.masthead-topic       { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.82); margin-top:6px; font-weight:300; position:relative; }
+.masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:8px; position:relative; }
+.masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto 0; width:160px; }
+
+/* PROGRESS BAR */
+.progress-wrap { position:sticky; top:0; z-index:100; background:var(--paper); border-bottom:1px solid var(--line); padding:10px 20px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 8px var(--shadow); }
+.progress-label { font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--sepia); font-weight:600; white-space:nowrap; }
+.progress-track { flex:1; height:6px; background:var(--cream); border-radius:99px; overflow:hidden; border:1px solid var(--line); }
+.progress-fill  { height:100%; background:linear-gradient(90deg,var(--red),var(--gold)); border-radius:99px; transition:width .4s ease; width:0%; }
+.progress-pct   { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--red); white-space:nowrap; min-width:44px; text-align:right; }
+
+/* MAIN */
+.doc { max-width:760px; margin:0 auto; padding:40px 24px 100px; }
+
+/* RESET BUTTON */
+.reset-row { display:flex; justify-content:flex-end; margin-bottom:28px; }
+.btn-reset { background:transparent; border:1.5px solid var(--line); color:var(--sepia); font-family:'Source Serif 4',serif; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; padding:7px 16px; border-radius:4px; cursor:pointer; transition:all .18s; }
+.btn-reset:hover { border-color:var(--red); color:var(--red); }
+
+/* SECTION */
+.section { margin-bottom:48px; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--red);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.section-progress { font-family:'Source Serif 4',serif; font-size:0.72rem; color:var(--sepia); letter-spacing:0.08em; font-weight:400; }
+
+/* CHECKLIST ITEMS */
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .12s;
+  border-radius: 2px;
+  padding-left: 6px;
+}
+.item:last-child { border-bottom: none; }
+.item:hover { background: rgba(201,168,76,0.06); }
+
+.item.done .item-text { color: var(--sepia); text-decoration: line-through; text-decoration-color: rgba(139,111,71,0.4); }
+.item.done .checkbox { background: var(--correct); border-color: var(--correct); }
+.item.done .checkbox::after { opacity: 1; }
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--line);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all .18s;
+  position: relative;
+  background: white;
+}
+.checkbox::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 2px;
+  width: 6px; height: 10px;
+  border: 2px solid white;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+.item-text {
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: var(--ink);
+  transition: color .18s;
+  user-select: none;
+}
+
+/* FOOTER */
+.site-footer { margin-top:60px; padding-top:16px; border-top:1px solid var(--line); text-align:center; font-size:0.72rem; letter-spacing:0.1em; color:var(--sepia); font-style:italic; }
+.footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 12px; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+@media(max-width:540px){ .doc{ padding:28px 14px 80px; } }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org/Calculus/">&#8592; Home</a>
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">AP Calculus BC Key Concepts</div>
+  <div class="masthead-topic">Topics &amp; Skills Checklist</div>
+  <div class="masthead-brand">Wikipeterson Math</div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<div class="progress-wrap">
+  <span class="progress-label">Progress</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<div class="doc">
+  <div class="reset-row">
+    <button class="btn-reset" onclick="resetAll()">Reset All</button>
+  </div>
+
+  <!-- LIMITS -->
+  <div class="section">
+    <div class="section-title">Limits &amp; Continuity <span class="section-progress" id="sp-0"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Intuitive understanding of the limit process</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Using graphs and tables of data to determine limits</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Properties of limits</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Algebraic techniques for evaluating limits</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Continuity and one-sided limits</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Geometric understanding of graphs of continuous functions</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Intermediate Value Theorem</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Infinite limits and using limits to find asymptotes</div></div>
+  </div>
+
+  <!-- DIFFERENTIATION -->
+  <div class="section">
+    <div class="section-title">Differentiation <span class="section-progress" id="sp-1"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Local linearity (zooming in on a curve)</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Understanding the derivative graphically, numerically, and analytically</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Approximating rates of change from graphs and tables</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">The derivative as a limit of the difference quotient and slope of a curve</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Translating verbal descriptions into equations and vice versa</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Relationship between differentiability and continuity</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Functions with a vertical tangent or no tangent at a point</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Differentiation rules: power, trig, sums, differences, products, quotients</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Chain rule</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Implicit differentiation</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Related rates problems</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Natural logarithm: differentiation and integration</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Exponential functions: differentiation and integration</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Bases other than e</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Inverse functions and their derivatives</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Inverse trig functions: differentiation and integration</div></div>
+  </div>
+
+  <!-- APPLICATIONS OF DERIVATIVES -->
+  <div class="section">
+    <div class="section-title">Applications of Derivatives <span class="section-progress" id="sp-2"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Extrema on an interval and the Extreme Value Theorem</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Rolle's Theorem and Mean Value Theorem and their geometric consequences</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Increasing/decreasing functions and the First Derivative Test</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Optimization: relative and absolute extrema</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Tangent lines and linear approximations</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Position, velocity, acceleration, and rectilinear motion</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Concavity and its relationship to first and second derivatives</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Inflection points</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Second Derivative Test</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Limits at infinity and curve sketching</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Relating the graphs of f, f′, and f′′</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">L'Hôpital's Rule and its use in determining limits</div></div>
+  </div>
+
+  <!-- INTEGRATION -->
+  <div class="section">
+    <div class="section-title">Integration <span class="section-progress" id="sp-3"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Antiderivatives and indefinite integration</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Basic properties of the definite integral</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Definite integral as a limit of Riemann sums</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Left, right, and midpoint Riemann sums</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Trapezoidal sums</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Fundamental Theorem of Calculus Part 1</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Fundamental Theorem of Calculus Part 2</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Functions defined by integrals (accumulation functions)</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">u-substitution</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Integration by parts</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Trigonometric integrals</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Integration by partial fractions</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Mean Value Theorem for Integrals and average value</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Improper integrals: convergence and divergence</div></div>
+  </div>
+
+  <!-- DIFFERENTIAL EQUATIONS -->
+  <div class="section">
+    <div class="section-title">Differential Equations <span class="section-progress" id="sp-4"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Solving separable differential equations</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Exponential growth and decay models</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Logistic differential equations and modeling</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Slope fields: interpreting and drawing</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Euler's method as a numerical solution</div></div>
+  </div>
+
+  <!-- APPLICATIONS OF INTEGRATION -->
+  <div class="section">
+    <div class="section-title">Applications of Integration <span class="section-progress" id="sp-5"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">The integral as an accumulator of rates of change</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Area of a region between two curves</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Volume of a solid with known cross sections</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Volume of solids of revolution (discs and washers)</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Arc length</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Motion along a line using definite integrals with initial conditions</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Distance traveled by a particle along a line</div></div>
+  </div>
+
+  <!-- SEQUENCES & SERIES -->
+  <div class="section">
+    <div class="section-title">Sequences &amp; Series <span class="section-progress" id="sp-6"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Convergence and divergence of sequences</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Series as a sequence of partial sums</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Geometric series and applications</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">nth-Term Test for Divergence</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Integral Test and p-series</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Comparison Test and Limit Comparison Test</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Alternating Series Test and Alternating Series Remainder</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Ratio Test and Root Test</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Absolute vs. conditional convergence</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Power series: radius and interval of convergence</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Taylor and Maclaurin polynomials and approximations</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Maclaurin series for sin x, cos x, eˣ, ln x, 1/(1−x), arctan x</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Manipulation of series: substitution, addition, differentiation, integration</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Lagrange Error Bound (Taylor's Theorem Remainder)</div></div>
+  </div>
+
+  <!-- PARAMETRIC & POLAR -->
+  <div class="section">
+    <div class="section-title">Parametric, Polar &amp; Vector <span class="section-progress" id="sp-7"></span></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Parametric equations and calculus (derivatives, arc length)</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Motion along a curve: position, velocity, acceleration, speed, distance</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Analysis of curves given in parametric form</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Polar coordinates and polar graphs</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Analysis of curves given in polar form</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Area of a region bounded by polar curves</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Derivatives and integrals of vector-valued functions</div></div>
+    <div class="item" onclick="toggle(this)"><div class="checkbox"></div><div class="item-text">Position, velocity, and acceleration vectors from derivatives and integrals</div></div>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-rule"></div>
+    wikipeterson.github.io
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'apcalc_bc_checklist';
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveState(state) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function toggle(el) {
+  el.classList.toggle('done');
+  persistAndUpdate();
+}
+
+function persistAndUpdate() {
+  const items = document.querySelectorAll('.item');
+  const state = {};
+  items.forEach((item, i) => { state[i] = item.classList.contains('done'); });
+  saveState(state);
+  updateProgress();
+}
+
+function updateProgress() {
+  const items = document.querySelectorAll('.item');
+  const total = items.length;
+  let done = 0;
+  items.forEach(item => { if (item.classList.contains('done')) done++; });
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+
+  // Section progress
+  const sections = document.querySelectorAll('.section');
+  sections.forEach((sec, i) => {
+    const secItems = sec.querySelectorAll('.item');
+    const secDone  = sec.querySelectorAll('.item.done').length;
+    const sp = document.getElementById('sp-' + i);
+    if (sp) sp.textContent = secDone + ' / ' + secItems.length;
+  });
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes?')) return;
+  document.querySelectorAll('.item').forEach(item => item.classList.remove('done'));
+  saveState({});
+  updateProgress();
+}
+
+// Restore state on load
+function restoreState() {
+  const state = getState();
+  const items = document.querySelectorAll('.item');
+  items.forEach((item, i) => {
+    if (state[i]) item.classList.add('done');
+  });
+  updateProgress();
+}
+
+restoreState();
+</script>
+</body>
+</html>

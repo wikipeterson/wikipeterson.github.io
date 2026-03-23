@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommended Reading — Wikipeterson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #1a1410;
+    --paper:  #f5f0e8;
+    --cream:  #ede7d9;
+    --sepia:  #8b6f47;
+    --red:    #7A1518;
+    --red2:   #B31B1B;
+    --gold:   #F0B429;
+    --gold2:  #F5C842;
+    --line:   rgba(139,111,71,0.22);
+    --shadow: rgba(26,20,16,0.10);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: repeating-linear-gradient(
+      transparent, transparent 31px,
+      var(--line) 31px, var(--line) 32px
+    );
+    background-attachment: fixed;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--red);
+    color: var(--paper);
+    text-align: center;
+    padding: 22px 20px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent, transparent 60px,
+      rgba(0,0,0,0.04) 60px, rgba(0,0,0,0.04) 61px
+    );
+  }
+  .masthead::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+  }
+  .home-btn {
+    position: absolute; top: 10px; left: 12px; z-index: 10;
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px; padding: 5px 10px;
+    color: rgba(255,255,255,0.85); font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 0.75rem; text-decoration: none; letter-spacing: .05em; transition: background .18s;
+  }
+  .home-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+  .masthead-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 10px; width: 160px;
+  }
+  .masthead-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    position: relative;
+  }
+  .masthead-topic {
+    font-size: clamp(0.85rem, 2.5vw, 1.15rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.82);
+    margin-top: 6px;
+    font-weight: 300;
+    position: relative;
+  }
+  .masthead-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--gold2);
+    margin-top: 8px;
+    position: relative;
+  }
+  .masthead-rule-bottom {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 10px auto 0; width: 160px;
+  }
+
+  /* ── MAIN ── */
+  .main-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--sepia);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* ── BOOK CARDS ── */
+  .cards { display: flex; flex-direction: column; gap: 14px; }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--red);
+    border-radius: 2px;
+    padding: 18px 22px;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 2px 12px var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-left-color 0.15s;
+    animation: cardIn 0.38s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .card:nth-child(1)  { animation-delay: 0.03s; }
+  .card:nth-child(2)  { animation-delay: 0.08s; }
+  .card:nth-child(3)  { animation-delay: 0.13s; }
+  .card:nth-child(4)  { animation-delay: 0.18s; }
+  .card:nth-child(5)  { animation-delay: 0.23s; }
+  .card:nth-child(6)  { animation-delay: 0.28s; }
+  .card:nth-child(7)  { animation-delay: 0.33s; }
+  .card:nth-child(8)  { animation-delay: 0.38s; }
+  .card:nth-child(9)  { animation-delay: 0.43s; }
+  .card:nth-child(10) { animation-delay: 0.48s; }
+
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(14px) scale(0.985); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+    border-left-color: var(--gold);
+  }
+
+  .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--red);
+    width: 36px;
+    flex-shrink: 0;
+    text-align: center;
+    opacity: 0.5;
+  }
+
+  .card-body { flex: 1; min-width: 0; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+    line-height: 1.25;
+  }
+
+  .card-author {
+    font-size: 0.82rem;
+    color: var(--sepia);
+    font-style: italic;
+  }
+
+  .card-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--red);
+    background: rgba(155,28,28,0.07);
+    border: 1px solid rgba(155,28,28,0.18);
+    border-radius: 20px;
+    padding: 3px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card-arrow {
+    color: var(--sepia);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.15s, color 0.15s;
+  }
+  .card:hover .card-arrow {
+    color: var(--gold);
+    transform: translateX(4px);
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    margin-top: 48px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--sepia);
+    font-style: italic;
+  }
+  .footer-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    width: 80px;
+    margin: 0 auto 12px;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  @media (max-width: 540px) {
+    .card { padding: 14px 14px; gap: 12px; }
+    .card-num { width: 24px; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org/">&#8592; Home</a>
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">Recommended Reading</div>
+  <div class="masthead-topic">Books Worth Your Time</div>
+  <div class="masthead-brand">Wikipeterson Math</div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<div class="main-container">
+  <div class="section-label">10 Books — Click to View on Amazon</div>
+
+  <div class="cards">
+
+    <a class="card" href="https://www.amazon.com/s?k=The+Signal+and+the+Noise+Nate+Silver" target="_blank" rel="noopener">
+      <div class="card-num">1</div>
+      <div class="card-body">
+        <div class="card-title">The Signal and the Noise</div>
+        <div class="card-author">Nate Silver</div>
+      </div>
+      <span class="card-tag">Probability</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Thinking+Fast+and+Slow+Kahneman" target="_blank" rel="noopener">
+      <div class="card-num">2</div>
+      <div class="card-body">
+        <div class="card-title">Thinking, Fast and Slow</div>
+        <div class="card-author">Daniel Kahneman</div>
+      </div>
+      <span class="card-tag">Psychology</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Fooled+by+Randomness+Taleb" target="_blank" rel="noopener">
+      <div class="card-num">3</div>
+      <div class="card-body">
+        <div class="card-title">Fooled by Randomness</div>
+        <div class="card-author">Nassim Nicholas Taleb</div>
+      </div>
+      <span class="card-tag">Probability</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=The+Drunkard%27s+Walk+Mlodinow" target="_blank" rel="noopener">
+      <div class="card-num">4</div>
+      <div class="card-body">
+        <div class="card-title">The Drunkard's Walk</div>
+        <div class="card-author">Leonard Mlodinow</div>
+      </div>
+      <span class="card-tag">Probability</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Mindset+Carol+Dweck" target="_blank" rel="noopener">
+      <div class="card-num">5</div>
+      <div class="card-body">
+        <div class="card-title">Mindset</div>
+        <div class="card-author">Carol S. Dweck</div>
+      </div>
+      <span class="card-tag">Education</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Outliers+Malcolm+Gladwell" target="_blank" rel="noopener">
+      <div class="card-num">6</div>
+      <div class="card-body">
+        <div class="card-title">Outliers</div>
+        <div class="card-author">Malcolm Gladwell</div>
+      </div>
+      <span class="card-tag">Success</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Moneyball+Michael+Lewis" target="_blank" rel="noopener">
+      <div class="card-num">7</div>
+      <div class="card-body">
+        <div class="card-title">Moneyball</div>
+        <div class="card-author">Michael Lewis</div>
+      </div>
+      <span class="card-tag">Statistics</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=The+Black+Swan+Taleb" target="_blank" rel="noopener">
+      <div class="card-num">8</div>
+      <div class="card-body">
+        <div class="card-title">The Black Swan</div>
+        <div class="card-author">Nassim Nicholas Taleb</div>
+      </div>
+      <span class="card-tag">Probability</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Talent+Is+Overrated+Geoff+Colvin" target="_blank" rel="noopener">
+      <div class="card-num">9</div>
+      <div class="card-body">
+        <div class="card-title">Talent Is Overrated</div>
+        <div class="card-author">Geoff Colvin</div>
+      </div>
+      <span class="card-tag">Success</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="https://www.amazon.com/s?k=Why+Don%27t+Students+Like+School+Willingham" target="_blank" rel="noopener">
+      <div class="card-num">10</div>
+      <div class="card-body">
+        <div class="card-title">Why Don't Students Like School?</div>
+        <div class="card-author">Daniel T. Willingham</div>
+      </div>
+      <span class="card-tag">Education</span>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-rule"></div>
+    wikipeterson.github.io
+  </div>
+</div>
+
+</body>
+</html>

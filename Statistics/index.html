@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics — Wikipeterson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1410;
+  --paper:  #f5f0e8;
+  --cream:  #ede7d9;
+  --sepia:  #8b6f47;
+  --red:    #7A1518;
+  --red2:   #B31B1B;
+  --gold:   #F0B429;
+  --gold2:  #F5C842;
+  --line:   rgba(139,111,71,0.22);
+  --shadow: rgba(26,20,16,0.10);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+.masthead {
+  background: var(--red);
+  color: var(--paper);
+  text-align: center;
+  padding: 22px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
+.masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
+.home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
+.home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
+.rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 10px; width:200px; position:relative; }
+.rule-thin   { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:10px auto 0; width:200px; position:relative; }
+.wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.8rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
+.sub         { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.78); margin-top:6px; font-weight:300; position:relative; }
+.brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:6px; position:relative; }
+.main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 20px; }
+.coming-soon {
+  text-align: center;
+  max-width: 480px;
+}
+.cs-icon { font-family:'Playfair Display',serif; font-size:5rem; color:var(--red); opacity:0.12; line-height:1; margin-bottom:24px; }
+.cs-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--ink); margin-bottom:12px; }
+.cs-text  { font-size:1rem; color:var(--sepia); font-style:italic; line-height:1.7; }
+.footer { text-align:center; padding:20px; font-size:0.68rem; letter-spacing:0.1em; color:var(--sepia); font-style:italic; }
+.footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 10px; }
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+</style>
+</head>
+<body>
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
+  <div class="rule"></div>
+  <div class="wordmark">Statistics</div>
+  <div class="sub">AP Statistics &amp; More</div>
+  <div class="brand">Wikipeterson</div>
+  <div class="rule-thin"></div>
+</div>
+<div class="main">
+  <div class="coming-soon">
+    <div class="cs-icon">σ</div>
+    <div class="cs-title">Coming Soon</div>
+    <div class="cs-text">Statistics resources, practice tools, and more are on their way. Check back soon.</div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-rule"></div>
+  wikipeterson.org — your math is right or it's free. Guaranteed!™<br>We only use 100% REAL Math.
+</div>
+</body>
+</html>
