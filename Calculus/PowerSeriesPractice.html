@@ -117,23 +117,16 @@
   .sigma-copy { text-align: left; }
   .sigma-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-size: clamp(1.6rem, 2.8vw, 2.25rem);
     font-weight: 700;
     color: #fff;
     line-height: 1;
   }
-  .sigma-line {
-    font-size: 0.7rem;
+  .sigma-tagline {
+    font-size: 0.9rem;
     color: rgba(255,255,255,0.82);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .sigma-byline {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.55);
-    font-style: italic;
-    margin-top: 4px;
+    margin-top: 8px;
+    min-height: 1.2em;
   }
   .sigma-rule {
     height: 2px;
@@ -280,9 +273,8 @@
     <div class="masthead-brandblock" aria-label="Sigma Math branding">
       <img class="sigma-mark" src="../assets/logos/sigma-math-logo-mark.svg" alt="Sigma Math mark">
       <div class="sigma-copy">
-        <div class="sigma-name">Sigma Math</div>
-        <div class="sigma-line">Practice Makes Progress</div>
-        <div class="sigma-byline">by Wikipeterson</div>
+        <div class="sigma-name">Wikipeterson's Sigma Math</div>
+        <div class="sigma-tagline" id="sigmaTagline"></div>
         <div class="sigma-rule"></div>
       </div>
     </div>
@@ -371,6 +363,11 @@
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  const calcTaglines=Array.isArray(data)?[]:(data.calcTaglines||[]);
+  if(calcTaglines.length){
+    const t=calcTaglines[Math.floor(Math.random()*calcTaglines.length)];
+    document.getElementById('sigmaTagline').textContent=t;
+  }
 }).catch(()=>{});
 
 const LETTERS = ['A','B','C','D','E'];

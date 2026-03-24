@@ -25,9 +25,8 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:va
 .masthead-brandblock{flex-shrink:0;display:flex;align-items:center;gap:14px;padding-right:18px;}
 .sigma-mark{width:88px;height:88px;flex-shrink:0;}
 .sigma-copy{text-align:left;}
-.sigma-name{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:#fff;line-height:1;}
-.sigma-line{font-size:0.7rem;color:rgba(255,255,255,0.82);letter-spacing:.18em;text-transform:uppercase;margin-top:6px;}
-.sigma-byline{font-size:0.78rem;color:rgba(255,255,255,0.55);font-style:italic;margin-top:4px;}
+.sigma-name{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.8vw,2.25rem);font-weight:700;color:#fff;line-height:1;}
+.sigma-tagline{font-size:0.9rem;color:rgba(255,255,255,0.82);margin-top:8px;min-height:1.2em;}
 .sigma-rule{height:2px;width:170px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;}
 .home-btn{position:absolute;top:10px;left:12px;z-index:10;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:5px 10px;color:rgba(255,255,255,0.85);font-family:'Source Serif 4',Georgia,serif;font-size:0.75rem;text-decoration:none;letter-spacing:.05em;transition:background .18s;}
 .home-btn:hover{background:rgba(255,255,255,0.22);color:#fff;}
@@ -98,9 +97,8 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:va
     <div class="masthead-brandblock" aria-label="Sigma Math branding">
       <img class="sigma-mark" src="../assets/logos/sigma-math-logo-mark.svg" alt="Sigma Math mark">
       <div class="sigma-copy">
-        <div class="sigma-name">Sigma Math</div>
-        <div class="sigma-line">Practice Makes Progress</div>
-        <div class="sigma-byline">by Wikipeterson</div>
+        <div class="sigma-name">Wikipeterson's Sigma Math</div>
+        <div class="sigma-tagline" id="sigmaTagline"></div>
         <div class="sigma-rule"></div>
       </div>
     </div>
@@ -152,6 +150,15 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:va
   <button class="btn-restart" onclick="restart()">Start New Session</button>
 </div>
 <script>
+const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  const calcTaglines=Array.isArray(data)?[]:(data.calcTaglines||[]);
+  if(calcTaglines.length){
+    const t=calcTaglines[Math.floor(Math.random()*calcTaglines.length)];
+    document.getElementById('sigmaTagline').textContent=t;
+  }
+}).catch(()=>{});
+
 const QUESTIONS=[
 {q:`Which of the following statements about convergence of the series \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) is true?`,
 choices:[`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) converges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) converges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) diverges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) diverges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\)`],
