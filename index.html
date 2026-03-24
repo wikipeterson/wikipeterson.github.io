@@ -218,12 +218,12 @@ fetch(APPS_URL).then(r=>r.json()).then(data=>{
   ];
   if(homepageTaglines.length){
     const t=homepageTaglines[Math.floor(Math.random()*homepageTaglines.length)];
-    document.getElementById('tagline').textContent='"'+t+'"';
+    document.getElementById('tagline').textContent=t;
   }else{
-    document.getElementById('tagline').textContent='"Mathematically proven to be mathematics."';
+    document.getElementById('tagline').textContent='Mathematically proven to be mathematics.';
   }
 }).catch(()=>{
-  document.getElementById('tagline').textContent='"Mathematically proven to be mathematics."';
+  document.getElementById('tagline').textContent='Mathematically proven to be mathematics.';
 });
 </script>
 </body>
