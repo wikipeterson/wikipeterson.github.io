@@ -34,16 +34,16 @@ body {
   background: var(--red);
   color: var(--paper);
   text-align: center;
-  padding: 32px 20px 30px;
+  padding: 18px 20px 16px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
 }
 .masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
-.masthead-logo { width:min(620px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
+.masthead-logo { width:min(580px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
 .sub       { font-size:clamp(0.72rem,1.7vw,0.9rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:8px; font-weight:300; position:relative; }
-.mquote    { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.8rem,1.7vw,0.96rem); color:rgba(245,240,232,0.8); margin-top:12px; position:relative; line-height:1.6; }
+.mquote    { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.8rem,1.7vw,0.96rem); color:rgba(245,240,232,0.8); margin-top:6px; position:relative; line-height:1.45; }
 .mquote-attr { font-size:0.82em; opacity:0.7; }
 .main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 20px 40px; flex-direction:column; gap:40px; }
 .class-cards { display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:680px; width:100%; }
