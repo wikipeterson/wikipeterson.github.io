@@ -42,15 +42,19 @@ body {
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
 .home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
 .home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
-.corner-quote{position:absolute;top:14px;right:18px;max-width:260px;text-align:right;z-index:10;color:rgba(245,240,232,0.9);}
-.corner-quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(0.66rem,1vw,0.8rem);line-height:1.45;}
-.corner-quote-author{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,232,0.66);margin-top:6px;}
 .rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 10px; width:200px; position:relative; }
 .rule-thin   { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:10px auto 0; width:200px; position:relative; }
 .wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,6.4vw,4.4rem); font-weight:900; letter-spacing:0.03em; line-height:0.98; position:relative; }
 .tagline     { font-style:italic; font-size:clamp(0.96rem,2.1vw,1.4rem); color:rgba(245,240,232,0.92); margin-top:10px; min-height:1.2em; position:relative; font-weight:600; }
 .sub         { font-size:clamp(0.64rem,1.3vw,0.8rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.62); margin-top:13px; font-weight:300; position:relative; }
 .brand       { font-family:'Playfair Display',serif; font-size:clamp(0.74rem,1.4vw,0.9rem); font-weight:700; letter-spacing:0.08em; color:rgba(240,180,41,0.88); margin-top:4px; position:relative; }
+.quote-strip { background:white; border-bottom:2px solid var(--line); padding:16px 28px; display:none; }
+.quote-strip-inner { max-width:980px; margin:0 auto; display:flex; align-items:center; gap:14px; }
+.qs-mark  { font-family:'Playfair Display',serif; font-size:3rem; line-height:0.65; color:var(--gold); opacity:0.3; flex-shrink:0; user-select:none; }
+.qs-text  { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.88rem,1.7vw,1.02rem); line-height:1.6; color:var(--ink); flex:1; }
+.qs-auth  { font-size:0.67rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sepia); font-weight:600; margin-top:5px; }
+.qs-link  { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sepia); text-decoration:none; opacity:0.4; flex-shrink:0; align-self:flex-end; transition:opacity .18s; }
+.qs-link:hover { opacity:1; color:var(--red); }
 .main { flex:1; padding:60px 20px; }
 .page { max-width: 980px; margin: 0 auto; }
 .coming-soon {
@@ -104,22 +108,27 @@ body {
 @media (max-width: 520px) {
   .support-grid { grid-template-columns: 1fr; }
 }
-@media (max-width:900px){.corner-quote{display:none;}}
 </style>
 </head>
 <body>
 <div class="masthead">
   <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
-  <div class="corner-quote">
-    <div class="corner-quote-text" id="cornerQuoteText"></div>
-    <div class="corner-quote-author" id="cornerQuoteAuthor"></div>
-  </div>
   <div class="rule"></div>
   <div class="wordmark">Wikipeterson's Sigma Math</div>
   <div class="tagline" id="tagline"></div>
   <div class="sub">Statistics &amp; More</div>
   <div class="brand">Wikipeterson</div>
   <div class="rule-thin"></div>
+</div>
+<div class="quote-strip" id="quoteSection">
+  <div class="quote-strip-inner">
+    <div class="qs-mark">&ldquo;</div>
+    <div>
+      <div class="qs-text" id="rqText"></div>
+      <div class="qs-auth" id="rqAuthor"></div>
+    </div>
+    <a class="qs-link" href="/Quotes.html">All quotes →</a>
+  </div>
 </div>
 <div class="main">
   <div class="page">
@@ -177,18 +186,23 @@ body {
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
-  const statsTaglines=Array.isArray(data)?[]:(data.statsTaglines||[]);
+  const statsTaglines=Array.isArray(data)?[]:((data.statsTaglines&&data.statsTaglines.length?data.statsTaglines:(data.taglines||[])));
   if(statsTaglines.length){
     const t=statsTaglines[Math.floor(Math.random()*statsTaglines.length)];
     document.getElementById('tagline').textContent=t;
+  }else{
+    document.getElementById('tagline').textContent='Mathematically proven to be mathematics.';
   }
   const quotes=Array.isArray(data)?data:(data.quotes||[]);
   if(quotes.length){
     const q=quotes[Math.floor(Math.random()*quotes.length)];
-    document.getElementById('cornerQuoteText').textContent='"'+q.quote+'"';
-    document.getElementById('cornerQuoteAuthor').textContent=q.author?'— '+q.author:'';
+    document.getElementById('rqText').textContent=q.quote;
+    if(q.author) document.getElementById('rqAuthor').textContent='— '+q.author;
+    document.getElementById('quoteSection').style.display='block';
   }
-}).catch(()=>{});
+}).catch(()=>{
+  document.getElementById('tagline').textContent='Mathematically proven to be mathematics.';
+});
 </script>
 </body>
 </html>
