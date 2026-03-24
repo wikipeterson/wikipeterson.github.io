@@ -41,8 +41,6 @@ body {
 }
 .masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
-.rule      { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 14px; width:320px; position:relative; }
-.rule-thin { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:14px auto 0; width:320px; position:relative; }
 .masthead-logo { width:min(620px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
 .sub       { font-size:clamp(0.72rem,1.7vw,0.9rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:8px; font-weight:300; position:relative; }
 .mquote    { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.8rem,1.7vw,0.96rem); color:rgba(245,240,232,0.8); margin-top:12px; position:relative; line-height:1.6; }
@@ -108,17 +106,14 @@ body {
 @media (max-width:520px) {
   .class-cards { grid-template-columns:1fr; }
   .misc-grid { grid-template-columns:1fr; }
-  .rule, .rule-thin { width:240px; }
 }
 </style>
 </head>
 <body>
 
 <div class="masthead">
-  <div class="rule"></div>
   <img class="masthead-logo" src="assets/logos/wikipeterson-logo-full-dark.svg" alt="Wikipeterson logo">
   <div class="mquote">&ldquo;When you&rsquo;re working on a math problem, you&rsquo;re really working on yourself.&rdquo;<br><span class="mquote-attr">— S. Peterson</span></div>
-  <div class="rule-thin"></div>
 </div>
 
 <div class="main">
