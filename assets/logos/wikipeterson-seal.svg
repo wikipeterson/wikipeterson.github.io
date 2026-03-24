@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Wikipeterson academic seal logo</title>
+  <desc id="desc">A circular academic seal with an open book, integral sign, and site name.</desc>
+  <rect width="640" height="640" fill="#f5f0e8"/>
+  <circle cx="320" cy="320" r="258" fill="#7A1518"/>
+  <circle cx="320" cy="320" r="226" fill="none" stroke="#f0b429" stroke-width="12"/>
+  <circle cx="320" cy="320" r="190" fill="#f5f0e8"/>
+  <path d="M224 374Q272 338 320 374Q368 338 416 374V260Q368 224 320 260Q272 224 224 260Z" fill="#ede7d9" stroke="#7A1518" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M320 260V374" stroke="#7A1518" stroke-width="6"/>
+  <path d="M285 308Q310 284 294 244Q286 220 304 206Q323 191 350 206" fill="none" stroke="#f0b429" stroke-width="16" stroke-linecap="round"/>
+  <text x="320" y="132" text-anchor="middle" font-family="'Palatino Linotype', Georgia, serif" font-size="40" letter-spacing="5" fill="#f0b429">WIKIPETERSON</text>
+  <text x="320" y="500" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" letter-spacing="8" fill="#7A1518">MATH AND MORE</text>
+  <circle cx="148" cy="320" r="9" fill="#f0b429"/>
+  <circle cx="492" cy="320" r="9" fill="#f0b429"/>
+</svg>
