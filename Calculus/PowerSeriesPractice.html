@@ -98,15 +98,6 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgba(245,240,232,0.82);
-    margin-top: 6px;
-    font-weight: 300;
-    position: relative;
-  }
-  .masthead-tagline {
-    font-size: clamp(0.78rem, 1.5vw, 0.94rem);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.82);
     margin-top: 8px;
     font-weight: 300;
     position: relative;
@@ -146,9 +137,9 @@
   }
   .sigma-rule {
     height: 2px;
-    width: 170px;
+    width: 145px;
     background: linear-gradient(90deg, var(--gold), transparent);
-    margin-top: 8px;
+    margin-top: 10px;
   }
   .masthead-rule-bottom {
     height: 1px;
@@ -285,8 +276,6 @@
   <div class="masthead-inner">
     <div class="masthead-copy">
       <div class="masthead-wordmark">Power Series Practice</div>
-      <div class="masthead-topic">Sigma Math</div>
-      <div class="masthead-tagline">Sigma Math</div>
     </div>
     <div class="masthead-brandblock" aria-label="Sigma Math branding">
       <img class="sigma-mark" src="../assets/logos/sigma-math-logo-mark.svg" alt="Sigma Math mark">
@@ -382,10 +371,6 @@
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
-  if(data.taglines&&data.taglines.length){
-    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
-    document.getElementById('tagline').textContent='"'+t+'"';
-  }
 }).catch(()=>{});
 
 const LETTERS = ['A','B','C','D','E'];
@@ -530,7 +515,7 @@ function restartSession(){
   document.getElementById('quizArea').style.display='';
   document.getElementById('statsBar').style.display='';
   document.querySelector('.progress-bar-wrap').style.display='';
-  fetch(APPS_URL).then(r=>r.json()).then(data=>{if(data.taglines&&data.taglines.length){document.getElementById('tagline').textContent='"'+data.taglines[Math.floor(Math.random()*data.taglines.length)]+'"';}}).catch(()=>{});
+  fetch(APPS_URL).then(r=>r.json()).catch(()=>{});
   refillQueue();nextQuestion();
 }
 
