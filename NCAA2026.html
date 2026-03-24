@@ -880,8 +880,9 @@ function showToast(msg,isErr=false){
 renderBracket();
 const CORNER_QUOTES_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(CORNER_QUOTES_URL).then(r=>r.json()).then(data=>{
-  if(data.quotes&&data.quotes.length){
-    const q=data.quotes[Math.floor(Math.random()*data.quotes.length)];
+  const quotes=Array.isArray(data)?data:(data.quotes||[]);
+  if(quotes.length){
+    const q=quotes[Math.floor(Math.random()*quotes.length)];
     document.getElementById('cornerQuoteText').textContent='"'+q.quote+'"';
     document.getElementById('cornerQuoteAuthor').textContent=q.author?'— '+q.author:'';
   }

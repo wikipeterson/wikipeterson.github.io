@@ -67,7 +67,8 @@ const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0b
 async function loadQuotes() {
   try {
     const res = await fetch(APPS_URL);
-    const quotes = await res.json();
+    const data = await res.json();
+    const quotes = Array.isArray(data) ? data : (data.quotes || []);
     if (quotes.length) {
       const q = quotes[Math.floor(Math.random() * quotes.length)];
       document.getElementById('cornerQuoteText').textContent = '"' + q.quote + '"';
