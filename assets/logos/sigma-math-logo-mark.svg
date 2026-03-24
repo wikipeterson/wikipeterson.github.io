@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Sigma Math logo mark</title>
+  <desc id="desc">A compact Sigma Math badge with a maroon circle and cream sigma.</desc>
+  <circle cx="128" cy="128" r="92" fill="#8B1A1A"/>
+  <circle cx="128" cy="128" r="92" fill="none" stroke="#C8A84B" stroke-width="6"/>
+  <text x="128" y="154" text-anchor="middle" font-family="Century Schoolbook, Georgia, serif" font-size="104" font-weight="700" fill="#F5EFDF">&#x03A3;</text>
+</svg>
