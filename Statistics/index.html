@@ -50,6 +50,7 @@ body {
 .wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.8rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
 .sub         { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.78); margin-top:6px; font-weight:300; position:relative; }
 .brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:6px; position:relative; }
+.tagline     { font-style:italic; font-size:clamp(0.68rem,1.6vw,0.82rem); color:rgba(245,240,232,0.62); margin-top:8px; min-height:1.2em; position:relative; }
 .main { flex:1; padding:60px 20px; }
 .page { max-width: 980px; margin: 0 auto; }
 .coming-soon {
@@ -114,7 +115,8 @@ body {
     <div class="corner-quote-author" id="cornerQuoteAuthor"></div>
   </div>
   <div class="rule"></div>
-  <div class="wordmark">Statistics</div>
+  <div class="wordmark">Wikipeterson's Sigma Math</div>
+  <div class="tagline" id="tagline"></div>
   <div class="sub">Statistics &amp; More</div>
   <div class="brand">Wikipeterson</div>
   <div class="rule-thin"></div>
@@ -175,6 +177,11 @@ body {
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  const statsTaglines=Array.isArray(data)?[]:(data.statsTaglines||[]);
+  if(statsTaglines.length){
+    const t=statsTaglines[Math.floor(Math.random()*statsTaglines.length)];
+    document.getElementById('tagline').textContent=t;
+  }
   const quotes=Array.isArray(data)?data:(data.quotes||[]);
   if(quotes.length){
     const q=quotes[Math.floor(Math.random()*quotes.length)];
