@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wikipeterson</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -42,6 +43,7 @@ body {
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
 .rule      { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 16px; width:360px; position:relative; }
 .rule-thin { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:16px auto 0; width:360px; position:relative; }
+.masthead-logo { width:min(680px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
 .wordmark  { font-family:'Playfair Display',serif; font-size:clamp(3rem,9vw,6.5rem); font-weight:900; letter-spacing:0.04em; line-height:1; position:relative; }
 .sub       { font-size:clamp(0.75rem,1.8vw,0.95rem); letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:10px; font-weight:300; position:relative; }
 .brand     { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,1.8vw,1rem); font-weight:700; letter-spacing:0.1em; color:var(--gold2); margin-top:8px; position:relative; }
@@ -115,9 +117,8 @@ body {
 
 <div class="masthead">
   <div class="rule"></div>
-  <div class="wordmark">Wikipeterson</div>
+  <img class="masthead-logo" src="assets/logos/wikipeterson-logo-full.svg" alt="Wikipeterson logo">
   <div class="sub">Math &amp; More &nbsp;·&nbsp; Haverford High School</div>
-  <div class="brand">Resources &amp; Tools</div>
   <div class="mquote">&ldquo;When you&rsquo;re working on a math problem, you&rsquo;re really working on yourself.&rdquo;<br><span class="mquote-attr">— S. Peterson</span></div>
   <div class="rule-thin"></div>
 </div>
