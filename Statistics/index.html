@@ -46,19 +46,59 @@ body {
 .wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,6vw,3.8rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
 .sub         { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.78); margin-top:6px; font-weight:300; position:relative; }
 .brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:6px; position:relative; }
-.main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 20px; }
+.main { flex:1; padding:60px 20px; }
+.page { max-width: 980px; margin: 0 auto; }
 .coming-soon {
   text-align: center;
   max-width: 480px;
+  margin: 0 auto 42px;
 }
 .cs-icon { font-family:'Playfair Display',serif; font-size:5rem; color:var(--red); opacity:0.12; line-height:1; margin-bottom:24px; }
 .cs-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--ink); margin-bottom:12px; }
 .cs-text  { font-size:1rem; color:var(--sepia); font-style:italic; line-height:1.7; }
+.sec-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.support-card {
+  background: white;
+  border-radius: 5px;
+  border-left: 3px solid var(--red);
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .16s, box-shadow .16s, border-left-color .16s;
+}
+.support-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px var(--shadow);
+  border-left-color: var(--gold);
+}
+.sc-row { display:flex; align-items:baseline; gap:8px; margin-bottom:5px; }
+.sc-icon { font-size:0.95rem; width:20px; flex-shrink:0; text-align:center; }
+.sc-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; line-height:1.2; }
+.sc-desc  { font-size:0.8rem; color:var(--sepia); font-style:italic; line-height:1.5; padding-left:28px; }
 .footer { text-align:center; padding:20px; font-size:0.68rem; letter-spacing:0.1em; color:var(--sepia); font-style:italic; }
 .footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 10px; }
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--cream); }
 ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+@media (max-width: 760px) {
+  .support-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .support-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -71,10 +111,40 @@ body {
   <div class="rule-thin"></div>
 </div>
 <div class="main">
-  <div class="coming-soon">
-    <div class="cs-icon">σ</div>
-    <div class="cs-title">Coming Soon</div>
-    <div class="cs-text">Statistics resources, practice tools, and more are on their way. Check back soon.</div>
+  <div class="page">
+    <div class="coming-soon">
+      <div class="cs-icon">σ</div>
+      <div class="cs-title">Coming Soon</div>
+      <div class="cs-text">Statistics resources, practice tools, and more are on their way. Check back soon.</div>
+    </div>
+
+    <div class="sec-label">Misc</div>
+    <div class="support-grid">
+      <a class="support-card" href="https://pollev.com/wikipeterson" target="_blank" rel="noopener">
+        <div class="sc-row"><span class="sc-icon">📊</span><span class="sc-title">Poll Everywhere</span></div>
+        <div class="sc-desc">Live classroom polls and quick check-ins.</div>
+      </a>
+      <a class="support-card" href="https://hhs.haverford.k12.pa.us/haverford-high-school/bell-schedules" target="_blank" rel="noopener">
+        <div class="sc-row"><span class="sc-icon">🔔</span><span class="sc-title">Bell Schedules</span></div>
+        <div class="sc-desc">Daily Haverford High School bell schedule information.</div>
+      </a>
+      <a class="support-card" href="https://www.desmos.com/calculator" target="_blank" rel="noopener">
+        <div class="sc-row"><span class="sc-icon">📈</span><span class="sc-title">Desmos Calculator</span></div>
+        <div class="sc-desc">Free online graphing calculator.</div>
+      </a>
+      <a class="support-card" href="/Quotes.html">
+        <div class="sc-row"><span class="sc-icon">❝</span><span class="sc-title">Quotes</span></div>
+        <div class="sc-desc">It's just like Dr. Peterson used to always say...</div>
+      </a>
+      <a class="support-card" href="/RecommendedReading.html">
+        <div class="sc-row"><span class="sc-icon">📚</span><span class="sc-title">Recommended Reading</span></div>
+        <div class="sc-desc">Books on probability, statistics, psychology, and learning.</div>
+      </a>
+      <a class="support-card" href="/NCAA2026.html">
+        <div class="sc-row"><span class="sc-icon">🏀</span><span class="sc-title">NCAA 2026</span></div>
+        <div class="sc-desc">Tournament bracket tracker.</div>
+      </a>
+    </div>
   </div>
 </div>
 <div class="footer">

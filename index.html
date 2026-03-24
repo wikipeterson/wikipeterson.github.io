@@ -75,13 +75,30 @@ body {
 .card-cta   { font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--red); font-weight:700; margin-top:4px; transition:letter-spacing .18s; }
 .card:hover .card-cta { letter-spacing:0.22em; }
 
-/* Site links strip */
-.site-links { display:flex; flex-wrap:wrap; justify-content:center; gap:0; max-width:680px; width:100%; background:white; border-radius:6px; box-shadow:0 2px 10px rgba(26,20,16,0.08); padding:4px 8px; }
-.site-link { display:flex; align-items:center; gap:6px; padding:9px 14px; text-decoration:none; color:var(--ink); font-size:0.88rem; border-right:1px solid var(--line); transition:color .15s, background .15s; border-radius:4px; }
-.site-link:last-child { border-right:none; }
-.site-link:hover { color:var(--red); background:rgba(122,21,24,0.04); }
-.site-link-icon { font-size:0.9rem; opacity:0.7; }
-.site-link-label { font-family:'Playfair Display',serif; font-weight:700; }
+.misc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.misc-card {
+  background: white;
+  border-radius: 5px;
+  border-left: 3px solid var(--red);
+  box-shadow: 0 2px 10px var(--shadow);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .16s, box-shadow .16s, border-left-color .16s;
+}
+.misc-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px var(--shadow);
+  border-left-color: var(--gold);
+}
+.misc-row { display:flex; align-items:baseline; gap:8px; margin-bottom:5px; }
+.misc-icon { font-size:0.95rem; width:20px; flex-shrink:0; text-align:center; }
+.misc-title { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; line-height:1.2; }
+.misc-desc { font-size:0.8rem; color:var(--sepia); font-style:italic; line-height:1.5; padding-left:28px; }
 
 .footer { text-align:center; padding:20px; font-size:0.68rem; letter-spacing:0.1em; color:var(--sepia); font-style:italic; }
 .footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 10px; }
@@ -90,7 +107,7 @@ body {
 ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
 @media (max-width:520px) {
   .class-cards { grid-template-columns:1fr; }
-  .site-link { border-right:none; }
+  .misc-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -122,15 +139,30 @@ body {
     </a>
   </div>
 
-  <div class="site-links">
-    <a class="site-link" href="/Quotes.html">
-      <span class="site-link-icon">❝</span><span class="site-link-label">Quotes</span>
+  <div class="misc-grid">
+    <a class="misc-card" href="https://pollev.com/wikipeterson" target="_blank" rel="noopener">
+      <div class="misc-row"><span class="misc-icon">📊</span><span class="misc-title">Poll Everywhere</span></div>
+      <div class="misc-desc">Live classroom polls and quick check-ins.</div>
     </a>
-    <a class="site-link" href="/RecommendedReading.html">
-      <span class="site-link-icon">📚</span><span class="site-link-label">Recommended Reading</span>
+    <a class="misc-card" href="https://hhs.haverford.k12.pa.us/haverford-high-school/bell-schedules" target="_blank" rel="noopener">
+      <div class="misc-row"><span class="misc-icon">🔔</span><span class="misc-title">Bell Schedules</span></div>
+      <div class="misc-desc">Daily Haverford High School bell schedule information.</div>
     </a>
-    <a class="site-link" href="/NCAA2026.html">
-      <span class="site-link-icon">🏀</span><span class="site-link-label">NCAA 2026</span>
+    <a class="misc-card" href="https://www.desmos.com/calculator" target="_blank" rel="noopener">
+      <div class="misc-row"><span class="misc-icon">📈</span><span class="misc-title">Desmos Calculator</span></div>
+      <div class="misc-desc">Free online graphing calculator.</div>
+    </a>
+    <a class="misc-card" href="/Quotes.html">
+      <div class="misc-row"><span class="misc-icon">❝</span><span class="misc-title">Quotes</span></div>
+      <div class="misc-desc">It's just like Dr. Peterson used to always say...</div>
+    </a>
+    <a class="misc-card" href="/RecommendedReading.html">
+      <div class="misc-row"><span class="misc-icon">📚</span><span class="misc-title">Recommended Reading</span></div>
+      <div class="misc-desc">Books on probability, statistics, psychology, and learning.</div>
+    </a>
+    <a class="misc-card" href="/NCAA2026.html">
+      <div class="misc-row"><span class="misc-icon">🏀</span><span class="misc-title">NCAA 2026</span></div>
+      <div class="misc-desc">Tournament bracket tracker.</div>
     </a>
   </div>
 
