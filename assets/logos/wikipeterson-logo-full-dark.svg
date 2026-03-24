@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="200" viewBox="0 0 680 200" role="img" aria-labelledby="title desc">
+  <title id="title">Wikipeterson full logo for dark backgrounds</title>
+  <desc id="desc">A high-contrast maroon, gold, and cream academic logo for dark backgrounds.</desc>
+  <defs>
+    <style>
+      .serif { font-family: "Century Schoolbook", "Century Schoolbook L", "New Century Schoolbook", "TeX Gyre Schola", Georgia, serif; }
+    </style>
+  </defs>
+  <circle cx="100" cy="100" r="72" fill="#8B1A1A"/>
+  <circle cx="100" cy="100" r="72" fill="none" stroke="#C8A84B" stroke-width="3"/>
+  <text x="100" y="120" text-anchor="middle" class="serif" font-size="80" font-weight="700" fill="#F5EFDF">&#x2211;</text>
+  <text x="195" y="88" class="serif" font-size="52" font-weight="700" fill="#F5EFDF" letter-spacing="-1">Wikipeterson</text>
+  <text x="197" y="118" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#D9CFC2" letter-spacing="3">MATH &amp; MORE · HAVERFORD HIGH SCHOOL</text>
+  <line x1="197" y1="128" x2="642" y2="128" stroke="#C8A84B" stroke-width="1.2"/>
+  <text x="197" y="148" class="serif" font-size="13" font-style="italic" fill="#F0B429">Resources &amp; Tools</text>
+</svg>
