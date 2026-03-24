@@ -44,9 +44,6 @@ body {
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
 .home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
 .home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
-.corner-quote{position:absolute;top:14px;right:18px;max-width:280px;text-align:right;z-index:10;color:rgba(245,240,232,0.9);}
-.corner-quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(0.66rem,1vw,0.8rem);line-height:1.45;}
-.corner-quote-author{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,232,0.66);margin-top:6px;}
 .masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 12px; width:340px; position:relative; }
 .masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,7vw,5rem); font-weight:900; letter-spacing:0.04em; line-height:1; position:relative; }
 .masthead-sub         { font-size:clamp(0.72rem,1.6vw,0.9rem); letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:8px; font-weight:300; position:relative; }
@@ -250,7 +247,6 @@ body {
 @media (max-width:420px) {
   .support-grid { grid-template-columns:1fr; }
 }
-@media (max-width:900px){.corner-quote{display:none;}}
 </style>
 </head>
 <body>
@@ -258,10 +254,6 @@ body {
 <!-- MASTHEAD -->
 <div class="masthead">
   <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
-  <div class="corner-quote">
-    <div class="corner-quote-text" id="cornerQuoteText"></div>
-    <div class="corner-quote-author" id="cornerQuoteAuthor"></div>
-  </div>
   <div class="masthead-rule"></div>
   <div class="masthead-wordmark">Wikipeterson</div>
   <div class="masthead-sub">AP Calculus BC &nbsp;·&nbsp; Math &amp; More</div>
@@ -427,19 +419,13 @@ fetch(APPS_URL).then(r => r.json()).then(data => {
   }
   const quotes = Array.isArray(data) ? data : (data.quotes || []);
   if (quotes.length) {
-    const cornerIndex = Math.floor(Math.random() * quotes.length);
-    const cornerQuote = quotes[cornerIndex];
-    document.getElementById('cornerQuoteText').textContent = '"' + cornerQuote.quote + '"';
-    document.getElementById('cornerQuoteAuthor').textContent = cornerQuote.author ? '— ' + cornerQuote.author : '';
-    const stripQuote = quotes.length > 1 ? quotes[(cornerIndex + 1 + Math.floor(Math.random() * (quotes.length - 1))) % quotes.length] : cornerQuote;
+    const stripQuote = quotes[Math.floor(Math.random() * quotes.length)];
     document.getElementById('rqText').textContent = stripQuote.quote;
     if (stripQuote.author) document.getElementById('rqAuthor').textContent = '— ' + stripQuote.author;
     document.getElementById('quoteSection').style.display = 'block';
   }
 }).catch(() => {
   document.getElementById('tagline').textContent = 'Mathematically proven to be mathematics.';
-  document.getElementById('cornerQuoteText').textContent = '"Math is how we make uncertainty behave."';
-  document.getElementById('cornerQuoteAuthor').textContent = '';
 });
 </script>
 </body>
