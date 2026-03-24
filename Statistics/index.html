@@ -42,12 +42,13 @@ body {
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
 .home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
 .home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
-.rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 10px; width:200px; position:relative; }
-.rule-thin   { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:10px auto 0; width:200px; position:relative; }
-.wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,6.4vw,4.4rem); font-weight:900; letter-spacing:0.03em; line-height:0.98; position:relative; }
-.tagline     { font-style:italic; font-size:clamp(0.96rem,2.1vw,1.4rem); color:rgba(245,240,232,0.92); margin-top:10px; min-height:1.2em; position:relative; font-weight:600; }
-.sub         { font-size:clamp(0.64rem,1.3vw,0.8rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.62); margin-top:13px; font-weight:300; position:relative; }
-.brand       { font-family:'Playfair Display',serif; font-size:clamp(0.74rem,1.4vw,0.9rem); font-weight:700; letter-spacing:0.08em; color:rgba(240,180,41,0.88); margin-top:4px; position:relative; }
+.rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 14px; width:min(420px,72vw); position:relative; }
+.rule-thin   { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:16px auto 0; width:min(420px,72vw); position:relative; }
+.masthead-emblem{ width:112px; height:112px; margin:0 auto 18px; border:3px solid rgba(240,180,41,0.92); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:4.8rem; line-height:1; color:var(--paper); position:relative; box-shadow:0 0 0 10px rgba(255,255,255,0.03); }
+.wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.25rem,5.6vw,4rem); font-weight:900; letter-spacing:0.02em; line-height:1; position:relative; max-width:11ch; margin:0 auto; }
+.tagline     { font-style:italic; font-size:clamp(1.02rem,2.3vw,1.5rem); color:rgba(245,240,232,0.96); margin-top:12px; min-height:1.2em; position:relative; font-weight:600; }
+.sub         { font-size:clamp(0.62rem,1.2vw,0.76rem); letter-spacing:0.32em; text-transform:uppercase; color:rgba(245,240,232,0.58); margin-top:16px; font-weight:300; position:relative; }
+.brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,1.5vw,1rem); font-weight:700; letter-spacing:0.04em; color:rgba(240,180,41,0.96); margin-top:5px; position:relative; }
 .quote-strip { background:white; border-bottom:2px solid var(--line); padding:16px 28px; display:none; }
 .quote-strip-inner { max-width:980px; margin:0 auto; display:flex; align-items:center; gap:14px; }
 .qs-mark  { font-family:'Playfair Display',serif; font-size:3rem; line-height:0.65; color:var(--gold); opacity:0.3; flex-shrink:0; user-select:none; }
@@ -114,10 +115,11 @@ body {
 <div class="masthead">
   <a class="home-btn" href="https://wikipeterson.org">&#8592; Home</a>
   <div class="rule"></div>
+  <div class="masthead-emblem" aria-hidden="true">σ</div>
   <div class="wordmark">Wikipeterson's Sigma Math</div>
   <div class="tagline" id="tagline"></div>
   <div class="sub">Statistics &amp; More</div>
-  <div class="brand">Wikipeterson</div>
+  <div class="brand">Haverford High School</div>
   <div class="rule-thin"></div>
 </div>
 <div class="quote-strip" id="quoteSection">
