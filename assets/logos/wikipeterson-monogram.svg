@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">Wikipeterson monogram logo</title>
-  <desc id="desc">A square monogram with WP lettering and a sigma accent in maroon, gold, and cream.</desc>
-  <rect width="512" height="512" rx="48" fill="#f5f0e8"/>
-  <rect x="28" y="28" width="456" height="456" rx="34" fill="none" stroke="#7A1518" stroke-width="8"/>
-  <path d="M110 392L160 116L218 116L256 267L294 116L352 116L402 392L344 392L316 212L272 392L240 392L196 212L168 392Z" fill="#7A1518"/>
-  <path d="M292 166H414L386 198H336L376 256L336 314H389L416 346H292L334 256Z" fill="#f0b429"/>
-  <text x="258" y="438" text-anchor="middle" font-family="'Palatino Linotype', Georgia, serif" font-size="34" letter-spacing="8" fill="#8b6f47">WP</text>
-</svg>

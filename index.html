@@ -34,20 +34,18 @@ body {
   background: var(--red);
   color: var(--paper);
   text-align: center;
-  padding: 44px 20px 36px;
+  padding: 32px 20px 30px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
 }
 .masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
 .masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
-.rule      { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 16px; width:360px; position:relative; }
-.rule-thin { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:16px auto 0; width:360px; position:relative; }
-.masthead-logo { width:min(680px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
-.wordmark  { font-family:'Playfair Display',serif; font-size:clamp(3rem,9vw,6.5rem); font-weight:900; letter-spacing:0.04em; line-height:1; position:relative; }
-.sub       { font-size:clamp(0.75rem,1.8vw,0.95rem); letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:10px; font-weight:300; position:relative; }
-.brand     { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,1.8vw,1rem); font-weight:700; letter-spacing:0.1em; color:var(--gold2); margin-top:8px; position:relative; }
-.mquote    { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.82rem,1.8vw,1rem); color:rgba(245,240,232,0.8); margin-top:14px; position:relative; line-height:1.6; }
+.rule      { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 14px; width:320px; position:relative; }
+.rule-thin { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:14px auto 0; width:320px; position:relative; }
+.masthead-logo { width:min(620px,92vw); height:auto; display:block; margin:0 auto; position:relative; filter:drop-shadow(0 6px 16px rgba(26,20,16,0.12)); }
+.sub       { font-size:clamp(0.72rem,1.7vw,0.9rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.72); margin-top:8px; font-weight:300; position:relative; }
+.mquote    { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(0.8rem,1.7vw,0.96rem); color:rgba(245,240,232,0.8); margin-top:12px; position:relative; line-height:1.6; }
 .mquote-attr { font-size:0.82em; opacity:0.7; }
 .main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 20px 40px; flex-direction:column; gap:40px; }
 .class-cards { display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:680px; width:100%; }
@@ -110,6 +108,7 @@ body {
 @media (max-width:520px) {
   .class-cards { grid-template-columns:1fr; }
   .misc-grid { grid-template-columns:1fr; }
+  .rule, .rule-thin { width:240px; }
 }
 </style>
 </head>
