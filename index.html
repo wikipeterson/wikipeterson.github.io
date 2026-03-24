@@ -211,8 +211,13 @@ body {
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
-  if(data.taglines&&data.taglines.length){
-    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
+  const homepageTaglines=[
+    ...(data.calcTaglines||[]),
+    ...(data.statsTaglines||[]),
+    ...(data.taglines||[])
+  ];
+  if(homepageTaglines.length){
+    const t=homepageTaglines[Math.floor(Math.random()*homepageTaglines.length)];
     document.getElementById('tagline').textContent='"'+t+'"';
   }
 }).catch(()=>{

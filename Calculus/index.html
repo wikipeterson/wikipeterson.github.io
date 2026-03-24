@@ -418,8 +418,9 @@ body {
 const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 
 fetch(APPS_URL).then(r => r.json()).then(data => {
-  if (data.taglines && data.taglines.length) {
-    const t = data.taglines[Math.floor(Math.random() * data.taglines.length)];
+  const calcTaglines = data.calcTaglines || data.taglines || [];
+  if (calcTaglines.length) {
+    const t = calcTaglines[Math.floor(Math.random() * calcTaglines.length)];
     document.getElementById('tagline').textContent = '"' + t + '"';
   }
   if (data.quotes && data.quotes.length) {

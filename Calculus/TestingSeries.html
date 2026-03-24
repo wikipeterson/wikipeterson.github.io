@@ -152,14 +152,6 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:va
   <button class="btn-restart" onclick="restart()">Start New Session</button>
 </div>
 <script>
-const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
-fetch(APPS_URL).then(r=>r.json()).then(data=>{
-  if(data.taglines&&data.taglines.length){
-    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
-    document.getElementById('tagline').textContent=t;
-  }
-}).catch(()=>{});
-
 const QUESTIONS=[
 {q:`Which of the following statements about convergence of the series \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) is true?`,
 choices:[`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) converges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) converges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) diverges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n}\\)`,`\\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{\\ln(n+1)}\\) diverges by comparison with \\(\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n^2}\\)`],
