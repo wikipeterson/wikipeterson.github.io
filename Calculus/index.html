@@ -421,21 +421,23 @@ fetch(APPS_URL).then(r => r.json()).then(data => {
   const calcTaglines = data.calcTaglines || data.taglines || [];
   if (calcTaglines.length) {
     const t = calcTaglines[Math.floor(Math.random() * calcTaglines.length)];
-    document.getElementById('tagline').textContent = '"' + t + '"';
+    document.getElementById('tagline').textContent = t;
   } else {
-    document.getElementById('tagline').textContent = '"Mathematically proven to be mathematics."';
+    document.getElementById('tagline').textContent = 'Mathematically proven to be mathematics.';
   }
   const quotes = Array.isArray(data) ? data : (data.quotes || []);
   if (quotes.length) {
-    const q = quotes[Math.floor(Math.random() * quotes.length)];
-    document.getElementById('cornerQuoteText').textContent = '"' + q.quote + '"';
-    document.getElementById('cornerQuoteAuthor').textContent = q.author ? '— ' + q.author : '';
-    document.getElementById('rqText').textContent = q.quote;
-    if (q.author) document.getElementById('rqAuthor').textContent = '— ' + q.author;
+    const cornerIndex = Math.floor(Math.random() * quotes.length);
+    const cornerQuote = quotes[cornerIndex];
+    document.getElementById('cornerQuoteText').textContent = '"' + cornerQuote.quote + '"';
+    document.getElementById('cornerQuoteAuthor').textContent = cornerQuote.author ? '— ' + cornerQuote.author : '';
+    const stripQuote = quotes.length > 1 ? quotes[(cornerIndex + 1 + Math.floor(Math.random() * (quotes.length - 1))) % quotes.length] : cornerQuote;
+    document.getElementById('rqText').textContent = stripQuote.quote;
+    if (stripQuote.author) document.getElementById('rqAuthor').textContent = '— ' + stripQuote.author;
     document.getElementById('quoteSection').style.display = 'block';
   }
 }).catch(() => {
-  document.getElementById('tagline').textContent = '"Mathematically proven to be mathematics."';
+  document.getElementById('tagline').textContent = 'Mathematically proven to be mathematics.';
   document.getElementById('cornerQuoteText').textContent = '"Math is how we make uncertainty behave."';
   document.getElementById('cornerQuoteAuthor').textContent = '';
 });
