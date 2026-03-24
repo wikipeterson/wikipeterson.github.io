@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wikipeterson</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink:    #1a1410;
@@ -51,6 +51,9 @@ body {
 .masthead-symbol.right{ right:22px; }
 .masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.15rem,5.2vw,3.85rem); font-weight:900; letter-spacing:0.015em; line-height:0.94; position:relative; max-width:10ch; margin:0 auto; text-shadow:0 2px 10px rgba(26,20,16,0.14); }
 .masthead-tagline     { font-style:italic; font-size:clamp(1.02rem,2.25vw,1.45rem); color:rgba(245,240,232,0.98); margin-top:14px; position:relative; min-height:1.2em; font-weight:600; }
+.masthead-tagline.tagline-style-1 { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
+.masthead-tagline.tagline-style-2 { font-family:'Playfair Display',serif; letter-spacing:0.01em; }
+.masthead-tagline.tagline-style-3 { font-family:'Source Serif 4',serif; letter-spacing:0.005em; }
 .masthead-sub         { font-size:clamp(0.6rem,1.15vw,0.74rem); letter-spacing:0.34em; text-transform:uppercase; color:rgba(245,240,232,0.54); margin-top:18px; font-weight:300; position:relative; }
 .masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.8rem,1.45vw,0.98rem); font-weight:700; letter-spacing:0.04em; color:rgba(240,180,41,0.98); margin-top:6px; position:relative; }
 .masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:16px auto 0; width:min(420px,72vw); position:relative; }
@@ -265,7 +268,7 @@ body {
     <div class="masthead-symbol right" aria-hidden="true">∫</div>
     <div class="masthead-wordmark">Wikipeterson's Sigma Math</div>
     <div class="masthead-tagline" id="tagline"></div>
-    <div class="masthead-sub">AP Calculus BC &nbsp;·&nbsp; Math &amp; More</div>
+    <div class="masthead-sub">AP Calculus BC</div>
     <div class="masthead-brand">Haverford High School</div>
   </div>
   <div class="masthead-rule-bottom"></div>
@@ -417,6 +420,13 @@ body {
 
 <script>
 const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+const TAGLINE_STYLES = ['tagline-style-1', 'tagline-style-2', 'tagline-style-3'];
+
+function applyRandomTaglineStyle() {
+  const el = document.getElementById('tagline');
+  el.classList.remove(...TAGLINE_STYLES);
+  el.classList.add(TAGLINE_STYLES[Math.floor(Math.random() * TAGLINE_STYLES.length)]);
+}
 
 fetch(APPS_URL).then(r => r.json()).then(data => {
   const calcTaglines = data.calcTaglines || data.taglines || [];
@@ -426,6 +436,7 @@ fetch(APPS_URL).then(r => r.json()).then(data => {
   } else {
     document.getElementById('tagline').textContent = 'Mathematically proven to be mathematics.';
   }
+  applyRandomTaglineStyle();
   const quotes = Array.isArray(data) ? data : (data.quotes || []);
   if (quotes.length) {
     const stripQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -435,6 +446,7 @@ fetch(APPS_URL).then(r => r.json()).then(data => {
   }
 }).catch(() => {
   document.getElementById('tagline').textContent = 'Mathematically proven to be mathematics.';
+  applyRandomTaglineStyle();
 });
 </script>
 </body>
