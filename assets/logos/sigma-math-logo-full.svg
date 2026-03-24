@@ -10,7 +10,7 @@
   <circle cx="96" cy="100" r="66" fill="none" stroke="#C8A84B" stroke-width="3"/>
   <text x="96" y="118" text-anchor="middle" class="serif" font-size="74" font-weight="700" fill="#F5EFDF">&#x03A3;</text>
   <text x="186" y="92" class="serif" font-size="54" font-weight="700" fill="#8B1A1A" letter-spacing="-1">Sigma Math</text>
-  <text x="188" y="120" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#6B6B6B" letter-spacing="3">PRACTICE · PROBLEMS · PROGRESS</text>
+  <text x="188" y="120" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#6B6B6B" letter-spacing="3">PRACTICE MAKES PROGRESS</text>
   <line x1="188" y1="132" x2="566" y2="132" stroke="#C8A84B" stroke-width="1.2"/>
   <text x="188" y="154" class="serif" font-size="14" font-style="italic" fill="#C8A84B">by Wikipeterson</text>
 </svg>

@@ -71,16 +71,31 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     margin: 0 auto 10px; width: 160px;
   }
-  .masthead-logo {
-    width: min(460px, 90vw);
-    height: auto;
-    display: block;
+  .masthead-inner {
+    max-width: 980px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+  }
+  .masthead-copy {
+    flex: 1;
+    text-align: left;
+    padding-left: 42px;
+  }
+  .masthead-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.4rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.02;
     position: relative;
   }
   .masthead-topic {
-    font-size: clamp(0.82rem, 2.1vw, 1rem);
-    letter-spacing: 0.2em;
+    font-size: clamp(0.78rem, 1.8vw, 0.94rem);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgba(245,240,232,0.82);
     margin-top: 6px;
@@ -96,10 +111,31 @@
     position: relative;
     min-height: 1.2em;
   }
+  .masthead-brandmark {
+    width: min(280px, 34vw);
+    height: auto;
+    display: block;
+    flex-shrink: 0;
+    position: relative;
+  }
   .masthead-rule-bottom {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     margin: 10px auto 0; width: 160px;
+  }
+  @media (max-width: 760px) {
+    .masthead-inner {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .masthead-copy {
+      text-align: center;
+      padding-left: 0;
+    }
+    .masthead-brandmark {
+      width: min(260px, 70vw);
+    }
   }
   .progress-bar-wrap {
     background: var(--cream);
@@ -211,9 +247,14 @@
 <div class="masthead">
   <a class="home-btn" href="https://wikipeterson.org/Calculus/">&#8592; Home</a>
   <div class="masthead-rule"></div>
-  <img class="masthead-logo" src="../assets/logos/sigma-math-logo-full-dark.svg" alt="Sigma Math logo">
-  <div class="masthead-topic">Power Series Practice</div>
-  <div class="masthead-tagline" id="tagline">by Wikipeterson</div>
+  <div class="masthead-inner">
+    <div class="masthead-copy">
+      <div class="masthead-wordmark">Power Series Practice</div>
+      <div class="masthead-topic">Sigma Math</div>
+      <div class="masthead-tagline" id="tagline">by Wikipeterson</div>
+    </div>
+    <img class="masthead-brandmark" src="../assets/logos/sigma-math-logo-full-dark.svg" alt="Sigma Math logo">
+  </div>
   <div class="masthead-rule-bottom"></div>
 </div>
 
