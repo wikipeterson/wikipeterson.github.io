@@ -48,6 +48,7 @@ body {
 .masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(3.2rem,8vw,5.8rem); font-weight:900; letter-spacing:0.04em; line-height:1; position:relative; }
 .masthead-sub         { font-size:clamp(0.72rem,1.6vw,0.9rem); letter-spacing:0.26em; text-transform:uppercase; color:rgba(245,240,232,0.78); margin-top:8px; font-weight:300; position:relative; }
 .masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.88rem,1.9vw,1.15rem); font-weight:700; letter-spacing:0.04em; color:var(--gold2); margin-top:6px; position:relative; }
+.masthead-tagline     { font-style:italic; font-size:clamp(0.68rem,1.4vw,0.82rem); color:rgba(245,240,232,0.62); margin-top:10px; position:relative; min-height:1.2em; }
 .masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:12px auto 0; width:340px; position:relative; }
 .mquote-attr { font-size:0.82em; opacity:0.7; }
 .main { flex:1; display:flex; align-items:center; justify-content:center; padding:60px 20px 40px; flex-direction:column; gap:40px; }
@@ -135,6 +136,7 @@ body {
   <div class="masthead-wordmark">Wikipeterson</div>
   <div class="masthead-sub">Math &amp; More</div>
   <div class="masthead-brand">Haverford High School</div>
+  <div class="masthead-tagline" id="tagline"></div>
   <div class="masthead-rule-bottom"></div>
 </div>
 
@@ -206,5 +208,16 @@ body {
   wikipeterson.org — your math is right or it's free. Guaranteed!™<br>We only use 100% REAL Math.
 </div>
 
+<script>
+const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+fetch(APPS_URL).then(r=>r.json()).then(data=>{
+  if(data.taglines&&data.taglines.length){
+    const t=data.taglines[Math.floor(Math.random()*data.taglines.length)];
+    document.getElementById('tagline').textContent='"'+t+'"';
+  }
+}).catch(()=>{
+  document.getElementById('tagline').textContent='"Mathematically proven to be mathematics."';
+});
+</script>
 </body>
 </html>
