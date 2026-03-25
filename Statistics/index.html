@@ -44,9 +44,11 @@ body {
 .home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
 .rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 14px; width:min(420px,72vw); position:relative; }
 .rule-thin   { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:16px auto 0; width:min(420px,72vw); position:relative; }
-.masthead-shell{ position:relative; max-width:720px; margin:0 auto; padding:20px 32px 18px; border:1px solid rgba(240,180,41,0.14); border-radius:28px; background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.01)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px rgba(26,20,16,0.16); }
+.masthead-shell{ position:relative; max-width:720px; margin:0 auto; padding:20px 40px 18px; border:1px solid rgba(240,180,41,0.14); border-radius:28px; background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.01)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px rgba(26,20,16,0.16); }
 .masthead-copy{ text-align:center; max-width:560px; margin:0 auto; }
-.masthead-symbol{ position:absolute; right:-188px; top:50%; transform:translateY(-50%); width:236px; height:236px; border:4px solid rgba(240,180,41,0.96); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:9.2rem; line-height:1; color:var(--paper); background:rgba(122,21,24,0.94); box-shadow:0 0 0 12px rgba(255,255,255,0.03); }
+.masthead-symbol{ position:absolute; top:50%; transform:translateY(-50%); width:164px; height:164px; border:4px solid rgba(240,180,41,0.96); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:6.6rem; line-height:1; color:var(--paper); background:rgba(122,21,24,0.94); box-shadow:0 0 0 10px rgba(255,255,255,0.03); }
+.masthead-symbol-left { left:-118px; }
+.masthead-symbol-right{ right:-118px; }
 .wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.95rem,4.2vw,3.15rem); font-weight:900; letter-spacing:0.015em; line-height:0.92; position:relative; max-width:12.5ch; margin:0 auto; text-shadow:0 2px 10px rgba(26,20,16,0.14); }
 .tagline     { font-style:italic; font-size:clamp(0.98rem,2vw,1.28rem); color:rgba(245,240,232,0.98); margin-top:10px; min-height:1.2em; position:relative; font-weight:600; }
 .tagline.tagline-style-1 { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
@@ -128,7 +130,8 @@ body {
       <div class="sub">Statistics</div>
       <div class="brand">Haverford High School</div>
     </div>
-    <div class="masthead-symbol" aria-hidden="true">σ</div>
+    <div class="masthead-symbol masthead-symbol-left" aria-hidden="true">μ</div>
+    <div class="masthead-symbol masthead-symbol-right" aria-hidden="true">σ</div>
   </div>
   <div class="rule-thin"></div>
 </div>
