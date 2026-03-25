@@ -52,9 +52,9 @@ body {
 .masthead-symbol      { position:absolute; top:50%; transform:translateY(-50%); width:var(--symbol-size); height:var(--symbol-size); border:3px solid rgba(240,180,41,0.96); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:5.9rem; line-height:1; color:var(--paper); background:rgba(122,21,24,0.92); box-shadow:0 0 0 10px rgba(255,255,255,0.03); text-align:center; }
 .masthead-symbol-left { left:calc(-1 * (((100vw - var(--shell-width)) / 4) + (var(--symbol-size) / 2))); }
 .masthead-symbol-right{ right:calc(-1 * (((100vw - var(--shell-width)) / 4) + (var(--symbol-size) / 2))); }
-.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.95rem,4.2vw,3.15rem); font-weight:900; letter-spacing:0.015em; line-height:0.92; position:relative; max-width:12.5ch; margin:0 auto; text-shadow:0 2px 10px rgba(26,20,16,0.14); }
-.masthead-wordmark-top { display:block; font-style:italic; font-size:0.86em; }
-.masthead-wordmark-bottom { display:block; font-size:1.18em; white-space:nowrap; }
+.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.95rem,4.2vw,3.15rem); font-weight:900; letter-spacing:0.015em; line-height:0.96; position:relative; max-width:none; margin:0 auto; text-shadow:0 2px 10px rgba(26,20,16,0.14); white-space:nowrap; }
+.masthead-wordmark-top { display:inline; font-style:italic; font-size:0.86em; margin-right:0.18em; }
+.masthead-wordmark-bottom { display:inline; font-size:1.18em; white-space:nowrap; }
 .masthead-symbol-glyph { display:block; transform:translate(0, 0); }
 .masthead-symbol-left .masthead-symbol-glyph { transform:translate(-0.05em, -0.08em); }
 .masthead-symbol-right .masthead-symbol-glyph { transform:translate(-0.05em, -0.09em); }
@@ -66,7 +66,7 @@ body {
 .masthead-sub         { font-family:'Playfair Display',serif; font-size:clamp(1.08rem,2vw,1.42rem); letter-spacing:0.03em; color:rgba(240,180,41,0.98); margin-top:10px; font-weight:700; position:relative; }
 .masthead-brand       { font-size:clamp(0.58rem,1.05vw,0.7rem); letter-spacing:0.24em; text-transform:uppercase; color:rgba(245,240,232,0.62); margin-top:4px; position:relative; }
 .masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:10px auto 0; width:min(420px,72vw); position:relative; }
-@media (max-width:760px){ .masthead { --shell-width:min(620px, calc(100vw - 40px)); --symbol-size:88px; padding:20px 20px 14px; } .masthead-shell { width:var(--shell-width); padding:18px 24px 14px; } .masthead-copy { max-width:none; } .masthead-symbol { position:static; transform:none; width:var(--symbol-size); height:var(--symbol-size); font-size:3.6rem; margin:14px auto 0; } }
+@media (max-width:760px){ .masthead { --shell-width:min(620px, calc(100vw - 40px)); --symbol-size:88px; padding:20px 20px 14px; } .masthead-shell { width:var(--shell-width); padding:18px 24px 14px; } .masthead-copy { max-width:none; } .masthead-symbol { position:static; transform:none; width:var(--symbol-size); height:var(--symbol-size); font-size:3.6rem; margin:14px auto 0; } .masthead-wordmark { white-space:normal; } .masthead-wordmark-top, .masthead-wordmark-bottom { display:block; margin-right:0; } }
 
 /* ── QUOTE STRIP ── */
 .quote-strip {
