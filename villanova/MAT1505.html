@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAT1505 — Wikipeterson</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f1726;
+  --paper: #f6f8fc;
+  --navy: #0c2340;
+  --navy2: #16355f;
+  --blue: #6fb0e4;
+  --blue2: #a8d0f0;
+  --line: rgba(12,35,64,0.14);
+  --shadow: rgba(15,23,38,0.12);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+.masthead {
+  background: linear-gradient(180deg, var(--navy), var(--navy2));
+  color: #fff;
+  text-align: center;
+  padding: 26px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,0.035) 60px,rgba(255,255,255,0.035) 61px); }
+.masthead::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--blue),var(--blue2),var(--blue)); }
+.home-btn {
+  position:absolute; top:12px; left:14px; z-index:2;
+  display:flex; align-items:center; gap:6px;
+  text-decoration:none; color:rgba(255,255,255,0.88);
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2);
+  border-radius:8px; padding:8px 14px; font-size:0.8rem; letter-spacing:0.04em;
+}
+.rule { height:2px; width:min(420px,72vw); margin:0 auto 12px; background:linear-gradient(90deg,transparent,var(--blue),var(--blue2),var(--blue),transparent); position:relative; }
+.hero {
+  width:min(780px, calc(100vw - 40px));
+  margin:0 auto;
+  padding:18px 28px 16px;
+  border:1px solid rgba(168,208,240,0.18);
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.015));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.05), 0 18px 40px var(--shadow);
+  position:relative;
+}
+.wordmark {
+  display:flex; justify-content:center; align-items:baseline; gap:0.18em;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.1rem,4.6vw,3.35rem);
+  font-weight:900; line-height:0.96; white-space:nowrap;
+}
+.wordmark-top { font-style:italic; font-size:0.86em; }
+.wordmark-bottom { font-family:'Helvetica Neue', Arial, sans-serif; font-size:1.03em; font-weight:800; letter-spacing:0.01em; }
+.sub {
+  margin-top:12px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.15rem,2.2vw,1.5rem);
+  color:var(--blue2);
+  font-weight:700;
+}
+.brand {
+  margin-top:5px;
+  font-size:clamp(0.58rem,1vw,0.72rem);
+  text-transform:uppercase;
+  letter-spacing:0.24em;
+  color:rgba(255,255,255,0.66);
+}
+.rule-bottom { height:1px; width:min(420px,72vw); margin:12px auto 0; background:linear-gradient(90deg,transparent,var(--blue),var(--blue2),var(--blue),transparent); position:relative; }
+.quote-strip {
+  background:white;
+  border-bottom:2px solid var(--line);
+  padding:18px 24px 20px;
+}
+.quote-inner { max-width:980px; margin:0 auto; text-align:center; }
+.quote-text { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; color:var(--ink); }
+.quote-author { margin-top:8px; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:#5f7087; }
+@media (max-width:760px) {
+  .wordmark { white-space:normal; display:block; }
+  .wordmark-top, .wordmark-bottom { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="masthead">
+  <a class="home-btn" href="/villanova/">&#8592; Villanova</a>
+  <div class="rule"></div>
+  <div class="hero">
+    <div class="wordmark"><span class="wordmark-top">Wikipeterson's</span><span class="wordmark-bottom">SigmaMath</span></div>
+    <div class="sub">MAT1505 · Calculus II</div>
+    <div class="brand">Villanova University</div>
+  </div>
+  <div class="rule-bottom"></div>
+</div>
+<div class="quote-strip">
+  <div class="quote-inner">
+    <div class="quote-text">&ldquo;When you&rsquo;re working on a math problem, you&rsquo;re really working on yourself.&rdquo;</div>
+    <div class="quote-author">— S. Peterson</div>
+  </div>
+</div>
+</body>
+</html>
