@@ -52,6 +52,9 @@ body {
 .wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.95rem,4.2vw,3.15rem); font-weight:900; letter-spacing:0.015em; line-height:0.92; position:relative; max-width:12.5ch; margin:0 auto; text-shadow:0 2px 10px rgba(26,20,16,0.14); }
 .wordmark-top { display:block; font-style:italic; font-size:0.86em; }
 .wordmark-bottom { display:block; font-size:1.18em; }
+.masthead-symbol-glyph { display:block; transform:translate(0, 0); }
+.masthead-symbol-left .masthead-symbol-glyph { transform:translateX(0.1em); }
+.masthead-symbol-right .masthead-symbol-glyph { transform:translateX(-0.02em); }
 .tagline     { font-style:italic; font-size:clamp(0.98rem,2vw,1.28rem); color:rgba(245,240,232,0.98); margin-top:10px; min-height:1.2em; position:relative; font-weight:600; }
 .tagline.tagline-style-1 { font-family:'Cormorant Garamond',serif; letter-spacing:0.01em; }
 .tagline.tagline-style-2 { font-family:'Playfair Display',serif; letter-spacing:0.01em; }
@@ -132,8 +135,8 @@ body {
       <div class="sub">Statistics</div>
       <div class="brand">Haverford High School</div>
     </div>
-    <div class="masthead-symbol masthead-symbol-left" aria-hidden="true">μ</div>
-    <div class="masthead-symbol masthead-symbol-right" aria-hidden="true">σ</div>
+    <div class="masthead-symbol masthead-symbol-left" aria-hidden="true"><span class="masthead-symbol-glyph">μ</span></div>
+    <div class="masthead-symbol masthead-symbol-right" aria-hidden="true"><span class="masthead-symbol-glyph">σ</span></div>
   </div>
   <div class="rule-thin"></div>
 </div>
