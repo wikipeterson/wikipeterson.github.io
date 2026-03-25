@@ -45,7 +45,9 @@ body {
 .corner-quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(0.68rem,1vw,0.82rem);line-height:1.45;}
 .corner-quote-author{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,232,0.66);margin-top:6px;}
 .masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent); margin:0 auto 12px; width:340px; position:relative; }
-.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(2.9rem,7.2vw,5rem); font-weight:900; letter-spacing:0.03em; line-height:0.98; position:relative; }
+.masthead-wordmark    { display:flex; align-items:baseline; justify-content:center; gap:0.18em; font-family:'Playfair Display',serif; font-size:clamp(2.4rem,6vw,4.2rem); font-weight:900; letter-spacing:0.02em; line-height:0.98; position:relative; text-align:center; white-space:nowrap; }
+.masthead-wordmark-top { display:inline-block; font-style:italic; font-size:0.86em; }
+.masthead-wordmark-bottom { display:inline-block; font-family:'Helvetica Neue', Arial, sans-serif; font-size:1.02em; font-weight:800; letter-spacing:0.01em; }
 .masthead-tagline     { font-style:italic; font-size:clamp(1rem,2.3vw,1.55rem); color:rgba(245,240,232,0.92); margin-top:12px; position:relative; min-height:1.2em; font-weight:600; }
 .masthead-sub         { font-size:clamp(0.64rem,1.3vw,0.78rem); letter-spacing:0.28em; text-transform:uppercase; color:rgba(245,240,232,0.62); margin-top:14px; font-weight:300; position:relative; }
 .masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.76rem,1.5vw,0.96rem); font-weight:700; letter-spacing:0.04em; color:rgba(240,180,41,0.88); margin-top:4px; position:relative; }
@@ -133,7 +135,7 @@ body {
     <div class="corner-quote-author">— S. Peterson</div>
   </div>
   <div class="masthead-rule"></div>
-  <div class="masthead-wordmark">Wikipeterson's Sigma Math</div>
+  <div class="masthead-wordmark"><span class="masthead-wordmark-top">Wikipeterson's</span><span class="masthead-wordmark-bottom">SigmaMath</span></div>
   <div class="masthead-tagline" id="tagline"></div>
   <div class="masthead-sub">Math &amp; More</div>
   <div class="masthead-brand">Haverford High School</div>
