@@ -68,6 +68,84 @@ body {
   padding: 16px 28px;
   display: none;
 }
+.exam-countdown {
+  margin: 0 0 36px;
+  padding: 24px 24px 20px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at top, rgba(240,180,41,0.18), transparent 38%),
+    linear-gradient(180deg, #2a0e0f, #561416 58%, #7A1518);
+  color: var(--paper);
+  box-shadow: 0 12px 28px rgba(26,20,16,0.18);
+  border: 1px solid rgba(240,180,41,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.exam-countdown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 70px, rgba(255,255,255,0.03) 70px, rgba(255,255,255,0.03) 71px);
+  pointer-events: none;
+}
+.countdown-inner { position: relative; }
+.countdown-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 8px;
+}
+.countdown-title {
+  font-family:'Playfair Display',serif;
+  font-size: clamp(1.5rem, 3.4vw, 2.45rem);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+.countdown-subtitle {
+  color: rgba(245,240,232,0.82);
+  font-style: italic;
+  font-size: 0.96rem;
+  margin-bottom: 18px;
+}
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.countdown-unit {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 14px 10px 12px;
+  text-align: center;
+}
+.countdown-value {
+  font-family:'Playfair Display',serif;
+  font-size: clamp(1.55rem, 3.5vw, 2.55rem);
+  line-height: 1;
+  color: var(--gold2);
+  margin-bottom: 4px;
+}
+.countdown-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.72);
+}
+.countdown-footer {
+  margin-top: 16px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.68);
+}
+.countdown-final {
+  font-family:'Playfair Display',serif;
+  font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+  color: var(--gold2);
+}
+
 .quote-strip-inner {
   max-width: 980px;
   margin: 0 auto;
@@ -247,6 +325,7 @@ body {
 ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
 
 @media (max-width:640px) {
+  .countdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .feature-grid  { grid-template-columns:1fr; }
   .support-grid  { grid-template-columns:1fr 1fr; }
   .link-row-wrap { gap:4px; }
@@ -302,6 +381,33 @@ body {
     <a class="mini-link" href="https://www.khanacademy.org/math/ap-calculus-bc" target="_blank" rel="noopener">
       <span class="mini-link-icon">🟢</span><span class="mini-link-label">Khan Academy</span><span class="mini-link-arr">→</span>
     </a>
+  </div>
+
+  <div class="exam-countdown">
+    <div class="countdown-inner">
+      <div class="countdown-kicker">AP Calculus BC Exam Countdown</div>
+      <div class="countdown-title">How Close Are We To The Apocalypse?</div>
+      <div class="countdown-subtitle">Monday, May 11, 2026 at 8:00 AM local time</div>
+      <div class="countdown-grid" id="apCountdownGrid">
+        <div class="countdown-unit">
+          <div class="countdown-value" id="countDays">--</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-unit">
+          <div class="countdown-value" id="countHours">--</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-unit">
+          <div class="countdown-value" id="countMinutes">--</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-unit">
+          <div class="countdown-value" id="countSeconds">--</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+      <div class="countdown-footer" id="apCountdownFooter">Pencils sharpened. Calculator charged. Existential dread optional.</div>
+    </div>
   </div>
 
   <!-- GENERAL -->
@@ -423,12 +529,47 @@ body {
 <script>
 const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
 const TAGLINE_STYLES = ['tagline-style-1', 'tagline-style-2', 'tagline-style-3'];
+const AP_CALC_BC_EXAM = new Date('2026-05-11T08:00:00-04:00');
 
 function applyRandomTaglineStyle() {
   const el = document.getElementById('tagline');
   el.classList.remove(...TAGLINE_STYLES);
   el.classList.add(TAGLINE_STYLES[Math.floor(Math.random() * TAGLINE_STYLES.length)]);
 }
+
+function updateCountdown() {
+  const countdownGrid = document.getElementById('apCountdownGrid');
+  const countdownFooter = document.getElementById('apCountdownFooter');
+  const diff = AP_CALC_BC_EXAM.getTime() - Date.now();
+
+  if (diff <= 0) {
+    countdownGrid.innerHTML = '<div class="countdown-final">The AP Calculus BC exam is here. Deep breaths. You know more than you think.</div>';
+    countdownFooter.textContent = 'Go do the thing.';
+    return;
+  }
+
+  const totalSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  document.getElementById('countDays').textContent = days;
+  document.getElementById('countHours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('countMinutes').textContent = String(minutes).padStart(2, '0');
+  document.getElementById('countSeconds').textContent = String(seconds).padStart(2, '0');
+
+  if (days <= 7) {
+    countdownFooter.textContent = 'This is not a drill.';
+  } else if (days <= 30) {
+    countdownFooter.textContent = 'Review season has entered the chat.';
+  } else {
+    countdownFooter.textContent = 'Pencils sharpened. Calculator charged. Existential dread optional.';
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
 fetch(APPS_URL).then(r => r.json()).then(data => {
   const calcTaglines = data.calcTaglines || data.taglines || [];
