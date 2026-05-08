@@ -39,7 +39,6 @@
   .tab.active{color:var(--red);border-bottom-color:var(--red);}
 
   .container{max-width:900px;margin:0 auto;padding:2rem 1.25rem 4rem;}
-  #tab-leaderboard{max-width:1160px;}
   .section-header{margin-bottom:1.5rem;}
   .section-header h2{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;}
   .section-header p{font-size:14px;color:var(--sepia);font-style:italic;}
@@ -108,16 +107,9 @@
   .rules-card li{margin-bottom:0.4rem;}
   .rules-card strong{color:var(--red);font-weight:600;}
 
-  #leaderboard-content{overflow-x:auto;}
-  .lb-table{width:100%;min-width:980px;border-collapse:collapse;table-layout:fixed;}
+  .lb-table{width:100%;border-collapse:collapse;}
   .lb-table th{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--sepia);text-align:left;padding:0.6rem 0.75rem;border-bottom:2px solid var(--line);font-weight:600;}
   .lb-table td{padding:0.85rem 0.75rem;font-size:14px;border-bottom:1px solid var(--line);color:var(--ink);}
-  .lb-table th:nth-child(1), .lb-table td:nth-child(1){width:64px;}
-  .lb-table th:nth-child(2), .lb-table td:nth-child(2){width:36%;}
-  .lb-table th:nth-child(3), .lb-table td:nth-child(3){width:120px;}
-  .lb-table th:nth-child(4), .lb-table td:nth-child(4){width:130px;}
-  .lb-table th:nth-child(5), .lb-table td:nth-child(5){width:110px;}
-  .lb-name-cell{font-weight:600;white-space:normal;line-height:1.35;word-break:break-word;overflow-wrap:anywhere;}
   .lb-table tr:last-child td{border-bottom:none;}
   .lb-table tr.rank-1 td{background:rgba(201,168,76,0.07);}
   .rank-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-family:'Playfair Display',serif;font-size:12px;font-weight:700;}
@@ -720,7 +712,7 @@ async function renderLeaderboard(){
       const date=new Date(r.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric'});
       html+=`<tr class="${rc}" id="lb-row-${i}">
         <td><div class="rank-badge">${rank}</div></td>
-        <td class="lb-name-cell">${r.name}</td>
+        <td style="font-weight:600">${r.name}</td>
         <td>${sh}</td><td>${tb}</td>
         <td style="font-size:12px;color:var(--sepia)">${date}</td>
         ${showPicks?`<td><button class="picks-toggle-btn" onclick="togglePicks(${i})" id="ptb-${i}">View picks</button></td>`:''}
