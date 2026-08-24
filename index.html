@@ -75,86 +75,6 @@ body {
 .card:nth-child(2) { animation-delay:.22s; }
 .card:hover { transform:translateY(-5px); box-shadow:0 12px 36px rgba(26,20,16,0.16); border-top-color:var(--gold); }
 @keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-.countdown-board {
-  width:min(880px,100%);
-  background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(245,240,232,0.96));
-  border:1px solid rgba(139,111,71,0.18);
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(26,20,16,0.10);
-  padding:22px 24px 24px;
-  position:relative;
-  overflow:hidden;
-}
-.countdown-board::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at top right, rgba(240,180,41,0.10), transparent 34%),
-    linear-gradient(90deg, transparent, rgba(122,21,24,0.04), transparent);
-  pointer-events:none;
-}
-.countdown-kicker{
-  position:relative;
-  font-size:0.68rem;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--red);
-  font-weight:700;
-  margin-bottom:8px;
-}
-.countdown-title{
-  position:relative;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.5rem,3vw,2rem);
-  font-weight:900;
-  color:var(--ink);
-  line-height:1.05;
-}
-.countdown-subtitle{
-  position:relative;
-  margin-top:8px;
-  color:var(--sepia);
-  font-style:italic;
-  font-size:0.96rem;
-}
-.countdown-grid{
-  position:relative;
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
-  margin-top:18px;
-}
-.countdown-stat{
-  background:rgba(255,255,255,0.84);
-  border:1px solid rgba(139,111,71,0.14);
-  border-radius:12px;
-  padding:18px 16px 16px;
-  text-align:center;
-}
-.countdown-value{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,4vw,2.8rem);
-  line-height:1;
-  font-weight:900;
-  color:var(--red);
-}
-.countdown-label{
-  margin-top:8px;
-  font-size:0.72rem;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--sepia);
-  font-weight:700;
-  line-height:1.45;
-}
-.countdown-note{
-  position:relative;
-  margin-top:14px;
-  font-size:0.76rem;
-  color:rgba(139,111,71,0.9);
-  text-align:center;
-}
 .card-icon  { font-family:'Playfair Display',serif; font-size:3.5rem; color:var(--red); opacity:0.15; line-height:1; }
 .card-title { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:900; color:var(--ink); line-height:1.1; }
 .card-desc  { font-size:0.9rem; color:var(--sepia); font-style:italic; line-height:1.65; flex:1; }
@@ -202,7 +122,6 @@ body {
 ::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
 @media (max-width:520px) {
   .class-cards { grid-template-columns:1fr; }
-  .countdown-grid { grid-template-columns:1fr; }
   .misc-grid { grid-template-columns:1fr; }
 }
 @media (max-width:900px){.corner-quote{display:none;}}
@@ -239,27 +158,6 @@ body {
       <div class="card-cta">Enter →</div>
     </a>
   </div>
-
-  <section class="countdown-board" aria-labelledby="countdown-title">
-    <div class="countdown-kicker">Spring Countdown</div>
-    <h2 class="countdown-title" id="countdown-title">The stretch run</h2>
-    <p class="countdown-subtitle">A little dashboard for how much 2025-2026 we still have left.</p>
-    <div class="countdown-grid">
-      <div class="countdown-stat">
-        <div class="countdown-value" id="days-left">--</div>
-        <div class="countdown-label">Days Until Last Student Day</div>
-      </div>
-      <div class="countdown-stat">
-        <div class="countdown-value" id="school-days-left">--</div>
-        <div class="countdown-label">School Days Until Last Student Day</div>
-      </div>
-      <div class="countdown-stat">
-        <div class="countdown-value" id="grad-school-days-left">--</div>
-        <div class="countdown-label">School Days Until Graduation</div>
-      </div>
-    </div>
-    <div class="countdown-note">Using the 2025-2026 district calendar and the current Haverford High graduation date.</div>
-  </section>
 
   <div class="link-section">
     <div class="link-label">General</div>
@@ -318,58 +216,6 @@ body {
 
 <script>
 const APPS_URL='https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
-const LAST_STUDENT_DAY='2026-06-16';
-const GRADUATION_DAY='2026-06-04';
-const NO_STUDENT_DAYS=[
-  '2025-08-19','2025-08-20','2025-08-21','2025-08-25','2025-08-26','2025-08-27','2025-08-28',
-  '2025-09-01','2025-10-02','2025-11-04','2025-11-27','2025-11-28',
-  '2025-12-24','2025-12-25','2025-12-26','2025-12-29','2025-12-30','2025-12-31',
-  '2026-01-01','2026-01-02','2026-01-19','2026-02-16',
-  '2026-03-30','2026-03-31','2026-04-01','2026-04-02','2026-04-03','2026-04-06',
-  '2026-05-19','2026-05-25','2026-06-17','2026-06-19'
-];
-
-function parseLocalDate(dateString){
-  const [year,month,day]=dateString.split('-').map(Number);
-  return new Date(year,month-1,day);
-}
-
-function startOfDay(date){
-  return new Date(date.getFullYear(),date.getMonth(),date.getDate());
-}
-
-function daysUntil(targetString){
-  const today=startOfDay(new Date());
-  const target=parseLocalDate(targetString);
-  const diff=target-today;
-  return Math.max(0, Math.ceil(diff/86400000));
-}
-
-function schoolDaysUntil(targetString){
-  const today=startOfDay(new Date());
-  const target=parseLocalDate(targetString);
-  const blockedDays=new Set(NO_STUDENT_DAYS);
-  let count=0;
-  const cursor=new Date(today);
-  cursor.setDate(cursor.getDate()+1);
-
-  while(cursor<=target){
-    const dayOfWeek=cursor.getDay();
-    const iso=`${cursor.getFullYear()}-${String(cursor.getMonth()+1).padStart(2,'0')}-${String(cursor.getDate()).padStart(2,'0')}`;
-    const isWeekday=dayOfWeek!==0 && dayOfWeek!==6;
-    if(isWeekday && !blockedDays.has(iso)){
-      count+=1;
-    }
-    cursor.setDate(cursor.getDate()+1);
-  }
-
-  return count;
-}
-
-document.getElementById('days-left').textContent=daysUntil(LAST_STUDENT_DAY);
-document.getElementById('school-days-left').textContent=schoolDaysUntil(LAST_STUDENT_DAY);
-document.getElementById('grad-school-days-left').textContent=schoolDaysUntil(GRADUATION_DAY);
-
 fetch(APPS_URL).then(r=>r.json()).then(data=>{
   const homepageTaglines=[
     ...(data.calcTaglines||[]),
