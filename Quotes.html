@@ -64,13 +64,20 @@
 </div>
 <script>
 const APPS_URL = 'https://script.google.com/macros/s/AKfycbx2i6MzYstdNztyAzFYp0bd8PvKMtqfy5n94QEp6UGVQLCCyhxdtkIU3INezzJTpPE/exec';
+function pickQuote(quotes) {
+  const previous = sessionStorage.getItem('wikipeterson-last-quote');
+  const choices = quotes.length > 1 ? quotes.filter(q => q.quote !== previous) : quotes;
+  const quote = choices[Math.floor(Math.random() * choices.length)];
+  sessionStorage.setItem('wikipeterson-last-quote', quote.quote);
+  return quote;
+}
 async function loadQuotes() {
   try {
     const res = await fetch(APPS_URL);
     const data = await res.json();
     const quotes = Array.isArray(data) ? data : (data.quotes || []);
     if (quotes.length) {
-      const q = quotes[Math.floor(Math.random() * quotes.length)];
+      const q = pickQuote(quotes);
       document.getElementById('cornerQuoteText').textContent = '"' + q.quote + '"';
       document.getElementById('cornerQuoteAuthor').textContent = q.author ? '— ' + q.author : '';
     }
