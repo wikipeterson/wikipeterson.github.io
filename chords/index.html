@@ -437,9 +437,9 @@ function layoutSong(song, extra){
   if (!best) {
   for (let P = 1; P <= 4; P++){
     // quick reject: if neither layout reaches the minimum size, try more pages
-    if (P < 4 && !tryFit(song, extra, html, minPx, 1, P) && !tryFit(song, extra, html, minPx, 2, P)) continue;
+    if (P < 4 && !(DEVICES[settings.dev].cols || [1, 2]).some(c => tryFit(song, extra, html, minPx, c, P))) continue;
     let bp = null;
-    for (const cols of [1, 2]){
+    for (const cols of (DEVICES[settings.dev].cols || [1, 2])){
       const px = search(p => tryFit(song, extra, html, p, cols, P), floorPx, maxPx);
       if (px) bp = choose(bp, { px, cols, P });
     }
