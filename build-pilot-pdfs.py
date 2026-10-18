@@ -1,4 +1,4 @@
-"""Update the three pilot PDFs and rebuild cookbook collections from recipe PDFs."""
+"""Update the recipe PDFs and rebuild cookbook collections from recipe PDFs."""
 from pathlib import Path
 from io import BytesIO
 from html import escape
@@ -38,12 +38,14 @@ def build_recipe(recipe, fmt, page, size):
     p = lambda text, style='body': Paragraph(clean(text), st[style])
     flow = [p(recipe['title'], 'title'), p(recipe['category']+' | '+recipe['method'], 'small'),
             p('Before you start', 'heading'), p(recipe['overview']), p('Ingredients', 'heading'),
-            p('Matching letters and colors = one prep bowl. Charcoal = keep separate.', 'small')]
+            p('Matching letters and colors = one prep bowl. Charcoal = keep separate.' if recipe['prepGroups'] else 'Keep these ingredients separate; follow the order in the directions.', 'small')]
     for group, name in recipe['prepGroups'].items():
         flow.append(p('Bowl '+group.upper()+' - '+name, 'small'))
     for ingredient in recipe['ingredients']:
         if ingredient['heading']:
             flow.append(p(ingredient['text'], 'heading')); continue
+        if ingredient.get('informational'):
+            flow.append(p(ingredient['text'], 'small')); continue
         group = ingredient['prepGroup']; color = COLORS[group]
         # A vector checkbox avoids font-dependent square glyphs, and letters survive grayscale printing.
         from reportlab.graphics.shapes import Drawing, Rect
@@ -53,13 +55,17 @@ def build_recipe(recipe, fmt, page, size):
         table.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),0),
                                    ('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),1),('BOTTOMPADDING',(0,0),(-1,-1),4)]))
         flow.append(table)
-    if fmt == 'letter': flow.append(PageBreak())
+    stage_blocks = []
     for i, stage in enumerate(recipe['stages'],1):
-        flow.append(p(str(i)+'. '+stage['title'], 'heading'))
-        for j, step in enumerate(stage['steps'],1): flow.append(p(str(j)+'. '+step))
-    if recipe['notes']:
-        flow.append(p('Notes', 'heading'))
-        flow += [p(n) for n in recipe['notes']]
+        block = [p(str(i)+'. '+stage['title'], 'heading')]
+        for j, step in enumerate(stage['steps'],1): block.append(p(str(j)+'. '+step))
+        if i == len(recipe['stages']) and recipe['notes']:
+            block.append(p('Notes', 'heading'))
+            block += [p(n) for n in recipe['notes']]
+        stage_blocks.append(block)
+    if len(stage_blocks) > 1 and sum(len(item.text) for item in stage_blocks[-1]) < 200:
+        stage_blocks[-2].extend(stage_blocks.pop())
+    flow.extend(KeepTogether(block) for block in stage_blocks)
     def recipe_footer(canvas, document):
         footer(canvas, document)
         canvas.setFont('Helvetica', 7)
