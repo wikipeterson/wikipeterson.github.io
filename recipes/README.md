@@ -5,7 +5,7 @@ The public site reads `recipes.json`. PDF downloads are prebuilt files in
 source, but this repository currently has no automatic Docs sync or build job.
 Publishing a repository update deploys the saved site snapshot through GitHub Pages.
 
-All 67 recipes on the website use the approved preparation-group format.
+All 136 recipes on the website use the approved preparation-group format.
 The wider Recipe Index may include additional recipes that are not yet on this website.
 
 ## Editorial format
@@ -60,3 +60,7 @@ green salads. Rice and vegetable accompaniments go in Side dishes.
 Corn bread and garlic knots go in Breads; jerky is a snack. Bacon belongs
 in Breakfast. Gorgonzola Cream Sauce for Filet stays in Main dishes because
 the recipe includes cooking two steaks, not just making a standalone sauce.
+
+## Linked recipe import — October 18, 2026
+
+Added 69 recipe pages from 67 previously omitted linked files. The hummus file contains three distinct recipes; the two breakfast-sausage-casserole files are duplicates. Ten linked files remain on the local exception list (nine incomplete recipe/reference notes and one permission-denied Doc). Menu/planning documents and entries without linked files are excluded. Original Docs and Word files remain preserved; site entries link to their source files. Conflicting amounts and missing preparation details are flagged in recipe notes.

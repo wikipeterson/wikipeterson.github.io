@@ -14,7 +14,11 @@ COLORS = {'a': '#657344', 'b': '#a0503b', 'c': '#886522', 'd': '#526b7a', 'separ
 FORMATS = {'kindle': ((446.4, 595.44), 12), 'paperwhite': ((303.12, 403.2), 11), 'letter': ((612, 792), 11)}
 
 def clean(text):
-    return escape(text.replace('–', '-').replace('—', '-').replace('↗', '').replace('’', "'"))
+    import re
+    fractions = {'¼':'1/4','½':'1/2','¾':'3/4','⅓':'1/3','⅔':'2/3','⅛':'1/8','⅜':'3/8','⅝':'5/8','⅞':'7/8','⅙':'1/6','⅚':'5/6'}
+    text = re.sub(r'(\d)([¼½¾⅓⅔⅛⅜⅝⅞⅙⅚])', r'\1 \2', text)
+    for glyph, plain in fractions.items(): text = text.replace(glyph, plain)
+    return escape(text.replace('⁄','/').replace('×','x').replace('–', '-').replace('—', '-').replace('↗', '').replace('’', "'"))
 
 def styles(size):
     return {
