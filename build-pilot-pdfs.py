@@ -3,7 +3,7 @@ from pathlib import Path
 from io import BytesIO
 from html import escape
 import json
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogether, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, KeepTogether, Table, TableStyle, PageBreak
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.colors import HexColor
 from pypdf import PdfReader, PdfWriter
@@ -53,16 +53,20 @@ def build_recipe(recipe, fmt, page, size):
         table.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),0),
                                    ('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),1),('BOTTOMPADDING',(0,0),(-1,-1),4)]))
         flow.append(table)
+    if fmt == 'letter': flow.append(PageBreak())
     for i, stage in enumerate(recipe['stages'],1):
         flow.append(p(str(i)+'. '+stage['title'], 'heading'))
         for j, step in enumerate(stage['steps'],1): flow.append(p(str(j)+'. '+step))
     if recipe['notes']:
         flow.append(p('Notes', 'heading'))
         flow += [p(n) for n in recipe['notes']]
-    flow.append(p('Sources', 'heading'))
-    flow.append(Paragraph('<link href="'+escape(recipe['source'],quote=True)+'">Original recipe</link> | <link href="'+escape(recipe['docUrl'],quote=True)+'">Your Google Doc</link>',st['small']))
-    flow.append(p('Archived for personal use; directions condensed/paraphrased from the original source.', 'small'))
-    doc.build(flow, onFirstPage=footer, onLaterPages=footer)
+    def recipe_footer(canvas, document):
+        footer(canvas, document)
+        canvas.setFont('Helvetica', 7)
+        canvas.drawString(document.leftMargin, 27, 'Original recipe | Google Doc')
+        canvas.linkURL(recipe['source'], (document.leftMargin, 25, document.leftMargin+48, 34), relative=0)
+        canvas.linkURL(recipe['docUrl'], (document.leftMargin+51, 25, document.leftMargin+95, 34), relative=0)
+    doc.build(flow, onFirstPage=recipe_footer, onLaterPages=recipe_footer)
 
 def cookbook(fmt, page, size):
     ordered = sorted(RECIPES, key=lambda r:r['title'].casefold())
