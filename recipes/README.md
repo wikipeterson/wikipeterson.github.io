@@ -64,3 +64,7 @@ the recipe includes cooking two steaks, not just making a standalone sauce.
 ## Linked recipe import — October 18, 2026
 
 Added 69 recipe pages from 67 previously omitted linked files. The hummus file contains three distinct recipes; the two breakfast-sausage-casserole files are duplicates. Ten linked files remain on the local exception list (nine incomplete recipe/reference notes and one permission-denied Doc). Menu/planning documents and entries without linked files are excluded. Original Docs and Word files remain preserved; site entries link to their source files. Conflicting amounts and missing preparation details are flagged in recipe notes.
+
+## Recipe card photos
+
+The collection is a plain searchable directory with green photo cards. The Sicilian Pizza feature and promotional headings have been removed. All 136 cards have representative food photos stored in `images/`; `photos.json` maps recipe IDs to assets and source/license metadata. These are illustrative food photos, not photos of the exact saved recipes. Full author, source, and license credits are in `photo-credits.html`, linked from the collection footer. Photos load lazily; recipes and PDF contents are unchanged.
