@@ -5,7 +5,7 @@ The public site reads `recipes.json`. PDF downloads are prebuilt files in
 source, but this repository currently has no automatic Docs sync or build job.
 Publishing a repository update deploys the saved site snapshot through GitHub Pages.
 
-All 66 recipes on the website use the approved preparation-group format.
+All 67 recipes on the website use the approved preparation-group format.
 The wider Recipe Index may include additional recipes that are not yet on this website.
 
 ## Editorial format
