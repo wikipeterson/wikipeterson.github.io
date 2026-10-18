@@ -4,8 +4,8 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f4ec"><meta name="description" content="The Wikipeterson recipe collection. Find something good, cook with clear steps, and take your cookbook to Kindle.">
   <title>Recipes · Wikipeterson</title>
-  <link rel="stylesheet" href="./style.css?v=recipe-categories-1">
-  <script src="./vendor/pdf-lib.min.js" defer></script><script src="./app.js?v=recipe-categories-1" defer></script>
+  <link rel="stylesheet" href="./style.css?v=artichoke-1">
+  <script src="./vendor/pdf-lib.min.js" defer></script><script src="./app.js?v=artichoke-1" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to recipes</a>
@@ -15,7 +15,7 @@
   <div class="dialog-top"><span class="eyebrow">YOUR COOKBOOK, TO GO</span><button class="icon-button" id="export-close" aria-label="Close PDF export">×</button></div>
   <h2 id="export-title">A little less screen.<br>A little more cooking.</h2>
   <p>Download a clean, searchable PDF with ingredients, clear steps, and your recipe notes.</p>
-  <fieldset><legend>What would you like to take?</legend><label><input type="radio" name="scope" value="all" checked> The whole cookbook <span>65 recipes, with a linked contents page</span></label><label id="scope-current-label"><input type="radio" name="scope" value="current"> This recipe <span id="current-export-name"></span></label><label id="scope-selected-label"><input type="radio" name="scope" value="selected"> My selection <span id="selection-export-count"></span></label></fieldset>
+  <fieldset><legend>What would you like to take?</legend><label><input type="radio" name="scope" value="all" checked> The whole cookbook <span>66 recipes, with a linked contents page</span></label><label id="scope-current-label"><input type="radio" name="scope" value="current"> This recipe <span id="current-export-name"></span></label><label id="scope-selected-label"><input type="radio" name="scope" value="selected"> My selection <span id="selection-export-count"></span></label></fieldset>
   <fieldset><legend>Page format</legend><div class="format-options"><label><input type="radio" name="format" value="kindle" checked> Scribe <span>6.2 × 8.27 in · 12 pt text</span></label><label><input type="radio" name="format" value="paperwhite"> Paperwhite <span>4.21 × 5.6 in · 11 pt text</span></label><label><input type="radio" name="format" value="letter"> Print <span>US Letter · 8.5 × 11 in</span></label></div></fieldset>
   <button class="button accent download-button" id="download-pdf">Download PDF <span aria-hidden="true">↓</span></button><p id="export-status" role="status" class="small"></p>
   <p class="kindle-note">Then upload the PDF using Amazon’s <a href="https://www.amazon.com/sendtokindle" target="_blank" rel="noopener noreferrer">Send to Kindle</a>, or use your usual Kindle email address. This site downloads the file; it does not email it.</p>
