@@ -46,3 +46,17 @@ and rendered PDF pages before publishing. Automatic Docs-to-site synchronization
 is a separate integration, not part of this formatting work.
 
 Temperature-guide entries use `informational: true`; they render as reference text, not ingredient checkboxes. Recipes with no shared prep bowl use an empty `prepGroups` object and charcoal checkboxes.
+
+## Categories
+
+Every recipe has one primary category, chosen by its main use at the table,
+not by protein or equipment. The sidebar order follows a meal: Breakfast,
+Appetizers & snacks, Main dishes, Soups, Salads, Side dishes, Breads,
+Sauces & dips, Desserts, Drinks. Cooking method remains a separate filter.
+
+Use Main dishes for meal-sized sandwiches, wraps, pasta, pizza, casseroles,
+and meat or fish plates. Use Salads for chicken salads as well as pasta and
+green salads. Rice and vegetable accompaniments go in Side dishes.
+Corn bread and garlic knots go in Breads; jerky is a snack. Bacon belongs
+in Breakfast. Gorgonzola Cream Sauce for Filet stays in Main dishes because
+the recipe includes cooking two steaks, not just making a standalone sauce.
