@@ -82,7 +82,7 @@ def cookbook(fmt, page, size):
     ordered = sorted(RECIPES, key=lambda r:r['title'].casefold())
     front = BytesIO(); st=styles(size)
     flow = [Paragraph('The Wikipeterson Cookbook',st['title']), Paragraph(f'{len(RECIPES)} recipes to keep.',st['body']),
-            Paragraph('Recipe collection updated October 18, 2026',st['small']),
+            Paragraph('Recipe collection updated October 19, 2026',st['small']),
             Paragraph('Contents',st['heading'])]
     for r in ordered:
         flow.append(Paragraph('<link href="#'+r['id']+'">'+clean(r['title'])+'</link>',st['small']))
