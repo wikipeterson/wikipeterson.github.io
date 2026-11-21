@@ -393,6 +393,11 @@ figure.portrait-card { margin: 0; padding: 12px; }
 .pstats em { display: block; font-size: 0.75rem; color: var(--sepia); }
 @media (max-width: 560px) { .vcanvas { height: 230px; } .viz { padding: 12px 8px; } .pc { height: 26px; font-size: 0.55rem; } }
 
+.pull { margin: 4px 0 24px; padding: 6px 0 6px 22px; border-left: 4px solid var(--gold); }
+.pull p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem !important; line-height: 1.5 !important; color: var(--ink); margin-bottom: 8px !important; }
+.pull cite { display: block; font-size: 0.85rem; color: var(--sepia); font-style: normal; letter-spacing: 0.04em; }
+.pull cite::before { content: '— '; }
+
 /* ── FOOTER ── */
 .site-footer {
   margin-top: 60px;
@@ -448,6 +453,12 @@ figure.portrait-card { margin: 0; padding: 12px; }
   <!-- ═══════════ INTRO: NEWS ═══════════ -->
   <div class="section">
     <div class="section-title" id="news">What just happened</div>
+
+    <blockquote class="pull">
+      <p>"If I were to awaken after having slept for a thousand years, my first question would be: Has the Riemann Hypothesis been proven?"</p>
+      <cite>attributed to David Hilbert</cite>
+    </blockquote>
+    <p>In 1900, the German mathematician David Hilbert presented a famous list of 23 problems he thought would shape the coming century. The Riemann Hypothesis was on it. More than a hundred years later, most of Hilbert's problems had been solved, but this one was still open. Hilbert was ready to wait a thousand years for the answer. If the new proof holds up, it took 126.</p>
 
     <div class="callout">
       <div class="callout-label">Status as of November 21, 2026</div>
