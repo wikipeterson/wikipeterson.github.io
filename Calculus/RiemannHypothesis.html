@@ -551,10 +551,14 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   <!-- ═══════════ 3. INFINITE PRIMES ═══════════ -->
   <div class="section">
     <div class="section-title" id="infinite">3. The payoff: there are infinitely many primes</div>
-    <p>Now go back to \(s = 1\). The sum side is the harmonic series:</p>
-    \[ 1 + \frac12 + \frac13 + \frac14 + \cdots = \infty \]
-    <p>You know from class that it diverges.</p>
-    <p>The product side at \(s = 1\) has one factor of \(\frac{p}{p-1}\) for each prime \(p\). Look at what it does:</p>
+    <p>Now plug \(s = 1\) into Euler's product formula:</p>
+    \[ \zeta(1) = \sum_{n=1}^{\infty} \frac{1}{n} = \prod_{p \text{ prime}} \frac{1}{1-\frac1p} \]
+    <p>The sum side is \(\zeta(1)\), and it's an old friend: the <strong>harmonic series</strong>.</p>
+    \[ \zeta(1) = 1 + \frac12 + \frac13 + \frac14 + \cdots = \infty \]
+    <p>You know from class that it diverges, so \(\zeta(1)\) is infinite. (This is the \(p = 1\) case of the p-series test from Section 1.)</p>
+    <p>On the product side, each factor simplifies: \(\dfrac{1}{1-\frac1p} = \dfrac{p}{p-1}\). So
+    \[ \zeta(1) = \prod_{p \text{ prime}} \frac{p}{p-1} = \frac21 \cdot \frac32 \cdot \frac54 \cdot \frac76 \cdots \]
+    Look at what the product does as we include more primes:</p>
     <div class="tbl-wrap"><table>
       <tr><th>Primes included</th><th>New factor</th><th>Running product</th></tr>
       <tr><td>2</td><td>\(\tfrac21\)</td><td class="num">2.000</td></tr>
@@ -566,7 +570,7 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     </table></div>
     <p>In product notation, the last row is \(\prod_{p \le 13} \frac{p}{p-1} \approx 5.214\), the product over every prime up to 13. The product keeps growing, though slowly.</p>
     <p><strong>Suppose there were only finitely many primes.</strong> Then the product would have only finitely many factors. Each factor is an ordinary number, so the product would be an ordinary, finite number.</p>
-    <p>The product equals the harmonic series, and the harmonic series is infinite. That's a contradiction, so the assumption was wrong:</p>
+    <p>But the product <em>is</em> \(\zeta(1)\), and \(\zeta(1)\) is infinite. A finite number can't equal \(\infty\). That's a contradiction, so the assumption was wrong:</p>
     <div class="big-claim">There must be infinitely many primes.</div>
     <p>A fact from your calculus course (the harmonic series diverges) proves a fact about whole numbers (the primes never run out). Euclid proved the same result around 300 BC in a different way. Euler's proof matters because it shows that <strong>calculus tools like series, limits, and convergence can answer questions about primes.</strong> Riemann's work, and the Riemann Hypothesis, builds directly on this idea.</p>
     <div class="note">The fine print: at \(s = 1\) we're rearranging a divergent series, which calculus says to be careful with. Mathematicians make the argument airtight by using \(s\) slightly bigger than 1 and letting \(s \to 1^+\).</div>
