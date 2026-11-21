@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Riemann Hypothesis — Wikipeterson</title>
+<meta name="description" content="An explanation of the Riemann Hypothesis for AP Calculus BC students, starting from p-series and geometric series.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    tags: 'none'
+  },
+  chtml: { scale: 1.1 },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #1a1410;
+  --paper:  #f5f0e8;
+  --cream:  #ede7d9;
+  --sepia:  #8b6f47;
+  --red:    #7A1518;
+  --gold:   #F0B429;
+  --gold2:  #F5C842;
+  --line:   rgba(139,111,71,0.22);
+  --shadow: rgba(26,20,16,0.10);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+  background-attachment: fixed;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--red);
+  color: var(--paper);
+  text-align: center;
+  padding: 22px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px); }
+.masthead::after  { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold)); }
+.home-btn { position:absolute; top:10px; left:12px; z-index:10; display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:6px; padding:5px 10px; color:rgba(255,255,255,0.85); font-family:'Source Serif 4',Georgia,serif; font-size:0.75rem; text-decoration:none; letter-spacing:.05em; transition:background .18s; }
+.home-btn:hover { background:rgba(255,255,255,0.22); color:#fff; }
+.masthead-rule        { height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 10px; width:160px; }
+.masthead-wordmark    { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; letter-spacing:0.02em; line-height:1.1; position:relative; }
+.masthead-topic       { font-size:clamp(0.82rem,2vw,1rem); letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.82); margin-top:6px; font-weight:300; position:relative; }
+.masthead-brand       { font-family:'Playfair Display',serif; font-size:clamp(0.82rem,2vw,1rem); font-weight:700; letter-spacing:0.08em; color:var(--gold2); margin-top:8px; position:relative; }
+.masthead-rule-bottom { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto 0; width:160px; }
+
+/* ── DOCUMENT ── */
+.doc { max-width: 740px; margin: 0 auto; padding: 48px 28px 100px; }
+
+/* ── TABLE OF CONTENTS ── */
+.toc {
+  background: white;
+  border-left: 4px solid var(--gold);
+  border-radius: 2px;
+  padding: 20px 24px;
+  margin-bottom: 52px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.toc h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 12px;
+}
+.toc ol { list-style: decimal; padding-left: 20px; columns: 2; column-gap: 32px; }
+.toc ol li { margin-bottom: 5px; break-inside: avoid; }
+.toc ol li a { font-size: 0.9rem; color: var(--red); text-decoration: none; transition: color .15s; }
+.toc ol li a:hover { color: var(--gold); }
+
+/* ── SECTIONS ── */
+.section { margin-bottom: 64px; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--red);
+  margin-bottom: 28px;
+  scroll-margin-top: 20px;
+}
+.sub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--red);
+  margin: 40px 0 14px;
+  scroll-margin-top: 20px;
+}
+.sub-sub-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin: 28px 0 10px;
+}
+.section p, .section li { font-size: 1.02rem; line-height: 1.85; }
+.section p { margin-bottom: 14px; }
+.section ul { padding-left: 24px; margin-bottom: 14px; }
+.section li { margin-bottom: 4px; }
+.section strong { color: var(--red); font-weight: 600; }
+mjx-container[display="true"] { margin: 16px 0 !important; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+
+/* ── TABLES ── */
+.tbl-wrap { overflow-x: auto; margin: 18px 0 22px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 10px var(--shadow);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.97rem;
+}
+th {
+  background: var(--red);
+  color: var(--paper);
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+td { padding: 9px 14px; border-top: 1px solid var(--line); }
+tr:nth-child(even) td { background: #fbf8f2; }
+td.num { font-variant-numeric: tabular-nums; }
+tr.final td { font-weight: 700; color: var(--red); background: #fdf6e3; }
+
+/* ── CALLOUTS ── */
+.callout {
+  background: white;
+  border-left: 4px solid var(--red);
+  border-radius: 2px;
+  padding: 16px 20px;
+  margin: 22px 0;
+  box-shadow: 0 2px 10px var(--shadow);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+.callout.gold { border-left-color: var(--gold); }
+.callout-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  margin-bottom: 6px;
+}
+.big-claim {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--red);
+  margin: 26px 0;
+}
+.note {
+  font-size: 0.9rem;
+  color: var(--sepia);
+  font-style: italic;
+  line-height: 1.7;
+  margin-top: 10px;
+  padding-left: 14px;
+  border-left: 2px solid var(--gold);
+}
+
+/* ── FIGURE ── */
+figure { margin: 24px 0; background: white; box-shadow: 0 2px 10px var(--shadow); border-radius: 4px; padding: 14px; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-align: center; margin-top: 8px; line-height: 1.6; }
+
+/* ── FOOTER ── */
+.site-footer {
+  margin-top: 60px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--sepia);
+  font-style: italic;
+}
+.footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); width:80px; margin:0 auto 12px; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); border-radius:3px; }
+
+@media (max-width: 560px) {
+  .toc ol { columns: 1; }
+  .doc { padding: 32px 16px 80px; }
+  th, td { padding: 8px 9px; }
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <a class="home-btn" href="https://wikipeterson.org/Calculus/">&#8592; Home</a>
+  <div class="masthead-rule"></div>
+  <div class="masthead-wordmark">The Riemann Hypothesis</div>
+  <div class="masthead-topic">Explained for Calculus Students</div>
+  <div class="masthead-brand">Wikipeterson Math</div>
+  <div class="masthead-rule-bottom"></div>
+</div>
+
+<div class="doc">
+
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#pseries">Start with p-series</a></li>
+      <li><a href="#primes">Why primes come in</a></li>
+      <li><a href="#infinite">Infinitely many primes</a></li>
+      <li><a href="#spread">How are primes spread out?</a></li>
+      <li><a href="#extend">Beyond where the series works</a></li>
+      <li><a href="#hypothesis">The hypothesis itself</a></li>
+      <li><a href="#matters">Why it matters</a></li>
+      <li><a href="#bottom">The bottom line</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══════════ 1. P-SERIES ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="pseries">1. Start with something you know: p-series</div>
+
+    <p>In BC Calculus you learned about the <strong>p-series</strong>:</p>
+    \[ \sum_{n=1}^{\infty} \frac{1}{n^p} = 1 + \frac{1}{2^p} + \frac{1}{3^p} + \frac{1}{4^p} + \cdots \]
+    <p>It <strong>converges when \(p > 1\)</strong> and <strong>diverges when \(p \le 1\)</strong>. For example:</p>
+    <ul>
+      <li>\(p = 1\) gives the harmonic series \(1 + \tfrac12 + \tfrac13 + \tfrac14 + \cdots\), which diverges.</li>
+      <li>\(p = 2\) gives \(1 + \tfrac14 + \tfrac19 + \tfrac1{16} + \cdots\), which converges.</li>
+    </ul>
+    <p>Now think of the p-series as a function of \(p\), and call the input \(s\) instead of \(p\). That function is the <strong>Riemann zeta function</strong>:</p>
+    \[ \zeta(s) = 1 + \frac{1}{2^s} + \frac{1}{3^s} + \frac{1}{4^s} + \cdots \]
+    <p>So \(\zeta(2)\) is just the sum of the \(p = 2\) series. Leonhard Euler found its exact value in 1734:</p>
+    \[ \zeta(2) = 1 + \frac14 + \frac19 + \frac{1}{16} + \cdots = \frac{\pi^2}{6} \]
+    <p>It's strange that \(\pi\), a number about circles, shows up in a sum of reciprocal squares.</p>
+  </div>
+
+  <!-- ═══════════ 2. PRIMES ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="primes">2. Why mathematicians care: prime numbers</div>
+
+    <div class="sub-title">What's a prime?</div>
+    <p>A <strong>prime number</strong> is a whole number greater than 1 whose only divisors are 1 and itself:</p>
+    \[ 2,\ 3,\ 5,\ 7,\ 11,\ 13,\ 17,\ 19,\ 23,\ 29,\ 31,\ \ldots \]
+    <p>Numbers that aren't prime are called <strong>composite</strong>, and every composite number can be broken down into primes:</p>
+    <div class="tbl-wrap"><table>
+      <tr><th>Number</th><th>Prime factorization</th></tr>
+      <tr><td>12</td><td>\(2 \cdot 2 \cdot 3 = 2^2 \cdot 3\)</td></tr>
+      <tr><td>18</td><td>\(2 \cdot 3 \cdot 3 = 2 \cdot 3^2\)</td></tr>
+      <tr><td>60</td><td>\(2 \cdot 2 \cdot 3 \cdot 5 = 2^2 \cdot 3 \cdot 5\)</td></tr>
+      <tr><td>77</td><td>\(7 \cdot 11\)</td></tr>
+      <tr><td>1000</td><td>\(2^3 \cdot 5^3\)</td></tr>
+    </table></div>
+    <p>The key fact is that <strong>each number has exactly one prime factorization.</strong> You can rearrange the order (\(2 \cdot 3\) or \(3 \cdot 2\)), but you can never factor 60 into a different set of primes. This is called the <strong>Fundamental Theorem of Arithmetic</strong>, and it's why primes are the "atoms" of the whole numbers. Every number is built from them in exactly one way.</p>
+
+    <div class="sub-title">Step 1: A geometric series for each prime</div>
+    <p>To keep the arithmetic simple, use \(s = 1\) for now. Recall the geometric series formula:</p>
+    \[ 1 + r + r^2 + r^3 + \cdots = \frac{1}{1-r} \quad \text{when } |r| \lt 1 \]
+    <p>Apply it with \(r = \tfrac12\):</p>
+    \[ 1 + \frac12 + \frac14 + \frac18 + \frac1{16} + \cdots = \frac{1}{1 - \frac12} = 2 \]
+    <p>Every denominator here is a <strong>power of 2</strong>. Keep an eye on the denominators, because that's where the whole numbers will show up.</p>
+    <p>Now do it with \(r = \tfrac13\):</p>
+    \[ 1 + \frac13 + \frac19 + \frac1{27} + \cdots = \frac{1}{1-\frac13} = \frac32 \]
+    <p>Every denominator here is a <strong>power of 3</strong>.</p>
+    <p>We can build one of these series for every prime: one for 2, one for 3, one for 5, one for 7, and so on.</p>
+
+    <div class="sub-title">Step 2: Multiply two of them together</div>
+    <p>Multiply the "2-series" by the "3-series":</p>
+    \[ \left(1 + \frac12 + \frac14 + \frac18 + \cdots\right)\left(1 + \frac13 + \frac19 + \frac1{27} + \cdots\right) \]
+    <p><strong>Using the formula,</strong> the answer is easy:</p>
+    \[ 2 \cdot \frac32 = 3 \]
+    <p><strong>What does that 3 consist of?</strong> Expand the product the long way. Each term comes from choosing one term from each series and multiplying them:</p>
+    <ul>
+      <li>\(\tfrac12 \cdot 1 = \tfrac12\)</li>
+      <li>\(\tfrac14 \cdot \tfrac13 = \tfrac1{12}\)</li>
+      <li>\(\tfrac12 \cdot \tfrac19 = \tfrac1{18}\)</li>
+    </ul>
+    <p>Putting all the terms in order:</p>
+    \[ 1 + \frac12 + \frac13 + \frac14 + \frac16 + \frac18 + \frac19 + \frac1{12} + \frac1{16} + \frac1{18} + \cdots = 3 \]
+    <p>Every number that can be built from only 2s and 3s <strong>appears as a denominator</strong>, and each one appears exactly once. The only way to get \(\tfrac1{12}\) is \(\tfrac14 \cdot \tfrac13\), because \(12 = 2^2 \cdot 3\) is the only prime factorization of 12.</p>
+    <p>Some denominators are missing: 5, 7, 10, 11, and so on. They need primes other than 2 and 3.</p>
+
+    <div class="sub-title">Step 3: Bring in more primes</div>
+    <p>Multiply in the 5-series, \(1 + \tfrac15 + \tfrac1{25} + \cdots\). That adds \(\tfrac15, \tfrac1{10}, \tfrac1{15}, \tfrac1{20}, \tfrac1{25}\), and so on: <strong>every denominator that has 5 as a factor</strong>.</p>
+    <p>Then multiply in the 7-series, the 11-series, and the rest. After all the primes are included, <strong>every whole number appears exactly once as a denominator</strong>, because every whole number has exactly one prime factorization:</p>
+    \[ \underbrace{\left(\frac{1}{1-\frac12}\right)\left(\frac{1}{1-\frac13}\right)\left(\frac{1}{1-\frac15}\right)\left(\frac{1}{1-\frac17}\right)\cdots}_{\text{one factor for each prime}} = \underbrace{1 + \frac12 + \frac13 + \frac14 + \frac15 + \cdots}_{\text{every whole number as a denominator}} \]
+
+    <div class="sub-sub-title">A new piece of notation: Π for products</div>
+    <p>Writing out an infinite product is awkward, so mathematicians use a shorthand. You already know <strong>sigma notation</strong> for sums:</p>
+    \[ \sum_{k=1}^{4} k = 1 + 2 + 3 + 4 = 10 \]
+    <p>The capital Greek letter \(\Sigma\) (sigma, an "S" for <strong>s</strong>um) means "add up all the terms."</p>
+    <p><strong>Capital pi</strong> works the same way. The letter \(\Pi\) (a "P" for <strong>p</strong>roduct) means "multiply all the terms":</p>
+    \[ \prod_{k=1}^{4} k = 1 \cdot 2 \cdot 3 \cdot 4 = 24 \]
+    <p>That one is \(4!\), so factorials can be written as \(n! = \prod_{k=1}^{n} k\). Another example:</p>
+    \[ \prod_{k=1}^{3} \left(1 + \frac1k\right) = \left(1 + \frac11\right)\left(1 + \frac12\right)\left(1 + \frac13\right) = 2 \cdot \frac32 \cdot \frac43 = 4 \]
+    <p>For Euler's formula we want one factor <strong>for each prime</strong>, so instead of counting \(k = 1, 2, 3, \ldots\) we write the letter \(p\) under the \(\Pi\). That means "multiply over every prime \(p\)":</p>
+    \[ \prod_{p \text{ prime}} \frac{1}{1-\frac1p} = \frac{1}{1-\frac12} \cdot \frac{1}{1-\frac13} \cdot \frac{1}{1-\frac15} \cdot \frac{1}{1-\frac17} \cdots \]
+
+    <div class="sub-sub-title">Euler's product formula</div>
+    <p>This works for any power \(s\), not only \(s = 1\). Replace each fraction with its \(s\)-th power and you get Euler's product formula. With both shorthands it fits on one line:</p>
+    <div class="callout">
+      \[ \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} = \prod_{p \text{ prime}} \frac{1}{1-\frac{1}{p^s}} \]
+    </div>
+    <p>The \(\Sigma\) side adds over <strong>all whole numbers</strong>. The \(\Pi\) side multiplies over <strong>primes only</strong>. The zeta function connects the two.</p>
+
+    <div class="sub-title">Checking it with numbers (s = 2)</div>
+    <p>With \(s = 2\), the sum side is \(1 + \tfrac14 + \tfrac19 + \cdots\), which Euler showed equals \(\pi^2/6 \approx \mathbf{1.6449}\). Watch the product side get closer to that value as we include more primes:</p>
+    <div class="tbl-wrap"><table>
+      <tr><th>Primes included</th><th>New factor</th><th>Running product</th></tr>
+      <tr><td>2</td><td>\(\tfrac43\)</td><td class="num">1.3333</td></tr>
+      <tr><td>2, 3</td><td>\(\tfrac98\)</td><td class="num">1.5000</td></tr>
+      <tr><td>2, 3, 5</td><td>\(\tfrac{25}{24}\)</td><td class="num">1.5625</td></tr>
+      <tr><td>2, 3, 5, 7</td><td>\(\tfrac{49}{48}\)</td><td class="num">1.5951</td></tr>
+      <tr><td>2, …, 11</td><td>\(\tfrac{121}{120}\)</td><td class="num">1.6083</td></tr>
+      <tr><td>2, …, 13</td><td>\(\tfrac{169}{168}\)</td><td class="num">1.6179</td></tr>
+      <tr class="final"><td>all primes</td><td></td><td class="num">1.6449…</td></tr>
+    </table></div>
+    <p>Each new prime nudges the product closer to \(\pi^2/6\).</p>
+  </div>
+
+  <!-- ═══════════ 3. INFINITE PRIMES ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="infinite">3. The payoff: there are infinitely many primes</div>
+    <p>Now go back to \(s = 1\). The sum side is the harmonic series:</p>
+    \[ 1 + \frac12 + \frac13 + \frac14 + \cdots = \infty \]
+    <p>You know from class that it diverges.</p>
+    <p>The product side at \(s = 1\) has one factor of \(\frac{p}{p-1}\) for each prime \(p\). Look at what it does:</p>
+    <div class="tbl-wrap"><table>
+      <tr><th>Primes included</th><th>New factor</th><th>Running product</th></tr>
+      <tr><td>2</td><td>\(\tfrac21\)</td><td class="num">2.000</td></tr>
+      <tr><td>2, 3</td><td>\(\tfrac32\)</td><td class="num">3.000</td></tr>
+      <tr><td>2, 3, 5</td><td>\(\tfrac54\)</td><td class="num">3.750</td></tr>
+      <tr><td>2, 3, 5, 7</td><td>\(\tfrac76\)</td><td class="num">4.375</td></tr>
+      <tr><td>2, …, 11</td><td>\(\tfrac{11}{10}\)</td><td class="num">4.813</td></tr>
+      <tr><td>2, …, 13</td><td>\(\tfrac{13}{12}\)</td><td class="num">5.214</td></tr>
+    </table></div>
+    <p>In product notation, the last row is \(\prod_{p \le 13} \frac{p}{p-1} \approx 5.214\), the product over every prime up to 13. The product keeps growing, though slowly.</p>
+    <p><strong>Suppose there were only finitely many primes.</strong> Then the product would have only finitely many factors. Each factor is an ordinary number, so the product would be an ordinary, finite number.</p>
+    <p>The product equals the harmonic series, and the harmonic series is infinite. That's a contradiction, so the assumption was wrong:</p>
+    <div class="big-claim">There must be infinitely many primes.</div>
+    <p>A fact from your calculus course (the harmonic series diverges) proves a fact about whole numbers (the primes never run out). Euclid proved the same result around 300 BC in a different way. Euler's proof matters because it shows that <strong>calculus tools like series, limits, and convergence can answer questions about primes.</strong> Riemann's work, and the Riemann Hypothesis, builds directly on this idea.</p>
+    <div class="note">The fine print: at \(s = 1\) we're rearranging a divergent series, which calculus says to be careful with. Mathematicians make the argument airtight by using \(s\) slightly bigger than 1 and letting \(s \to 1^+\).</div>
+  </div>
+
+  <!-- ═══════════ 4. SPREAD ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="spread">4. The question nobody can answer: how are the primes spread out?</div>
+    <p>Primes look random: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, … Sometimes they come close together, as with 11 and 13, and sometimes there are big gaps between them.</p>
+    <p>Large-scale patterns do exist. Around a number \(x\), roughly 1 out of every \(\ln(x)\) numbers is prime. (This is the <strong>Prime Number Theorem</strong>, proved in 1896.) Near 1,000, about 1 in 7 numbers is prime. Near 1,000,000, about 1 in 14 is.</p>
+    <p>The open question is <strong>how accurate that estimate is.</strong> Does the actual count of primes stay close to the prediction, or does it sometimes wander far from it? The answer depends on the zeta function.</p>
+  </div>
+
+  <!-- ═══════════ 5. EXTEND ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="extend">5. The tricky part: inputs where the series diverges</div>
+    <p>The series for \(\zeta(s)\) only works when \(s > 1\). In 1859, Bernhard Riemann found a way to extend \(\zeta\) to other inputs, including negative numbers and even <strong>complex numbers</strong> (numbers like \(0.5 + 14i\)).</p>
+    <p>A rough analogy from calculus: the geometric series</p>
+    \[ 1 + x + x^2 + x^3 + \cdots = \frac{1}{1-x} \]
+    <p>only converges when \(|x| \lt 1\). The formula \(\frac{1}{1-x}\), however, makes sense for almost every \(x\). For \(x = 3\) it gives \(-\tfrac12\), even though the series diverges there. The formula <strong>extends</strong> the function beyond the region where the series works. Riemann did the same kind of thing for zeta, using much harder math.</p>
+  </div>
+
+  <!-- ═══════════ 6. HYPOTHESIS ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="hypothesis">6. The hypothesis itself</div>
+    <p>Once zeta is defined everywhere, we can ask: <strong>where does \(\zeta(s) = 0\)?</strong></p>
+    <p>Some zeros are easy to find: \(s = -2, -4, -6, \ldots\) These are called the "trivial zeros." All the other zeros are complex numbers, and they lie in a narrow vertical strip in the complex plane between real part 0 and real part 1.</p>
+    <p>Riemann computed a few of these zeros. Every one he found had real part <strong>exactly ½</strong>:</p>
+    <ul>
+      <li>\(\tfrac12 + 14.13i\)</li>
+      <li>\(\tfrac12 + 21.02i\)</li>
+      <li>\(\tfrac12 + 25.01i\)</li>
+      <li>…</li>
+    </ul>
+
+    <figure>
+      <svg viewBox="0 0 620 380" role="img" aria-label="The complex plane with trivial zeros at negative even integers, the critical strip between real part 0 and 1, and the first ten nontrivial zeros on the line real part one half.">
+        <!-- critical strip -->
+        <rect x="445" y="20" width="55" height="310" fill="#F0B429" opacity="0.18"/>
+        <!-- grid -->
+        <g stroke="rgba(139,111,71,0.18)" stroke-width="1">
+          <line x1="40" y1="270" x2="580" y2="270"/>
+          <line x1="40" y1="210" x2="580" y2="210"/>
+          <line x1="40" y1="150" x2="580" y2="150"/>
+          <line x1="40" y1="90"  x2="580" y2="90"/>
+          <line x1="40" y1="30"  x2="580" y2="30"/>
+        </g>
+        <!-- axes -->
+        <line x1="40" y1="330" x2="590" y2="330" stroke="#1a1410" stroke-width="1.5"/>
+        <line x1="445" y1="345" x2="445" y2="14" stroke="#1a1410" stroke-width="1.5"/>
+        <!-- critical line -->
+        <line x1="472.5" y1="330" x2="472.5" y2="20" stroke="#7A1518" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <!-- x ticks -->
+        <g font-family="Source Serif 4, Georgia, serif" font-size="13" fill="#1a1410" text-anchor="middle">
+          <text x="115" y="350">−6</text>
+          <text x="225" y="350">−4</text>
+          <text x="335" y="350">−2</text>
+          <text x="438" y="350">0</text>
+          <text x="505" y="350">1</text>
+          <text x="560" y="350">2</text>
+        </g>
+        <!-- y ticks -->
+        <g font-family="Source Serif 4, Georgia, serif" font-size="12" fill="#8b6f47" text-anchor="end">
+          <text x="438" y="274">10i</text>
+          <text x="438" y="214">20i</text>
+          <text x="438" y="154">30i</text>
+          <text x="438" y="94">40i</text>
+          <text x="438" y="34">50i</text>
+        </g>
+        <!-- trivial zeros -->
+        <g fill="#8b6f47">
+          <circle cx="115" cy="330" r="5"/>
+          <circle cx="225" cy="330" r="5"/>
+          <circle cx="335" cy="330" r="5"/>
+        </g>
+        <text x="225" y="315" font-family="Source Serif 4, Georgia, serif" font-size="13" font-style="italic" fill="#8b6f47" text-anchor="middle">trivial zeros</text>
+        <!-- nontrivial zeros: y = 330 - 6*im -->
+        <g fill="#7A1518">
+          <circle cx="472.5" cy="245.2" r="4.5"/>
+          <circle cx="472.5" cy="203.9" r="4.5"/>
+          <circle cx="472.5" cy="179.9" r="4.5"/>
+          <circle cx="472.5" cy="147.5" r="4.5"/>
+          <circle cx="472.5" cy="132.4" r="4.5"/>
+          <circle cx="472.5" cy="104.5" r="4.5"/>
+          <circle cx="472.5" cy="84.5"  r="4.5"/>
+          <circle cx="472.5" cy="70.0"  r="4.5"/>
+          <circle cx="472.5" cy="41.9"  r="4.5"/>
+          <circle cx="472.5" cy="31.4"  r="4.5"/>
+        </g>
+        <g font-family="Source Serif 4, Georgia, serif" font-size="13" fill="#7A1518">
+          <text x="508" y="249">½ + 14.13i</text>
+          <text x="508" y="208">½ + 21.02i</text>
+          <text x="508" y="184">½ + 25.01i</text>
+        </g>
+        <text x="472.5" y="370" font-family="Source Serif 4, Georgia, serif" font-size="12" font-style="italic" fill="#7A1518" text-anchor="middle">real part = ½</text>
+      </svg>
+      <figcaption>The first ten non-trivial zeros, all on the dashed line with real part ½. The shaded band is the strip between real part 0 and real part 1, where all non-trivial zeros must lie.</figcaption>
+    </figure>
+
+    <div class="callout gold">
+      <div class="callout-label">The Riemann Hypothesis</div>
+      <em>Every</em> non-trivial zero of the zeta function has real part exactly ½. In other words, all of them sit on one vertical line, called the "critical line."
+    </div>
+    <p>Computers have checked more than ten trillion zeros, and all of them are on the line. That still doesn't count as proof, because there are infinitely many zeros, and one exception would make the hypothesis false.</p>
+  </div>
+
+  <!-- ═══════════ 7. MATTERS ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="matters">7. Why it matters</div>
+    <p>Riemann showed that the zeros of zeta control the "error" in the prime count, much as frequencies control the shape of a sound wave. Each zero adds a small wobble to how the primes are distributed.</p>
+    <ul>
+      <li><strong>If the Riemann Hypothesis is true,</strong> the wobbles stay as small as possible. The primes would be as evenly spread as they could be, and the Prime Number Theorem estimate would be very accurate.</li>
+      <li><strong>If it's false,</strong> the primes have irregularities larger than mathematicians expect.</li>
+    </ul>
+    <p>Hundreds of published theorems begin with "Assuming the Riemann Hypothesis…" If it's proven, all of them become true at once.</p>
+  </div>
+
+  <!-- ═══════════ 8. BOTTOM LINE ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="bottom">8. The bottom line</div>
+    <p>The Riemann Hypothesis has been unsolved for more than 165 years. It is one of the seven <strong>Millennium Prize Problems</strong>, and the Clay Mathematics Institute will pay <strong>$1,000,000</strong> for a proof. It starts from the p-series, a topic in your own course, and leads to one of the hardest open questions about prime numbers.</p>
+  </div>
+
+  <div class="site-footer">
+    <div class="footer-rule"></div>
+    wikipeterson.org
+  </div>
+
+</div>
+</body>
+</html>
