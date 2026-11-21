@@ -85,6 +85,10 @@ body {
 .toc ol { list-style: decimal; padding-left: 20px; columns: 2; column-gap: 32px; }
 .toc ol li { margin-bottom: 5px; break-inside: avoid; }
 .toc ol li a { font-size: 0.9rem; color: var(--red); text-decoration: none; transition: color .15s; }
+.toc-news { margin-bottom: 10px; }
+.toc-news a { font-size: 0.92rem; font-weight: 600; color: var(--red); text-decoration: none; }
+.toc-news a:hover { color: var(--gold); }
+.section .note a { color: var(--red); }
 .toc ol li a:hover { color: var(--gold); }
 
 /* ── SECTIONS ── */
@@ -417,6 +421,7 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
 
   <div class="toc">
     <h2>Contents</h2>
+    <div class="toc-news"><a href="#news">Start here: What just happened (November 2026)</a></div>
     <ol>
       <li><a href="#pseries">Start with p-series</a></li>
       <li><a href="#primes">Why primes come in</a></li>
@@ -427,6 +432,34 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
       <li><a href="#matters">Why it matters</a></li>
       <li><a href="#bottom">The bottom line</a></li>
     </ol>
+  </div>
+
+  <!-- ═══════════ INTRO: NEWS ═══════════ -->
+  <div class="section">
+    <div class="section-title" id="news">What just happened</div>
+
+    <div class="callout">
+      <div class="callout-label">Status as of November 21, 2026</div>
+      A proof of the Riemann Hypothesis has been <strong>claimed</strong> and is being checked by mathematicians. It is not yet confirmed.
+    </div>
+
+    <p>On Friday, November 20, 2026, the mathematician <strong>Levent Alpöge</strong>, who works at the AI company Anthropic, posted a short note that began: <em>"I believe I have, working with Claude, discovered a proof of the Riemann Hypothesis."</em> Claude is Anthropic's AI model. Alpöge said that near the end, Claude "far outpaced" him.</p>
+    <p>The proof is not a traditional paper. It's written in <strong>Lean</strong>, a programming language for mathematical proofs. In Lean, a computer checks every single logical step, so a proof that passes the check can't contain a hidden mistake in its reasoning. This one is enormous: millions of lines of code, which could amount to tens of thousands of pages of ordinary mathematics. A few hours later, Stanford's math department said that one of its postdoctoral researchers had independently submitted a proof as well.</p>
+
+    <div class="sub-sub-title">Why mathematicians are excited, but careful</div>
+    <ul>
+      <li><strong>No human has read the whole thing yet.</strong> Experts are translating parts of the Lean code into ordinary math and checking that the statement the computer verified really is the Riemann Hypothesis.</li>
+      <li><strong>Nobody yet knows <em>why</em> it works.</strong> A computer can confirm that every step follows from the one before, but mathematicians want to understand the key idea. That could take a lot longer.</li>
+      <li><strong>It caps off a remarkable year.</strong> In August, an earlier Claude model proved that at least 67.2% of the zeros sit exactly where the hypothesis says, up from 41.6%. In October, an OpenAI model claimed a proof of a weaker version, putting all the zeros between real parts \(\tfrac1{12}\) and \(\tfrac{11}{12}\). (You'll see what "zeros" and "real parts" mean in Section 6.)</li>
+    </ul>
+
+    <div class="sub-sub-title">Why it matters</div>
+    <p>The Riemann Hypothesis has been open since 1859. It's one of the seven Millennium Prize Problems, with a $1,000,000 prize, and many mathematicians consider it the most important unsolved problem in mathematics. Hundreds of published theorems start with "Assuming the Riemann Hypothesis…", so a confirmed proof would turn all of them into theorems at once. It would also be the first time an AI played a major role in solving one of the biggest problems in mathematics. That raises a new question: what does it mean to have a proof that's correct before anyone understands it?</p>
+
+    <div class="sub-sub-title">What this page is for</div>
+    <p>The good news is that you already have the tools to understand what the hypothesis says and why it's about prime numbers. It starts with something from your calculus course: the p-series.</p>
+
+    <div class="note">Read more: <a href="https://www.aljazeera.com/news/2026/11/21/riemann-hypothesis-has-the-worlds-most-famous-maths-problem-been-cracked" target="_blank" rel="noopener">Al Jazeera</a> · <a href="https://www.nature.com/articles/d41586-026-03812-7" target="_blank" rel="noopener">Nature</a> · <a href="https://www.anthropic.com/research/riemann-zeta" target="_blank" rel="noopener">Anthropic on the August result</a> · <a href="https://www.quantamagazine.org/ai-proved-the-quasi-riemann-hypothesis-what-happens-now-20261019" target="_blank" rel="noopener">Quanta on the October result</a></div>
   </div>
 
   <!-- ═══════════ 1. P-SERIES ═══════════ -->
