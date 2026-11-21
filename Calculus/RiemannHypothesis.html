@@ -209,14 +209,12 @@ figure svg { width: 100%; height: auto; display: block; }
 figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-align: center; margin-top: 8px; line-height: 1.6; }
 
 /* ── HISTORICAL PORTRAITS ── */
-.portrait-pair { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 24px 0 32px; }
-figure.portrait-card { margin: 0; padding: 12px; }
-.portrait-card img { display: block; width: 100%; height: 260px; object-fit: contain; background: var(--cream); border-radius: 3px; }
-.portrait-card figcaption { margin-top: 10px; }
-.portrait-card figcaption strong { display: block; color: var(--red); font-style: normal; font-size: 1rem; }
-.portrait-card figcaption a { color: var(--red); }
-@media (max-width: 760px) { .portrait-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .portrait-pair { grid-template-columns: 1fr; } }
+figure.portrait-single { float: right; width: 220px; margin: 4px 0 16px 20px; padding: 10px; }
+.portrait-single img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.portrait-single figcaption strong { display: block; color: var(--red); font-style: normal; font-size: 1rem; }
+.portrait-single figcaption a { color: var(--red); }
+@media (max-width: 760px) { figure.portrait-single { float: none; width: 100%; margin: 24px auto; } }
+.viz, .wob, .scrolly, .callout, .tbl-wrap { clear: both; }
 
 
 /* ── SCROLLYTELLING (Step 2) ── */
@@ -468,6 +466,11 @@ figure.portrait-card { margin: 0; padding: 12px; }
   <div class="section">
     <div class="section-title" id="news">What just happened</div>
 
+    <figure class="portrait-single">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/David_Hilbert,_1907.jpg" alt="Portrait of David Hilbert in 1907" loading="lazy" decoding="async">
+        <figcaption><strong>David Hilbert (1862–1943)</strong>In 1900, Hilbert included the Riemann Hypothesis in his famous list of 23 problems, as Problem 8. <a href="https://commons.wikimedia.org/wiki/File:David_Hilbert,_1907.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
+      </figure>
+
     <blockquote class="pull">
       <p>"If I were to awaken after having slept for a thousand years, my first question would be: Has the Riemann Hypothesis been proven?"</p>
       <cite>attributed to David Hilbert</cite>
@@ -495,21 +498,7 @@ figure.portrait-card { margin: 0; padding: 12px; }
     <div class="sub-sub-title">What this page is for</div>
     <p>The good news is that you already have the tools to understand what the hypothesis says and why it's about prime numbers. It starts with something from your calculus course: the p-series.</p>
 
-    <div class="sub-title">The mathematicians behind the ideas</div>
-    <div class="portrait-pair" aria-label="Public-domain portraits of Leonhard Euler and Bernhard Riemann">
-      <figure class="portrait-card">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leonhard_Euler.jpg" alt="Portrait of Leonhard Euler" loading="lazy" decoding="async">
-        <figcaption><strong>Leonhard Euler (1707–1783)</strong>Euler found the value of the zeta function at 2 and connected zeta values to prime numbers. <a href="https://commons.wikimedia.org/wiki/File:Leonhard_Euler.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
-      </figure>
-      <figure class="portrait-card">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bernhard_riemann.jpg" alt="Portrait of Bernhard Riemann" loading="lazy" decoding="async">
-        <figcaption><strong>Bernhard Riemann (1826–1866)</strong>Riemann extended the zeta function and stated the hypothesis that bears his name. <a href="https://commons.wikimedia.org/wiki/File:Bernhard_riemann.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
-      </figure>
-      <figure class="portrait-card">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/David_Hilbert,_1907.jpg" alt="Portrait of David Hilbert in 1907" loading="lazy" decoding="async">
-        <figcaption><strong>David Hilbert (1862–1943)</strong>In 1900, Hilbert included the Riemann Hypothesis in his famous list of 23 problems, as Problem 8. <a href="https://commons.wikimedia.org/wiki/File:David_Hilbert,_1907.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
-      </figure>
-    </div>
+
 
   </div>
 
@@ -526,7 +515,11 @@ figure.portrait-card { margin: 0; padding: 12px; }
     </ul>
     <p>Now think of the p-series as a function of \(p\), and call the input \(s\) instead of \(p\). That function is the <strong>Riemann zeta function</strong>:</p>
     \[ \zeta(s) = 1 + \frac{1}{2^s} + \frac{1}{3^s} + \frac{1}{4^s} + \cdots \]
-    <p>So \(\zeta(2)\) is just the sum of the \(p = 2\) series. Leonhard Euler found its exact value in 1734:</p>
+<figure class="portrait-single">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Leonhard_Euler.jpg" alt="Portrait of Leonhard Euler" loading="lazy" decoding="async">
+        <figcaption><strong>Leonhard Euler (1707–1783)</strong>Euler found the value of the zeta function at 2 and connected zeta values to prime numbers. <a href="https://commons.wikimedia.org/wiki/File:Leonhard_Euler.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
+      </figure>
+        <p>So \(\zeta(2)\) is just the sum of the \(p = 2\) series. Leonhard Euler found its exact value in 1734:</p>
     \[ \zeta(2) = 1 + \frac14 + \frac19 + \frac{1}{16} + \cdots = \frac{\pi^2}{6} \]
     <p>It's strange that \(\pi\), a number about circles, shows up in a sum of reciprocal squares.</p>
     <div class="viz" id="vzeta">
@@ -761,7 +754,11 @@ figure.portrait-card { margin: 0; padding: 12px; }
   <!-- ═══════════ 5. EXTEND ═══════════ -->
   <div class="section">
     <div class="section-title" id="extend">5. The tricky part: inputs where the series diverges</div>
-    <p>The series for \(\zeta(s)\) only works when \(s > 1\). In 1859, Bernhard Riemann found a way to extend \(\zeta\) to other inputs, including negative numbers and even <strong>complex numbers</strong> (numbers like \(0.5 + 14i\)).</p>
+<figure class="portrait-single">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bernhard_riemann.jpg" alt="Portrait of Bernhard Riemann" loading="lazy" decoding="async">
+        <figcaption><strong>Bernhard Riemann (1826–1866)</strong>Riemann extended the zeta function and stated the hypothesis that bears his name. <a href="https://commons.wikimedia.org/wiki/File:Bernhard_riemann.jpg" target="_blank" rel="noopener">Portrait and public-domain details</a>.</figcaption>
+      </figure>
+        <p>The series for \(\zeta(s)\) only works when \(s > 1\). In 1859, Bernhard Riemann found a way to extend \(\zeta\) to other inputs, including negative numbers and even <strong>complex numbers</strong> (numbers like \(0.5 + 14i\)).</p>
     <p>A rough analogy from calculus: the geometric series</p>
     \[ 1 + x + x^2 + x^3 + \cdots = \frac{1}{1-x} \]
     <p>only converges when \(|x| \lt 1\). The formula \(\frac{1}{1-x}\), however, makes sense for almost every \(x\). For \(x = 3\) it gives \(-\tfrac12\), even though the series diverges there. The formula <strong>extends</strong> the function beyond the region where the series works. Riemann did the same kind of thing for zeta, using much harder math.</p>
