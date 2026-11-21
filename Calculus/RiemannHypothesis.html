@@ -332,6 +332,30 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
 @media (max-width: 560px) { .box { height: 48px; } .box .bn { font-size: 1rem; } .pchips { gap: 3px; } .pchip { min-width: 24px; height: 22px; padding: 0 4px; font-size: 0.7rem; } }
 @media (prefers-reduced-motion: reduce) { .box, .box .bf, .pchip { transition: none !important; } }
 
+/* ── WOBBLE INTERACTIVE (Section 7) ── */
+.wob { background: white; border-radius: 6px; border-top: 4px solid var(--red); box-shadow: 0 4px 20px var(--shadow); padding: 16px 16px 14px; margin: 24px 0; }
+.wob-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; text-align: center; margin-bottom: 6px; }
+.wob-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 0.8rem; color: var(--sepia); margin-bottom: 8px; }
+.wob-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--ink); }
+.sw-smooth { border-top: 2px dashed var(--sepia); }
+.sw-curve { border-top: 3px solid var(--red); }
+.wob canvas { width: 100%; display: block; }
+#wobMain { height: 320px; }
+#wobWaves { height: 130px; }
+.wob-controls { display: flex; align-items: center; gap: 14px; margin: 10px 4px 6px; }
+.wob-slider { flex: 1; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; white-space: nowrap; }
+.wob-slider b { color: var(--red); font-family: 'Playfair Display', serif; font-size: 1.15rem; min-width: 2.2em; display: inline-block; text-align: right; }
+.wob-slider input { flex: 1; accent-color: var(--red); }
+#wobPlay { font-family: inherit; font-size: 0.85rem; background: var(--red); color: white; border: 0; border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+#wobPlay:hover { background: #5e1013; }
+.wob-toggle { display: flex; align-items: flex-start; gap: 8px; font-size: 0.92rem; line-height: 1.55; margin: 6px 4px 12px; cursor: pointer; }
+.wob-toggle input { margin-top: 5px; accent-color: var(--red); width: 16px; height: 16px; flex-shrink: 0; }
+.wob-sub { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sepia); margin: 4px 4px 2px; }
+.tryit { padding-left: 22px; margin: 0; }
+.tryit li { font-size: 1rem !important; margin-bottom: 4px; }
+@media (max-width: 560px) { #wobMain { height: 260px; } .wob { padding: 12px 8px; } .wob-controls { flex-wrap: wrap; } }
+
 /* ── FOOTER ── */
 .site-footer {
   margin-top: 60px;
@@ -685,12 +709,45 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   <!-- ═══════════ 7. MATTERS ═══════════ -->
   <div class="section">
     <div class="section-title" id="matters">7. Why it matters</div>
-    <p>Riemann showed that the zeros of zeta control the "error" in the prime count, much as frequencies control the shape of a sound wave. Each zero adds a small wobble to how the primes are distributed.</p>
+    <p>Riemann proved an <strong>explicit formula</strong> for counting primes. Start with the smooth estimate from the Prime Number Theorem. Then each zero \(\tfrac12 + \gamma i\) adds a wave to it, roughly</p>
+    \[ \sqrt{x}\,\cos(\gamma \ln x). \]
+    <p>The height \(\gamma\) sets how fast the wave wiggles. The real part, \(\tfrac12\), sets how big the wave gets: it grows like \(x^{1/2} = \sqrt{x}\). Add up the waves from all the zeros and you get the count of primes <em>exactly</em>. The zeros are the frequencies, and the primes are the sound.</p>
+
+    <div class="wob" id="wob">
+      <div class="wob-title">Building the primes from the zeros</div>
+      <div class="wob-legend">
+        <span><i class="sw sw-stair"></i>actual number of primes ≤ x</span>
+        <span><i class="sw sw-smooth"></i>smooth estimate</span>
+        <span><i class="sw sw-curve"></i>estimate + waves</span>
+      </div>
+      <canvas id="wobMain" aria-label="Graph of the prime counting staircase with the explicit-formula approximation"></canvas>
+      <div class="wob-controls">
+        <label class="wob-slider">Zeros used: <b id="wobN">0</b>
+          <input type="range" id="wobRange" min="0" max="100" value="0" step="1">
+        </label>
+        <button type="button" id="wobPlay">▶ Play</button>
+      </div>
+      <label class="wob-toggle"><input type="checkbox" id="wobOff"> What if the Riemann Hypothesis were false? Move the first zero off the line, to \(0.9 + 14.13i\).</label>
+      <div class="wob-sub">The first three waves</div>
+      <canvas id="wobWaves" aria-label="The waves contributed by the first three zeros"></canvas>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-label">Try it</div>
+      <ol class="tryit">
+        <li>At <strong>0 zeros</strong>, the smooth estimate follows the trend but misses every step.</li>
+        <li>Drag to about <strong>10 zeros</strong>. The curve starts bending toward the steps.</li>
+        <li>Drag to <strong>100 zeros</strong>. The curve nearly snaps onto the staircase, with a sharp jump at each prime.</li>
+        <li>Now <strong>turn on the toggle</strong>. The first wave grows like \(x^{0.9}\) instead of \(\sqrt{x}\). It gets bigger than all the others, and the curve can no longer follow the staircase.</li>
+      </ol>
+    </div>
+
     <ul>
-      <li><strong>If the Riemann Hypothesis is true,</strong> the wobbles stay as small as possible. The primes would be as evenly spread as they could be, and the Prime Number Theorem estimate would be very accurate.</li>
-      <li><strong>If it's false,</strong> the primes have irregularities larger than mathematicians expect.</li>
+      <li><strong>If the Riemann Hypothesis is true,</strong> every wave has real part ½, so every wave grows only like \(\sqrt{x}\). The wobbles stay as small as possible, and the primes are as evenly spread as they could be.</li>
+      <li><strong>If it's false,</strong> some zero has a bigger real part. Its wave grows faster than the rest and eventually swamps them, so the primes would have irregularities larger than mathematicians expect.</li>
     </ul>
     <p>Hundreds of published theorems begin with "Assuming the Riemann Hypothesis…" If it's proven, all of them become true at once.</p>
+    <div class="note">Zeros off the line would come in mirror-image pairs, so a zero at \(0.9 + 14.13i\) means another at \(0.1 + 14.13i\). The demo includes both. The curve also uses Riemann's full formula rather than the rough \(\sqrt{x}\cos(\gamma\ln x)\) version, which is why it fits so well.</div>
   </div>
 
   <!-- ═══════════ 8. BOTTOM LINE ═══════════ -->
@@ -885,6 +942,145 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   addEventListener('resize', update);
   update();
+})();
+</script>
+<script>
+(function () {
+  const wrap = document.getElementById('wob');
+  if (!wrap) return;
+  const GAMMA = [14.134725,21.022040,25.010858,30.424876,32.935062,37.586178,40.918719,43.327073,48.005151,49.773832,52.970321,56.446248,59.347044,60.831779,65.112544,67.079811,69.546402,72.067158,75.704691,77.144840,79.337375,82.910381,84.735493,87.425275,88.809111,92.491899,94.651344,95.870634,98.831194,101.317851,103.725538,105.446623,107.168611,111.029536,111.874659,114.320221,116.226680,118.790783,121.370125,122.946829,124.256819,127.516684,129.578704,131.087689,133.497737,134.756510,138.116042,139.736209,141.123707,143.111846,146.000982,147.422765,150.053520,150.925258,153.024694,156.112909,157.597592,158.849988,161.188964,163.030710,165.537069,167.184440,169.094515,169.911976,173.411537,174.754192,176.441434,178.377408,179.916484,182.207078,184.874468,185.598784,187.228923,189.416159,192.026656,193.079727,195.265397,196.876482,198.015310,201.264752,202.493595,204.189672,205.394697,207.906259,209.576510,211.690863,213.347919,214.547045,216.169539,219.067596,220.714919,221.430706,224.007000,224.983325,227.421444,229.337413,231.250189,231.987235,233.693404,236.524230];
+  const XMIN = 2, XMAX = 100, M = 700, OFF_BETA = 0.9;
+  const EG = 0.5772156649015329;
+  const MU = [0, 1, -1, -1, 0, -1, 1, -1, 0, 0, 1];
+
+  function li(x) { // logarithmic integral, x > 1
+    const L = Math.log(x); let s = 0, t = 1;
+    for (let k = 1; k < 300; k++) { t *= L / k; s += t / k; if (Math.abs(t / k) < 1e-15) break; }
+    return EG + Math.log(L) + s;
+  }
+  function R(x) { // Riemann's smooth estimate
+    let s = 0;
+    for (let n = 1; n <= 10; n++) {
+      if (!MU[n]) continue;
+      const y = Math.pow(x, 1 / n);
+      if (y <= 1.0001) break;
+      s += MU[n] / n * li(y);
+    }
+    return s - 1 / Math.log(x) + Math.atan(Math.PI / Math.log(x)) / Math.PI;
+  }
+  // complex helpers: [re, im]
+  const cmul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+  const cinv = a => { const d = a[0] * a[0] + a[1] * a[1]; return [a[0] / d, -a[1] / d]; };
+  function reEi(z) { // Re Ei(z) by its asymptotic series (|z| is large here)
+    const e = Math.exp(z[0]), ez = [e * Math.cos(z[1]), e * Math.sin(z[1])];
+    const w = cinv(z), w2 = cmul(w, w), w3 = cmul(w2, w);
+    const corr = [1 + w[0] + 2 * w2[0] + 6 * w3[0], w[1] + 2 * w2[1] + 6 * w3[1]];
+    return cmul(cmul(ez, w), corr)[0];
+  }
+  function wave(x, beta, g) { // contribution of one conjugate pair of zeros
+    const L = Math.log(x); let s = 0;
+    for (const n of [1, 2, 3]) s += MU[n] / n * 2 * reEi([beta * L / n, g * L / n]);
+    return -s;
+  }
+
+  // precompute everything once
+  const xs = Float64Array.from({ length: M }, (_, i) => XMIN + (XMAX - XMIN) * i / (M - 1));
+  const base = xs.map(R);
+  const waves = GAMMA.map(g => xs.map(x => wave(x, 0.5, g)));
+  const offWave = xs.map(x => wave(x, OFF_BETA, GAMMA[0]) + wave(x, 1 - OFF_BETA, GAMMA[0]));
+  const primes = []; for (let p = 2; p <= XMAX; p++) { let ok = true; for (let d = 2; d * d <= p; d++) if (p % d === 0) { ok = false; break; } if (ok) primes.push(p); }
+
+  const main = document.getElementById('wobMain'), wc = document.getElementById('wobWaves');
+  const range = document.getElementById('wobRange'), nOut = document.getElementById('wobN');
+  const off = document.getElementById('wobOff'), play = document.getElementById('wobPlay');
+  const C = { ink: '#1a1410', red: '#7A1518', sepia: '#8b6f47', gold: '#F0B429', grid: 'rgba(139,111,71,0.18)' };
+  const FONT = "12px 'Source Serif 4', Georgia, serif";
+
+  function setup(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return [ctx, w, h];
+  }
+
+  function drawMain(N, isOff) {
+    const [ctx, w, h] = setup(main);
+    const pad = { l: 34, r: 10, t: 8, b: 26 }, YMIN = -1, YMAX = 28;
+    const X = x => pad.l + (x - XMIN) / (XMAX - XMIN) * (w - pad.l - pad.r);
+    const Y = y => h - pad.b - (y - YMIN) / (YMAX - YMIN) * (h - pad.t - pad.b);
+    ctx.clearRect(0, 0, w, h); ctx.font = FONT; ctx.lineJoin = 'round';
+    // grid + axes
+    ctx.strokeStyle = C.grid; ctx.lineWidth = 1; ctx.fillStyle = C.sepia;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (let y = 0; y <= 25; y += 5) { ctx.beginPath(); ctx.moveTo(pad.l, Y(y)); ctx.lineTo(w - pad.r, Y(y)); ctx.stroke(); ctx.fillText(y, pad.l - 6, Y(y)); }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    for (let x = 10; x <= XMAX; x += 10) ctx.fillText(x, X(x), h - pad.b + 6);
+    ctx.fillText('x', X(XMIN) + 2, h - pad.b + 6);
+    // staircase
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath();
+    let c = 0; ctx.moveTo(X(XMIN), Y(0));
+    for (const p of primes) { ctx.lineTo(X(p), Y(c)); c++; ctx.lineTo(X(p), Y(c)); }
+    ctx.lineTo(X(XMAX), Y(c)); ctx.stroke();
+    // smooth estimate
+    ctx.setLineDash([5, 4]); ctx.strokeStyle = C.sepia; ctx.lineWidth = 1.4; ctx.beginPath();
+    xs.forEach((x, i) => i ? ctx.lineTo(X(x), Y(base[i])) : ctx.moveTo(X(x), Y(base[i]))); ctx.stroke(); ctx.setLineDash([]);
+    // estimate + N waves
+    ctx.strokeStyle = C.red; ctx.lineWidth = 2.4; ctx.beginPath();
+    for (let i = 0; i < M; i++) {
+      let v = base[i];
+      for (let k = 0; k < N; k++) v += (k === 0 && isOff) ? offWave[i] : waves[k][i];
+      const yy = Y(Math.max(YMIN, Math.min(YMAX, v)));
+      i ? ctx.lineTo(X(xs[i]), yy) : ctx.moveTo(X(xs[i]), yy);
+    }
+    ctx.stroke();
+  }
+
+  function drawWaves(isOff) {
+    const [ctx, w, h] = setup(wc);
+    const pad = { l: 34, r: 10, t: 6, b: 18 }, A = 2.2;
+    const X = x => pad.l + (x - XMIN) / (XMAX - XMIN) * (w - pad.l - pad.r);
+    const Y = y => pad.t + (A - y) / (2 * A) * (h - pad.t - pad.b);
+    ctx.clearRect(0, 0, w, h); ctx.font = FONT;
+    ctx.strokeStyle = C.grid; ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(w - pad.r, Y(0)); ctx.stroke();
+    const series = [
+      { d: isOff ? offWave : waves[0], col: isOff ? C.gold : C.red, lw: isOff ? 2.6 : 1.8, label: isOff ? 'zero 1, moved to 0.9 + 14.13i' : 'zero 1: ½ + 14.13i' },
+      { d: waves[1], col: C.sepia, lw: 1.4, label: 'zero 2: ½ + 21.02i' },
+      { d: waves[2], col: C.ink, lw: 1.1, label: 'zero 3: ½ + 25.01i' }
+    ];
+    series.slice().reverse().forEach(s => {
+      ctx.strokeStyle = s.col; ctx.lineWidth = s.lw; ctx.beginPath();
+      s.d.forEach((v, i) => { const yy = Y(Math.max(-A, Math.min(A, v))); i ? ctx.lineTo(X(xs[i]), yy) : ctx.moveTo(X(xs[i]), yy); });
+      ctx.stroke();
+    });
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    const narrow = w < 520;
+    series.forEach((s, j) => {
+      ctx.fillStyle = s.col;
+      const text = narrow ? (j === 0 && isOff ? 'zero 1 (moved)' : 'zero ' + (j + 1)) : s.label;
+      ctx.fillText(text, pad.l + 6 + j * (w - pad.l) / 3, h - pad.b + 4);
+    });
+  }
+
+  function draw() { const N = +range.value; nOut.textContent = N; drawMain(N, off.checked); drawWaves(off.checked); }
+  range.addEventListener('input', () => { stopPlay(); draw(); });
+  off.addEventListener('change', draw);
+  let timer = null;
+  function stopPlay() { if (timer) { cancelAnimationFrame(timer); timer = null; play.textContent = '▶ Play'; } }
+  play.addEventListener('click', () => {
+    if (timer) { stopPlay(); return; }
+    if (+range.value >= 100) range.value = 0;
+    play.textContent = '❚❚ Pause';
+    const start = performance.now(), from = +range.value;
+    const step = t => {
+      const n = Math.min(100, Math.round(from + (t - start) / 60));
+      range.value = n; draw();
+      if (n < 100) timer = requestAnimationFrame(step); else stopPlay();
+    };
+    timer = requestAnimationFrame(step);
+  });
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(draw, 100); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  draw();
 })();
 </script>
 </body>
