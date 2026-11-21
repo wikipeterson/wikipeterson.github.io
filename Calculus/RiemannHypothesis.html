@@ -356,6 +356,28 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
 .tryit li { font-size: 1rem !important; margin-bottom: 4px; }
 @media (max-width: 560px) { #wobMain { height: 260px; } .wob { padding: 12px 8px; } .wob-controls { flex-wrap: wrap; } }
 
+/* ── SMALL INTERACTIVES (Sections 1, 3, 4, 5) ── */
+.viz { background: white; border-radius: 6px; border-top: 4px solid var(--red); box-shadow: 0 4px 20px var(--shadow); padding: 16px 16px 14px; margin: 24px 0; }
+.vcanvas { width: 100%; height: 280px; display: block; }
+.viz-readout { text-align: center; font-size: 0.95rem; color: var(--sepia); font-style: italic; margin-top: 6px; min-height: 1.5em; }
+.viz-readout b { color: var(--red); font-style: normal; font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+.sw-band { height: 10px; border-top: 0; background: rgba(240,180,41,0.3); }
+.vbtn { font-family: inherit; font-size: 0.85rem; background: var(--red); color: white; border: 0; border-radius: 6px; padding: 7px 14px; cursor: pointer; }
+.vbtn:hover { background: #5e1013; }
+.vbtn.ghost { background: var(--cream); color: var(--ink); padding: 4px 10px; font-size: 0.8rem; }
+.vbtn.ghost:hover { background: var(--gold); }
+.pgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+.pc { height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 3px; background: #fbf8f2; color: rgba(26,20,16,0.38); font-size: 0.68rem; font-variant-numeric: tabular-nums; overflow: hidden; }
+.pc.prime { background: var(--red); color: white; font-weight: 700; }
+.prange { text-align: center; font-size: 0.85rem; color: var(--sepia); margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+.pjump { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--sepia); margin: 2px 4px 10px; }
+.pstats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pstats > div { background: var(--cream); border-radius: 5px; padding: 8px 10px; text-align: center; }
+.pstats span { display: block; font-size: 0.78rem; color: var(--sepia); }
+.pstats b { display: block; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--red); font-variant-numeric: tabular-nums; }
+.pstats em { display: block; font-size: 0.75rem; color: var(--sepia); }
+@media (max-width: 560px) { .vcanvas { height: 230px; } .viz { padding: 12px 8px; } .pc { height: 26px; font-size: 0.55rem; } }
+
 /* ── FOOTER ── */
 .site-footer {
   margin-top: 60px;
@@ -423,6 +445,18 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     <p>So \(\zeta(2)\) is just the sum of the \(p = 2\) series. Leonhard Euler found its exact value in 1734:</p>
     \[ \zeta(2) = 1 + \frac14 + \frac19 + \frac{1}{16} + \cdots = \frac{\pi^2}{6} \]
     <p>It's strange that \(\pi\), a number about circles, shows up in a sum of reciprocal squares.</p>
+    <div class="viz" id="vzeta">
+      <div class="wob-title">The graph of \(\zeta(s)\)</div>
+      <canvas class="vcanvas" id="zetaCanvas" aria-label="Graph of the zeta function for s greater than 1, with a vertical asymptote at s equals 1"></canvas>
+      <div class="wob-controls">
+        <label class="wob-slider">\(s =\) <b id="zetaS">2.00</b>
+          <input type="range" id="zetaRange" min="1.05" max="6" step="0.01" value="2">
+        </label>
+      </div>
+      <div class="viz-readout" id="zetaRead"></div>
+    </div>
+    <p>Drag \(s\) toward 1 and \(\zeta(s)\) shoots upward: the p-series is barely converging. At \(s = 1\) and below, the series diverges, so there's no value at all. As \(s\) gets large, \(\zeta(s)\) flattens out toward 1, because every term after the first \(1\) becomes tiny.</p>
+
   </div>
 
   <!-- ═══════════ 2. PRIMES ═══════════ -->
@@ -585,6 +619,11 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     <p>The sum side is \(\zeta(1)\), and it's an old friend: the <strong>harmonic series</strong>.</p>
     \[ \zeta(1) = 1 + \frac12 + \frac13 + \frac14 + \cdots = \infty \]
     <p>You know from class that it diverges, so \(\zeta(1)\) is infinite. (This is the \(p = 1\) case of the p-series test.)</p>
+    <div class="viz">
+      <canvas class="vcanvas" id="zetaCanvas2" aria-label="Graph of the zeta function highlighting the vertical asymptote at s equals 1"></canvas>
+      <div class="viz-readout">The same graph as in Section 1. \(\zeta(1)\) is the vertical asymptote: the harmonic series diverges.</div>
+    </div>
+
     <p>On the product side, each factor simplifies: \(\dfrac{1}{1-\frac1p} = \dfrac{p}{p-1}\). So
     \[ \zeta(1) = \prod_{p \text{ prime}} \frac{p}{p-1} = \frac21 \cdot \frac32 \cdot \frac54 \cdot \frac76 \cdots \]
     Look at what the product does as we include more primes:</p>
@@ -610,6 +649,28 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     <div class="section-title" id="spread">4. The question nobody can answer: how are the primes spread out?</div>
     <p>Primes look random: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, … Sometimes they come close together, as with 11 and 13, and sometimes there are big gaps between them.</p>
     <p>Large-scale patterns do exist. Around a number \(x\), roughly 1 out of every \(\ln(x)\) numbers is prime. (This is the <strong>Prime Number Theorem</strong>, proved in 1896.) Near 1,000, about 1 in 7 numbers is prime. Near 1,000,000, about 1 in 14 is.</p>
+    <div class="viz" id="vprimes">
+      <div class="wob-title">A window of 100 numbers</div>
+      <div class="prange" id="pRangeLabel"></div>
+      <div class="pgrid" id="pgrid"></div>
+      <div class="wob-controls">
+        <label class="wob-slider">Start at <b id="pStart">1</b>
+          <input type="range" id="pRange" min="0" max="1000" step="1" value="0">
+        </label>
+      </div>
+      <div class="pjump">Jump to:
+        <button type="button" class="vbtn ghost" data-start="1">1</button>
+        <button type="button" class="vbtn ghost" data-start="1000">1,000</button>
+        <button type="button" class="vbtn ghost" data-start="100000">100,000</button>
+        <button type="button" class="vbtn ghost" data-start="1000000">1,000,000</button>
+      </div>
+      <div class="pstats">
+        <div><span>Primes in this window</span><b id="pActual">25</b></div>
+        <div><span>Prediction, 100 ÷ ln x</span><b id="pPred">—</b></div>
+      </div>
+    </div>
+    <p>Slide the window up the number line. The primes thin out about as fast as the prediction says, but the actual count keeps landing a little above or below it. How big can those misses get?</p>
+
     <p>The open question is <strong>how accurate that estimate is.</strong> Does the actual count of primes stay close to the prediction, or does it sometimes wander far from it? The answer depends on the zeta function.</p>
   </div>
 
@@ -620,6 +681,27 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     <p>A rough analogy from calculus: the geometric series</p>
     \[ 1 + x + x^2 + x^3 + \cdots = \frac{1}{1-x} \]
     <p>only converges when \(|x| \lt 1\). The formula \(\frac{1}{1-x}\), however, makes sense for almost every \(x\). For \(x = 3\) it gives \(-\tfrac12\), even though the series diverges there. The formula <strong>extends</strong> the function beyond the region where the series works. Riemann did the same kind of thing for zeta, using much harder math.</p>
+    <div class="viz" id="vgeo">
+      <div class="wob-title">Partial sums vs. the formula</div>
+      <div class="wob-legend">
+        <span><i class="sw"></i>\(\dfrac{1}{1-x}\)</span>
+        <span><i class="sw sw-curve"></i>partial sum \(1 + x + \cdots + x^n\)</span>
+        <span><i class="sw sw-band"></i>where the series converges</span>
+      </div>
+      <canvas class="vcanvas" id="geoCanvas" aria-label="Graph of 1 over 1 minus x with partial sums of the geometric series"></canvas>
+      <div class="wob-controls">
+        <label class="wob-slider">\(n =\) <b id="geoN">0</b>
+          <input type="range" id="geoRange" min="0" max="25" step="1" value="0">
+        </label>
+        <button type="button" class="vbtn" id="geoPlay">▶ Play</button>
+      </div>
+      <div class="pstats">
+        <div><span>Partial sum at \(x = 0.5\)</span><b id="geoA">1</b><em>formula says 2</em></div>
+        <div><span>Partial sum at \(x = 3\)</span><b id="geoB">1</b><em>formula says −½</em></div>
+      </div>
+    </div>
+    <p>Inside the gold band, the partial sums settle onto the curve. Outside it, they fly off, but the formula \(\frac{1}{1-x}\) keeps going smoothly on both sides of the asymptote. Riemann's extension of \(\zeta\) works the same way: the series only works for \(s > 1\), but the function keeps going.</p>
+
   </div>
 
   <!-- ═══════════ 6. HYPOTHESIS ═══════════ -->
@@ -1081,6 +1163,170 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(draw, 100); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
   draw();
+})();
+</script>
+<script>
+(function () {
+  const C = { ink: '#1a1410', red: '#7A1518', sepia: '#8b6f47', gold: '#F0B429', grid: 'rgba(139,111,71,0.18)' };
+  const FONT = "12px 'Source Serif 4', Georgia, serif";
+  function setup(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h); ctx.font = FONT; ctx.lineJoin = 'round';
+    return [ctx, w, h];
+  }
+  function axes(ctx, w, h, pad, X, Y, xt, yt) {
+    ctx.strokeStyle = C.grid; ctx.lineWidth = 1; ctx.fillStyle = C.sepia;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    yt.forEach(y => { ctx.beginPath(); ctx.moveTo(pad.l, Y(y)); ctx.lineTo(w - pad.r, Y(y)); ctx.stroke(); ctx.fillText(y, pad.l - 6, Y(y)); });
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    xt.forEach(x => { ctx.beginPath(); ctx.moveTo(X(x), pad.t); ctx.lineTo(X(x), h - pad.b); ctx.stroke(); ctx.fillText(x, X(x), h - pad.b + 6); });
+  }
+  function curve(ctx, X, Y, f, a, b, steps, ylo, yhi) {
+    ctx.beginPath(); let pen = false;
+    for (let i = 0; i <= steps; i++) {
+      const x = a + (b - a) * i / steps, y = f(x);
+      if (!isFinite(y) || y < ylo - 50 || y > yhi + 50) { pen = false; continue; }
+      const yy = Y(Math.max(ylo - 1, Math.min(yhi + 1, y)));
+      pen ? ctx.lineTo(X(x), yy) : ctx.moveTo(X(x), yy); pen = true;
+    }
+    ctx.stroke();
+  }
+  const redrawers = [];
+  let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => redrawers.forEach(f => f()), 100); });
+  const ready = f => { redrawers.push(f); f(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(f); };
+
+  /* ── zeta(s) for real s > 1 (Euler–Maclaurin) ── */
+  function zeta(s) {
+    const N = 20; let sum = 0;
+    for (let n = 1; n < N; n++) sum += Math.pow(n, -s);
+    return sum + Math.pow(N, 1 - s) / (s - 1) + Math.pow(N, -s) / 2 + s * Math.pow(N, -s - 1) / 12;
+  }
+  function drawZeta(cv, sDot, emphasizePole) {
+    const [ctx, w, h] = setup(cv);
+    const pad = { l: 30, r: 12, t: 10, b: 26 }, S0 = 0, S1 = 6, Y0 = 0, Y1 = 6;
+    const X = s => pad.l + (s - S0) / (S1 - S0) * (w - pad.l - pad.r);
+    const Y = y => h - pad.b - (y - Y0) / (Y1 - Y0) * (h - pad.t - pad.b);
+    // diverges region
+    ctx.fillStyle = 'rgba(122,21,24,0.07)'; ctx.fillRect(X(0), pad.t, X(1) - X(0), h - pad.t - pad.b);
+    axes(ctx, w, h, pad, X, Y, [1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]);
+    ctx.fillStyle = C.red; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = "italic 12px 'Source Serif 4', Georgia, serif";
+    ctx.fillText('series', X(0.5), Y(3.3)); ctx.fillText('diverges', X(0.5), Y(2.9));
+    // asymptote and limit
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = emphasizePole ? C.red : C.sepia; ctx.lineWidth = emphasizePole ? 2.4 : 1.3;
+    ctx.beginPath(); ctx.moveTo(X(1), pad.t); ctx.lineTo(X(1), h - pad.b); ctx.stroke();
+    ctx.strokeStyle = C.sepia; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(X(1), Y(1)); ctx.lineTo(w - pad.r, Y(1)); ctx.stroke();
+    ctx.setLineDash([]);
+    // curve
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 2.4;
+    curve(ctx, X, Y, s => zeta(s), 1.005, 6, 500, Y0, Y1);
+    ctx.font = FONT; ctx.fillStyle = C.sepia; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+    ctx.fillText('approaches 1', w - pad.r - 4, Y(1) - 4);
+    // ζ(2) marker
+    ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(X(2), Y(zeta(2)), 5, 0, 7); ctx.fill();
+    ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('ζ(2) = π²/6 ≈ 1.645', X(2) + 8, Y(zeta(2)) - 4);
+    if (emphasizePole) {
+      ctx.fillStyle = C.red; ctx.font = "bold 14px 'Source Serif 4', Georgia, serif"; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('ζ(1) = ∞', X(1) + 8, pad.t + 4);
+    }
+    if (sDot != null) {
+      const z = zeta(sDot);
+      if (z <= Y1) { ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(X(sDot), Y(z), 6, 0, 7); ctx.fill(); }
+      else { ctx.fillStyle = C.red; ctx.beginPath(); ctx.moveTo(X(sDot), pad.t); ctx.lineTo(X(sDot) - 6, pad.t + 10); ctx.lineTo(X(sDot) + 6, pad.t + 10); ctx.fill(); }
+    }
+  }
+  const zc = document.getElementById('zetaCanvas');
+  if (zc) {
+    const r = document.getElementById('zetaRange');
+    const go = () => {
+      const s = +r.value, z = zeta(s);
+      document.getElementById('zetaS').textContent = s.toFixed(2);
+      document.getElementById('zetaRead').innerHTML = 'ζ(' + s.toFixed(2) + ') ≈ <b>' + z.toFixed(4) + '</b>' + (z > 6 ? ' (off the top of the graph)' : '');
+      drawZeta(zc, s, false);
+    };
+    r.addEventListener('input', go); ready(go);
+  }
+  const zc2 = document.getElementById('zetaCanvas2');
+  if (zc2) ready(() => drawZeta(zc2, null, true));
+
+  /* ── prime window ── */
+  const grid = document.getElementById('pgrid');
+  if (grid) {
+    const LIM = 1000200, sieve = new Uint8Array(LIM + 1); sieve[0] = sieve[1] = 1;
+    for (let i = 2; i * i <= LIM; i++) if (!sieve[i]) for (let j = i * i; j <= LIM; j += i) sieve[j] = 1;
+    const isP = n => !sieve[n];
+    grid.innerHTML = Array.from({ length: 100 }, () => '<div class="pc"></div>').join('');
+    const cells = [...grid.children], r = document.getElementById('pRange');
+    const fromSlider = v => Math.max(1, Math.round(Math.pow(10, 6 * v / 1000)));
+    const toSlider = a => Math.round(1000 * Math.log10(a) / 6);
+    function show(a) {
+      let k = 0;
+      const fits = grid.clientWidth / 10 >= 7 * (a + 99).toLocaleString().length + 4;
+      cells.forEach((c, i) => {
+        const n = a + i, p = isP(n);
+        c.textContent = fits ? n.toLocaleString() : '…' + String(n).slice(-2);
+        c.classList.toggle('prime', p); if (p) k++;
+      });
+      document.getElementById('pRangeLabel').textContent = a.toLocaleString() + ' to ' + (a + 99).toLocaleString();
+      document.getElementById('pStart').textContent = a.toLocaleString();
+      document.getElementById('pActual').textContent = k;
+      const mid = a + 49.5;
+      document.getElementById('pPred').textContent = mid < 3 ? '—' : (100 / Math.log(mid)).toFixed(1);
+    }
+    r.addEventListener('input', () => show(fromSlider(+r.value)));
+    document.querySelectorAll('#vprimes [data-start]').forEach(b => b.addEventListener('click', () => { const a = +b.dataset.start; r.value = toSlider(a); show(a); }));
+    show(1);
+  }
+
+  /* ── geometric series partial sums ── */
+  const gc = document.getElementById('geoCanvas');
+  if (gc) {
+    const r = document.getElementById('geoRange'), play = document.getElementById('geoPlay');
+    const S = (x, n) => x === 1 ? n + 1 : (1 - Math.pow(x, n + 1)) / (1 - x);
+    const fmt = v => Math.abs(v) >= 1e6 ? v.toExponential(2).replace('e+', ' × 10^') : (Math.abs(v) >= 1000 ? Math.round(v).toLocaleString() : (+v.toFixed(4)).toString());
+    function draw() {
+      const n = +r.value;
+      const [ctx, w, h] = setup(gc);
+      const pad = { l: 30, r: 12, t: 10, b: 26 }, X0 = -1.5, X1 = 3.5, Y0 = -4, Y1 = 6;
+      const X = x => pad.l + (x - X0) / (X1 - X0) * (w - pad.l - pad.r);
+      const Y = y => h - pad.b - (y - Y0) / (Y1 - Y0) * (h - pad.t - pad.b);
+      ctx.fillStyle = 'rgba(240,180,41,0.22)'; ctx.fillRect(X(-1), pad.t, X(1) - X(-1), h - pad.t - pad.b);
+      axes(ctx, w, h, pad, X, Y, [-1, 0, 1, 2, 3], [-4, -2, 0, 2, 4, 6]);
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(w - pad.r, Y(0)); ctx.stroke();
+      ctx.setLineDash([5, 4]); ctx.strokeStyle = C.sepia; ctx.beginPath(); ctx.moveTo(X(1), pad.t); ctx.lineTo(X(1), h - pad.b); ctx.stroke(); ctx.setLineDash([]);
+      ctx.save(); ctx.beginPath(); ctx.rect(pad.l, pad.t, w - pad.l - pad.r, h - pad.t - pad.b); ctx.clip();
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 2.2;
+      curve(ctx, X, Y, x => 1 / (1 - x), X0, 0.985, 400, Y0, Y1);
+      curve(ctx, X, Y, x => 1 / (1 - x), 1.015, X1, 400, Y0, Y1);
+      ctx.strokeStyle = C.red; ctx.lineWidth = 2.6;
+      curve(ctx, X, Y, x => S(x, n), X0, X1, 900, Y0, Y1);
+      ctx.restore();
+      // markers
+      ctx.fillStyle = C.gold; ctx.strokeStyle = C.ink; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(X(3), Y(-0.5), 6, 0, 7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = C.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('x = 3: formula gives −½', X(3) - 30, Y(-0.5) + 10);
+      ctx.beginPath(); ctx.arc(X(0.5), Y(2), 5, 0, 7); ctx.fillStyle = C.gold; ctx.fill(); ctx.stroke();
+      document.getElementById('geoN').textContent = n;
+      document.getElementById('geoA').textContent = fmt(S(0.5, n));
+      document.getElementById('geoB').textContent = fmt(S(3, n));
+    }
+    let timer = null;
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; play.textContent = '▶ Play'; } };
+    r.addEventListener('input', () => { stop(); draw(); });
+    play.addEventListener('click', () => {
+      if (timer) { stop(); return; }
+      if (+r.value >= 25) r.value = 0;
+      play.textContent = '❚❚ Pause';
+      timer = setInterval(() => { r.value = +r.value + 1; draw(); if (+r.value >= 25) stop(); }, 280);
+    });
+    ready(draw);
+  }
 })();
 </script>
 </body>
