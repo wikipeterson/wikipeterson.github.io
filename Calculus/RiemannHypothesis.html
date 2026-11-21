@@ -800,14 +800,20 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     if (step === 7) runSum(); else { stopSum(); setSum(0, 0); }
   }
 
-  render(0);
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) render(+e.target.dataset.step); });
-  }, {
-    // wide screens: trigger at mid-screen; narrow screens: trigger low, below the sticky table
-    rootMargin: window.matchMedia('(min-width: 1000px)').matches ? '-45% 0px -45% 0px' : '-74% 0px -16% 0px'
-  });
-  root.querySelectorAll('.step').forEach(s => io.observe(s));
+  // the active step is the last card whose top has passed the trigger line
+  const steps = [...root.querySelectorAll('.step')];
+  const wide = window.matchMedia('(min-width: 1000px)');
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const line = innerHeight * (wide.matches ? 0.55 : 0.8);
+    let active = 0;
+    steps.forEach(s => { if (s.getBoundingClientRect().top < line) active = +s.dataset.step; });
+    render(active);
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
 })();
 </script>
 <script>
@@ -856,11 +862,20 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     document.getElementById('litCount').textContent = lit;
   }
 
-  render(0);
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) render(+e.target.dataset.step); });
-  }, { rootMargin: window.matchMedia('(min-width: 1000px)').matches ? '-45% 0px -45% 0px' : '-74% 0px -16% 0px' });
-  root.querySelectorAll('.step').forEach(s => io.observe(s));
+  // the active step is the last card whose top has passed the trigger line
+  const steps = [...root.querySelectorAll('.step')];
+  const wide = window.matchMedia('(min-width: 1000px)');
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const line = innerHeight * (wide.matches ? 0.55 : 0.8);
+    let active = 0;
+    steps.forEach(s => { if (s.getBoundingClientRect().top < line) active = +s.dataset.step; });
+    render(active);
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  update();
 })();
 </script>
 </body>
