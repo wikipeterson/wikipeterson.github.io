@@ -190,6 +190,121 @@ figure { margin: 24px 0; background: white; box-shadow: 0 2px 10px var(--shadow)
 figure svg { width: 100%; height: auto; display: block; }
 figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-align: center; margin-top: 8px; line-height: 1.6; }
 
+/* ── SCROLLYTELLING (Step 2) ── */
+.scrolly { position: relative; margin: 28px 0 36px; }
+.scrolly-graphic { position: sticky; top: 8px; z-index: 1; }
+.sg-card {
+  background: white; border-radius: 6px; border-top: 4px solid var(--red);
+  box-shadow: 0 4px 20px var(--shadow); padding: 14px 14px 12px;
+  max-width: 520px; margin: 0 auto;
+}
+.scrolly-steps { position: relative; z-index: 2; pointer-events: none; }
+.step { margin: 0 auto 70vh; max-width: 440px; pointer-events: auto; }
+.step:first-child { margin-top: 45vh; }
+.step:last-child { margin-bottom: 85vh; }
+.step p {
+  background: rgba(255,255,255,0.97); border-left: 4px solid var(--gold);
+  box-shadow: 0 4px 18px var(--shadow); border-radius: 3px;
+  padding: 14px 18px; margin: 0 !important; font-size: 1rem !important; line-height: 1.7 !important;
+}
+
+/* captions */
+.sg-captions { position: relative; height: 52px; margin-bottom: 8px; }
+.sg-cap {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: 'Source Serif 4', Georgia, serif; font-size: 1.15rem; color: var(--ink);
+  opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s;
+}
+.sg-cap.on { opacity: 1; transform: none; }
+.cap-muted { color: var(--sepia); font-style: italic; font-size: 0.95rem; }
+.op { color: var(--sepia); }
+
+/* stacked fractions */
+.fr { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; vertical-align: middle; }
+.fr i { font-style: normal; padding: 0 3px; }
+.fr i:first-child { border-bottom: 1.5px solid currentColor; }
+.fr.hi { color: var(--red); font-weight: 700; }
+
+/* grid */
+.sg-grid {
+  display: grid; grid-template-columns: 52px repeat(4, 1fr) 30px; grid-auto-rows: 50px;
+  gap: 4px; font-size: 0.95rem; font-variant-numeric: tabular-nums;
+}
+.g-h, .g-c, .g-x {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 4px; position: relative;
+}
+.g-h { background: var(--cream); color: var(--ink); font-weight: 600; transition: background .3s, color .3s; }
+.g-h.row { background: #e9e1d1; }
+.g-h.hl { background: var(--gold); color: var(--ink); }
+.g-corner { color: var(--sepia); font-size: 1.2rem; }
+.g-x { color: var(--sepia); opacity: 0.55; font-size: 1.1rem; }
+.g-c { background: #fbf8f2; border: 1px dashed var(--line); }
+.g-c .val { opacity: 0; transform: scale(.6); transition: opacity .35s, transform .35s; display: flex; flex-direction: column; align-items: center; }
+.g-c.show .val { opacity: 1; transform: none; }
+.g-c.show { border-style: solid; }
+.g-c.hl { background: #fdf0c4; border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold2); }
+.g-c.hl .fr, .g-c.hl .den { color: var(--red); font-weight: 700; }
+.g-c .den { display: none; font-size: 1.2rem; font-weight: 600; }
+.g-c .fac { display: none; font-size: 0.62rem; color: var(--sepia); margin-top: 1px; }
+.sg-card.den-mode .g-c .fr { display: none; }
+.sg-card.den-mode .g-c .den, .sg-card.den-mode .g-c .fac { display: block; }
+.g-c.counted { background: #f7e1e1; border-color: var(--red); }
+
+/* bottom panel: number line / sum */
+.sg-panel { position: relative; height: 104px; margin-top: 10px; }
+.sg-numline, .sg-sum { position: absolute; inset: 0; opacity: 0; transition: opacity .35s; pointer-events: none; }
+.sg-numline.on, .sg-sum.on { opacity: 1; }
+.sg-numline { display: grid; grid-template-columns: repeat(15, 1fr); gap: 3px; align-content: start; }
+.nl {
+  height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 3px;
+  font-size: 0.78rem; background: var(--cream); color: rgba(26,20,16,0.4); transition: background .3s, color .3s;
+  position: relative;
+}
+.nl.smooth { background: var(--gold); color: var(--ink); font-weight: 700; }
+.sg-card.missing-mode .nl:not(.smooth) { background: white; color: var(--red); outline: 1.5px solid var(--red); font-weight: 700; }
+.sg-card.missing-mode .nl:not(.smooth)::after {
+  content: ''; position: absolute; left: 4px; right: 4px; top: 50%; height: 1.5px; background: var(--red); transform: rotate(-35deg);
+}
+.nl-label { grid-column: 1 / -1; font-size: 0.75rem; color: var(--sepia); font-style: italic; text-align: center; margin-top: 4px; }
+.sum-readout { text-align: center; font-size: 1.05rem; margin-bottom: 10px; }
+.sum-readout b { color: var(--red); font-family: 'Playfair Display', serif; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.sum-track { position: relative; height: 16px; background: var(--cream); border-radius: 99px; margin: 0 18px; }
+.sum-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--red), var(--gold)); transition: width .15s linear; }
+.sum-tick { position: absolute; right: 0; top: -5px; bottom: -5px; width: 2px; background: var(--ink); }
+.sum-tick span { position: absolute; top: 24px; left: -4px; font-size: 0.85rem; font-weight: 700; }
+.sum-note { text-align: center; font-size: 0.82rem; font-style: italic; color: var(--sepia); margin-top: 22px; opacity: 0; transition: opacity .5s; }
+.sum-note.on { opacity: 1; }
+
+/* wide screens: steps on the left, graphic on the right */
+@media (min-width: 1000px) {
+  .scrolly {
+    width: min(1060px, calc(100vw - 48px));
+    margin-left: calc(50% - min(530px, 50vw - 24px));
+    display: grid; grid-template-columns: 340px 1fr; gap: 48px; align-items: start;
+  }
+  .scrolly-graphic { order: 2; top: max(12px, calc(50vh - 320px)); }
+  .scrolly-steps { order: 1; }
+  .step { margin-bottom: 55vh; }
+  .step:first-child { margin-top: 20vh; }
+  .step:last-child { margin-bottom: 30vh; }
+  .step p { transition: opacity .3s; opacity: 0.35; }
+  .step.active p { opacity: 1; }
+  .sg-card { max-width: 600px; }
+  .sg-grid { grid-auto-rows: 58px; font-size: 1.02rem; }
+}
+@media (max-width: 560px) {
+  .sg-grid { grid-template-columns: 44px repeat(4, 1fr) 22px; grid-auto-rows: 40px; font-size: 0.85rem; }
+  .sg-card { padding: 10px 10px 8px; }
+  .sg-panel { height: 96px; }
+  .sg-captions { height: 46px; }
+  .sg-cap { font-size: 1rem; }
+  .nl { height: 26px; font-size: 0.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sg-cap, .g-c .val, .g-h, .nl, .sum-fill, .sg-numline, .sg-sum { transition: none !important; }
+}
+
 /* ── FOOTER ── */
 .site-footer {
   margin-top: 60px;
@@ -293,16 +408,48 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     \[ \left(1 + \frac12 + \frac14 + \frac18 + \cdots\right)\left(1 + \frac13 + \frac19 + \frac1{27} + \cdots\right) \]
     <p><strong>Using the formula,</strong> the answer is easy:</p>
     \[ 2 \cdot \frac32 = 3 \]
-    <p><strong>What does that 3 consist of?</strong> Expand the product the long way. Each term comes from choosing one term from each series and multiplying them:</p>
-    <ul>
-      <li>\(\tfrac12 \cdot 1 = \tfrac12\)</li>
-      <li>\(\tfrac14 \cdot \tfrac13 = \tfrac1{12}\)</li>
-      <li>\(\tfrac12 \cdot \tfrac19 = \tfrac1{18}\)</li>
-    </ul>
+    <p><strong>What does that 3 consist of?</strong> Expand the product the long way. Scroll slowly through the steps below and watch the table.</p>
+
+    <div class="scrolly" id="scrolly2">
+      <div class="scrolly-graphic" aria-hidden="true">
+        <div class="sg-card" id="sg" data-step="0">
+          <div class="sg-captions">
+            <div class="sg-cap" data-cap="0"><span class="cap-muted">each cell =</span> row <span class="op">×</span> column</div>
+            <div class="sg-cap" data-cap="1"><span class="fr"><i>1</i><i>2</i></span><span class="op">×</span>1<span class="op">=</span><span class="fr hi"><i>1</i><i>2</i></span></div>
+            <div class="sg-cap" data-cap="2"><span class="fr"><i>1</i><i>4</i></span><span class="op">×</span><span class="fr"><i>1</i><i>3</i></span><span class="op">=</span><span class="fr hi"><i>1</i><i>12</i></span></div>
+            <div class="sg-cap" data-cap="3"><span class="fr"><i>1</i><i>2</i></span><span class="op">×</span><span class="fr"><i>1</i><i>9</i></span><span class="op">=</span><span class="fr hi"><i>1</i><i>18</i></span></div>
+            <div class="sg-cap" data-cap="4"><span class="cap-muted">a corner of a table that goes on forever</span></div>
+            <div class="sg-cap" data-cap="5"><span class="cap-muted">denominators:</span>&nbsp;12 = 2<sup>2</sup>·3</div>
+            <div class="sg-cap" data-cap="6"><span class="cap-muted">never in the table:</span>&nbsp;5, 7, 10, 11, …</div>
+            <div class="sg-cap" data-cap="7"><span class="cap-muted">add up every cell</span></div>
+          </div>
+          <div class="sg-grid" id="sgGrid"></div>
+          <div class="sg-panel">
+            <div class="sg-numline" id="sgNum"></div>
+            <div class="sg-sum" id="sgSum">
+              <div class="sum-readout">Running total: <b id="sumVal">0.000</b></div>
+              <div class="sum-track"><div class="sum-fill" id="sumFill"></div><div class="sum-tick"><span>3</span></div></div>
+              <div class="sum-note" id="sumNote">The whole infinite table adds to exactly 3.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrolly-steps">
+        <div class="step" data-step="0"><p>Write the 2-series down the side and the 3-series across the top. Multiplying the two series means filling in this table: each cell is its <strong>row × column</strong>.</p></div>
+        <div class="step" data-step="1"><p>Choose \(\tfrac12\) from the 2-series and \(1\) from the 3-series. Their product, \(\tfrac12\), goes in that cell.</p></div>
+        <div class="step" data-step="2"><p>Choose \(\tfrac14\) and \(\tfrac13\). Their product is \(\tfrac1{12}\).</p></div>
+        <div class="step" data-step="3"><p>Choose \(\tfrac12\) and \(\tfrac19\). Their product is \(\tfrac1{18}\).</p></div>
+        <div class="step" data-step="4"><p>Do this for <strong>every pair</strong> and the whole table fills in. Each cell is one term of the product. The table goes on forever to the right and down, so we're only showing the corner.</p></div>
+        <div class="step" data-step="5"><p>Now look only at the <strong>denominators</strong>: 1, 2, 3, 4, 6, 8, 9, 12, … These are exactly the numbers built from only 2s and 3s, and each one appears <strong>exactly once</strong>. For example, 12 = 2²·3, so it can only come from row \(\tfrac14\), column \(\tfrac13\).</p></div>
+        <div class="step" data-step="6"><p>Some numbers <strong>never</strong> appear: 5, 7, 10, 11, 13, … However far the table goes, they can't show up, because they need a prime other than 2 or 3. Step 3 fixes that.</p></div>
+        <div class="step" data-step="7"><p>Finally, <strong>add up every cell</strong>. The 20 cells shown already total about 2.87, and the whole infinite table adds to exactly 3. That's the same answer the formula gave: \(2 \cdot \tfrac32 = 3\).</p></div>
+      </div>
+    </div>
+
     <p>Putting all the terms in order:</p>
     \[ 1 + \frac12 + \frac13 + \frac14 + \frac16 + \frac18 + \frac19 + \frac1{12} + \frac1{16} + \frac1{18} + \cdots = 3 \]
-    <p>Every number that can be built from only 2s and 3s <strong>appears as a denominator</strong>, and each one appears exactly once. The only way to get \(\tfrac1{12}\) is \(\tfrac14 \cdot \tfrac13\), because \(12 = 2^2 \cdot 3\) is the only prime factorization of 12.</p>
-    <p>Some denominators are missing: 5, 7, 10, 11, and so on. They need primes other than 2 and 3.</p>
+    <p>Every number that can be built from only 2s and 3s <strong>appears as a denominator</strong>, and each one appears exactly once. Some denominators are missing: 5, 7, 10, 11, and so on. They need primes other than 2 and 3.</p>
 
     <div class="sub-title">Step 3: Bring in more primes</div>
     <p>Multiply in the 5-series, \(1 + \tfrac15 + \tfrac1{25} + \cdots\). That adds \(\tfrac15, \tfrac1{10}, \tfrac1{15}, \tfrac1{20}, \tfrac1{25}\), and so on: <strong>every denominator that has 5 as a factor</strong>.</p>
@@ -490,5 +637,119 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   </div>
 
 </div>
+<script>
+(function () {
+  const root = document.getElementById('scrolly2');
+  if (!root) return;
+  const card = document.getElementById('sg');
+  const grid = document.getElementById('sgGrid');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ROWS = 5, COLS = 4;
+  const sup = n => n === 1 ? '' : '<sup>' + n + '</sup>';
+  const frac = d => d === 1 ? '<span class="fr"><i style="border:0">1</i></span>' : '<span class="fr"><i>1</i><i>' + d + '</i></span>';
+  const factor = (a, b) => {
+    const p = [];
+    if (a) p.push('2' + sup(a));
+    if (b) p.push('3' + sup(b));
+    return p.length ? p.join('·') : '&nbsp;';
+  };
+
+  // build the table
+  let html = '<div class="g-h g-corner">×</div>';
+  for (let b = 0; b < COLS; b++) html += '<div class="g-h col" data-col="' + b + '">' + frac(3 ** b) + '</div>';
+  html += '<div class="g-x">⋯</div>';
+  for (let a = 0; a < ROWS; a++) {
+    html += '<div class="g-h row" data-row="' + a + '">' + frac(2 ** a) + '</div>';
+    for (let b = 0; b < COLS; b++) {
+      const d = 2 ** a * 3 ** b;
+      html += '<div class="g-c" data-a="' + a + '" data-b="' + b + '" data-d="' + d + '"><div class="val">' +
+        frac(d) + '<span class="den">' + d + '</span><span class="fac">' + factor(a, b) + '</span></div></div>';
+    }
+    html += '<div class="g-x">⋯</div>';
+  }
+  html += '<div class="g-x">⋮</div>';
+  for (let b = 0; b < COLS; b++) html += '<div class="g-x">⋮</div>';
+  html += '<div class="g-x">⋱</div>';
+  grid.innerHTML = html;
+
+  // number line 1..30
+  const smooth = new Set([1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 27]);
+  let nl = '';
+  for (let n = 1; n <= 30; n++) nl += '<div class="nl' + (smooth.has(n) ? ' smooth' : '') + '">' + n + '</div>';
+  nl += '<div class="nl-label">gold = appears as a denominator</div>';
+  document.getElementById('sgNum').innerHTML = nl;
+
+  const cells = [...grid.querySelectorAll('.g-c')];
+  const cell = (a, b) => grid.querySelector('.g-c[data-a="' + a + '"][data-b="' + b + '"]');
+  const rowH = a => grid.querySelector('.g-h[data-row="' + a + '"]');
+  const colH = b => grid.querySelector('.g-h[data-col="' + b + '"]');
+
+  // which pair each early step picks
+  const picks = { 1: [1, 0], 2: [2, 1], 3: [1, 2], 5: [2, 1] };
+  const sorted = cells.slice().sort((x, y) => x.dataset.d - y.dataset.d);
+  const totalAll = sorted.reduce((s, c) => s + 1 / c.dataset.d, 0);
+  let sumTimer = null, current = -1;
+
+  function stopSum() { if (sumTimer) { clearInterval(sumTimer); sumTimer = null; } }
+  function setSum(total, k) {
+    document.getElementById('sumVal').textContent = total.toFixed(3);
+    document.getElementById('sumFill').style.width = (total / 3 * 100) + '%';
+    sorted.forEach((c, i) => c.classList.toggle('counted', i < k));
+    document.getElementById('sumNote').classList.toggle('on', k >= sorted.length);
+  }
+  function runSum() {
+    stopSum();
+    if (reduce) { setSum(totalAll, sorted.length); return; }
+    let k = 0, total = 0;
+    setSum(0, 0);
+    sumTimer = setInterval(() => {
+      total += 1 / sorted[k].dataset.d; k++;
+      setSum(total, k);
+      if (k >= sorted.length) stopSum();
+    }, 140);
+  }
+
+  function render(step) {
+    if (step === current) return;
+    const prev = current; current = step;
+    card.dataset.step = step;
+    root.querySelectorAll('.step').forEach(s => s.classList.toggle('active', +s.dataset.step === step));
+    card.querySelectorAll('.sg-cap').forEach(c => c.classList.toggle('on', +c.dataset.cap === step));
+
+    // which cells are visible
+    const shown = new Set();
+    for (let s = 1; s <= Math.min(step, 3); s++) shown.add(picks[s].join('-'));
+    const fillAll = step >= 4;
+    cells.forEach(c => {
+      const key = c.dataset.a + '-' + c.dataset.b;
+      const on = fillAll || shown.has(key);
+      const stagger = fillAll && prev < 4 && !reduce && !shown.has(key);
+      c.querySelector('.val').style.transitionDelay = stagger ? ((+c.dataset.a + +c.dataset.b) * 70) + 'ms' : '0ms';
+      c.classList.toggle('show', on);
+      c.classList.remove('hl');
+    });
+    grid.querySelectorAll('.g-h').forEach(h => h.classList.remove('hl'));
+    if (picks[step]) {
+      const [a, b] = picks[step];
+      cell(a, b).classList.add('hl'); rowH(a).classList.add('hl'); colH(b).classList.add('hl');
+    }
+
+    card.classList.toggle('den-mode', step >= 5);
+    card.classList.toggle('missing-mode', step === 6);
+    document.getElementById('sgNum').classList.toggle('on', step === 5 || step === 6);
+    document.getElementById('sgSum').classList.toggle('on', step === 7);
+    if (step === 7) runSum(); else { stopSum(); setSum(0, 0); }
+  }
+
+  render(0);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) render(+e.target.dataset.step); });
+  }, {
+    // wide screens: trigger at mid-screen; narrow screens: trigger low, below the sticky table
+    rootMargin: window.matchMedia('(min-width: 1000px)').matches ? '-45% 0px -45% 0px' : '-74% 0px -16% 0px'
+  });
+  root.querySelectorAll('.step').forEach(s => io.observe(s));
+})();
+</script>
 </body>
 </html>
