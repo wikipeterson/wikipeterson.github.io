@@ -305,6 +305,33 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
   .sg-cap, .g-c .val, .g-h, .nl, .sum-fill, .sg-numline, .sg-sum { transition: none !important; }
 }
 
+/* ── SCROLLYTELLING (Step 3) ── */
+.pchips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 12px; }
+.pchip {
+  min-width: 30px; height: 26px; padding: 0 6px; border-radius: 99px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; background: var(--cream); color: rgba(26,20,16,0.35); transition: background .3s, color .3s;
+}
+.pchip.on { background: var(--red); color: white; }
+.pchip.focus { background: var(--gold); color: var(--ink); }
+.strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.box {
+  height: 56px; border-radius: 4px; border: 1px dashed var(--line); background: #fbf8f2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: rgba(26,20,16,0.3); transition: background .35s, color .35s, border-color .35s, transform .35s, box-shadow .35s;
+}
+.box .bn { font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.box .bf { font-size: 0.62rem; color: var(--sepia); opacity: 0; transition: opacity .35s; min-height: 0.9em; }
+.box.lit { background: #f7e1e1; border: 1px solid rgba(122,21,24,0.45); color: var(--ink); }
+.box.lit .bf { opacity: 1; }
+.box.new { background: var(--gold); border-color: var(--gold); color: var(--ink); transform: scale(1.04); }
+.box.new .bf { color: var(--ink); }
+.box.focus { background: #fdf0c4; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold2); color: var(--red); transform: scale(1.08); }
+.strip-count { text-align: center; font-size: 0.9rem; color: var(--sepia); margin-top: 12px; font-style: italic; }
+.strip-count b { font-family: 'Playfair Display', serif; font-style: normal; font-size: 1.2rem; color: var(--red); }
+@media (min-width: 1000px) { .box { height: 64px; } }
+@media (max-width: 560px) { .box { height: 48px; } .box .bn { font-size: 1rem; } .pchips { gap: 3px; } .pchip { min-width: 24px; height: 22px; padding: 0 4px; font-size: 0.7rem; } }
+@media (prefers-reduced-motion: reduce) { .box, .box .bf, .pchip { transition: none !important; } }
+
 /* ── FOOTER ── */
 .site-footer {
   margin-top: 60px;
@@ -447,14 +474,46 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
       </div>
     </div>
 
-    <p>Putting all the terms in order:</p>
-    \[ 1 + \frac12 + \frac13 + \frac14 + \frac16 + \frac18 + \frac19 + \frac1{12} + \frac1{16} + \frac1{18} + \cdots = 3 \]
-    <p>Every number that can be built from only 2s and 3s <strong>appears as a denominator</strong>, and each one appears exactly once. Some denominators are missing: 5, 7, 10, 11, and so on. They need primes other than 2 and 3.</p>
+    <p>So the 3 is made of every fraction whose denominator is built from 2s and 3s. Numbers like 5, 7, and 10 are still missing.</p>
 
     <div class="sub-title">Step 3: Bring in more primes</div>
-    <p>Multiply in the 5-series, \(1 + \tfrac15 + \tfrac1{25} + \cdots\). That adds \(\tfrac15, \tfrac1{10}, \tfrac1{15}, \tfrac1{20}, \tfrac1{25}\), and so on: <strong>every denominator that has 5 as a factor</strong>.</p>
-    <p>Then multiply in the 7-series, the 11-series, and the rest. After all the primes are included, <strong>every whole number appears exactly once as a denominator</strong>, because every whole number has exactly one prime factorization:</p>
+    <p>To fill in the gaps, keep multiplying in more prime series: the 5-series \(1 + \tfrac15 + \tfrac1{25} + \cdots\), then the 7-series, and so on. Each term of the product picks <strong>one term from each series</strong>. Scroll through the steps and watch the denominators from 1 to 30 fill in.</p>
+
+    <div class="scrolly" id="scrolly3">
+      <div class="scrolly-graphic" aria-hidden="true">
+        <div class="sg-card" id="sg3">
+          <div class="sg-captions">
+            <div class="sg-cap" data-cap="0"><span class="cap-muted">denominators from the</span>&nbsp;2-series</div>
+            <div class="sg-cap" data-cap="1"><span class="cap-muted">multiply in the</span>&nbsp;3-series</div>
+            <div class="sg-cap" data-cap="2"><span class="cap-muted">multiply in the</span>&nbsp;5-series</div>
+            <div class="sg-cap" data-cap="3"><span class="fr"><i>1</i><i>2</i></span><span class="op">×</span><span class="fr"><i>1</i><i>3</i></span><span class="op">×</span><span class="fr"><i>1</i><i>5</i></span><span class="op">=</span><span class="fr hi"><i>1</i><i>30</i></span></div>
+            <div class="sg-cap" data-cap="4"><span class="cap-muted">multiply in the</span>&nbsp;7-series</div>
+            <div class="sg-cap" data-cap="5"><span class="cap-muted">multiply in</span>&nbsp;11, 13, 17, 19, 23, 29</div>
+            <div class="sg-cap" data-cap="6"><span class="cap-muted">every whole number,</span>&nbsp;exactly once</div>
+          </div>
+          <div class="pchips" id="pchips"></div>
+          <div class="strip" id="strip"></div>
+          <div class="strip-count"><b id="litCount">0</b> of 30 denominators so far</div>
+        </div>
+      </div>
+
+      <div class="scrolly-steps">
+        <div class="step" data-step="0"><p>Start with the 2-series alone. Its denominators are the powers of 2: <strong>1, 2, 4, 8, 16</strong>, and so on.</p></div>
+        <div class="step" data-step="1"><p>Multiply in the 3-series. That's the table from Step 2, and it adds <strong>3, 6, 9, 12, 18, 24, 27</strong>.</p></div>
+        <div class="step" data-step="2"><p>Multiply in the 5-series. Now each term picks one term from each of <em>three</em> series, and that adds <strong>5, 10, 15, 20, 25, 30</strong>.</p></div>
+        <div class="step" data-step="3"><p>Take 30 = 2 · 3 · 5. The only way to make \(\tfrac1{30}\) is \(\tfrac12\) from the 2-series, \(\tfrac13\) from the 3-series, and \(\tfrac15\) from the 5-series. There's <strong>exactly one way</strong> because 30 has exactly one prime factorization.</p></div>
+        <div class="step" data-step="4"><p>Multiply in the 7-series. That adds <strong>7, 14, 21, 28</strong>.</p></div>
+        <div class="step" data-step="5"><p>Multiply in the series for every remaining prime up to 30. Each prime brings in itself and its multiples: <strong>11, 13, 17, 19, 22, 23, 26, 29</strong>.</p></div>
+        <div class="step" data-step="6"><p>Now <strong>every box is lit</strong>, and each number got lit exactly once, by the one prime factorization it has. The same thing happens past 30, for every whole number there is.</p></div>
+      </div>
+    </div>
+
+    <p>Written out, multiplying the series for every prime gives the sum over every whole number:</p>
     \[ \underbrace{\left(\frac{1}{1-\frac12}\right)\left(\frac{1}{1-\frac13}\right)\left(\frac{1}{1-\frac15}\right)\left(\frac{1}{1-\frac17}\right)\cdots}_{\text{one factor for each prime}} = \underbrace{1 + \frac12 + \frac13 + \frac14 + \frac15 + \cdots}_{\text{every whole number as a denominator}} \]
+    <div class="callout gold">
+      <div class="callout-label">The key point</div>
+      The left side only knows about <strong>primes</strong>. The right side is <strong>every whole number</strong>. They're equal because every whole number has exactly one prime factorization. So anything we learn about this sum is secretly a fact about the primes.
+    </div>
 
     <div class="sub-sub-title">A new piece of notation: Π for products</div>
     <p>Writing out an infinite product is awkward, so mathematicians use a shorthand. You already know <strong>sigma notation</strong> for sums:</p>
@@ -748,6 +807,59 @@ figcaption { font-size: 0.86rem; color: var(--sepia); font-style: italic; text-a
     // wide screens: trigger at mid-screen; narrow screens: trigger low, below the sticky table
     rootMargin: window.matchMedia('(min-width: 1000px)').matches ? '-45% 0px -45% 0px' : '-74% 0px -16% 0px'
   });
+  root.querySelectorAll('.step').forEach(s => io.observe(s));
+})();
+</script>
+<script>
+(function () {
+  const root = document.getElementById('scrolly3');
+  if (!root) return;
+  const N = 30;
+  const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+  const factorize = n => { const f = []; for (const p of PRIMES) { let k = 0; while (n % p === 0) { n /= p; k++; } if (k) f.push([p, k]); } return f; };
+  const fstr = n => n === 1 ? '&nbsp;' : factorize(n).map(([p, k]) => p + (k > 1 ? '<sup>' + k + '</sup>' : '')).join('·');
+  const largest = n => n === 1 ? 1 : Math.max(...factorize(n).map(x => x[0]));
+  // primes included at each step
+  const included = [[2], [2, 3], [2, 3, 5], [2, 3, 5], [2, 3, 5, 7], PRIMES, PRIMES];
+
+  const strip = document.getElementById('strip');
+  let h = '';
+  for (let n = 1; n <= N; n++) h += '<div class="box" data-n="' + n + '"><span class="bn">' + n + '</span><span class="bf">' + fstr(n) + '</span></div>';
+  strip.innerHTML = h;
+  document.getElementById('pchips').innerHTML = PRIMES.map(p => '<span class="pchip" data-p="' + p + '">' + p + '</span>').join('') + '<span class="pchip">…</span>';
+  const boxes = [...strip.querySelectorAll('.box')];
+  const chips = [...root.querySelectorAll('.pchip[data-p]')];
+  let current = -1;
+
+  function render(step) {
+    if (step === current) return;
+    current = step;
+    root.querySelectorAll('.step').forEach(s => s.classList.toggle('active', +s.dataset.step === step));
+    root.querySelectorAll('.sg-cap').forEach(c => c.classList.toggle('on', +c.dataset.cap === step));
+    const inc = new Set(included[step]);
+    const prevInc = new Set(step > 0 ? included[step - 1] : []);
+    const isNew = step !== 3 && step !== 6;
+    let lit = 0;
+    boxes.forEach(b => {
+      const n = +b.dataset.n, L = largest(n);
+      const on = n === 1 || inc.has(L);
+      b.classList.toggle('lit', on);
+      b.classList.toggle('new', on && isNew && (step === 0 ? true : !prevInc.has(L) && n !== 1));
+      b.classList.toggle('focus', step === 3 && n === 30);
+      if (on) lit++;
+    });
+    chips.forEach(c => {
+      const p = +c.dataset.p;
+      c.classList.toggle('on', inc.has(p));
+      c.classList.toggle('focus', step === 3 && p <= 5);
+    });
+    document.getElementById('litCount').textContent = lit;
+  }
+
+  render(0);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) render(+e.target.dataset.step); });
+  }, { rootMargin: window.matchMedia('(min-width: 1000px)').matches ? '-45% 0px -45% 0px' : '-74% 0px -16% 0px' });
   root.querySelectorAll('.step').forEach(s => io.observe(s));
 })();
 </script>
