@@ -75,3 +75,7 @@ The collection is a plain searchable directory with green photo cards. The Sicil
 All 136 live recipes were checked against their linked sources. The 65 previously standardized Docs already matched the site. The 69 later imports and two earlier entries (Artichoke Dip and Chex Mix) now have standardized native Google Docs with title, at-a-glance summary, prep-state ingredients, colored prep-bowl markers, native numbered directions repeating ingredient quantities, notes, and provenance. Matching letters and dots identify ingredients that may share a bowl; black dots stay separate. Divided quantities stay separate unless their portions are explicit.
 
 For 32 editable existing Docs, the first Recipe tab is canonical and original tabs retain photos, variants, and notes. Thirty-nine new Docs cover 36 preserved Word files (including three hummus/sauce recipes) and one read-only native source. Spreadsheet column F and website docUrl links point directly to the canonical recipe tab. Source conflicts and incomplete quantities are explicitly flagged; unlinked entries and previously incomplete recipes have not been invented.
+
+## Curated menus
+
+A curated menu is stored as an entry in `recipes.json` with `type: "menu"`, category `Menu`, and `menuSections`. Each menu entry links to recipes already in the collection. The source Google Doc is linked with `docUrl`; update the Doc and the matching menu data together when the menu changes. Menus are excluded from cookbook PDF recipe downloads.
