@@ -12697,8 +12697,17 @@
     "title": "Thanksgiving Menu",
     "category": "Menu",
     "type": "menu",
-    "overview": "A Thanksgiving menu built from the eight recipes in Favorites.",
+    "overview": "A Thanksgiving menu built from the ten recipes in Favorites.",
     "menuSections": [
+      {
+        "title": "Appetizers",
+        "items": [
+          {
+            "title": "Artichoke Dip",
+            "id": "artichoke-dip"
+          }
+        ]
+      },
       {
         "title": "Main course",
         "items": [
@@ -12743,6 +12752,10 @@
           {
             "title": "Butter Swim Biscuits",
             "id": "butter-swim-biscuits"
+          },
+          {
+            "title": "No-Knead Bread",
+            "id": "no-knead-bread"
           }
         ]
       }
