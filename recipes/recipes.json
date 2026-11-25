@@ -12747,6 +12747,11 @@
         ]
       }
     ],
-    "docUrl": "https://docs.google.com/document/d/115yFp0uaYGdqZshdgSeqgp55YKmnRWnysF_kRy8teJM/edit?usp=drivesdk"
+    "docUrl": "https://docs.google.com/document/d/115yFp0uaYGdqZshdgSeqgp55YKmnRWnysF_kRy8teJM/edit?usp=drivesdk",
+    "method": "Menu",
+    "ingredients": [],
+    "stages": [],
+    "notes": [],
+    "source": "https://docs.google.com/document/d/115yFp0uaYGdqZshdgSeqgp55YKmnRWnysF_kRy8teJM/edit?usp=drivesdk"
   }
 ]
