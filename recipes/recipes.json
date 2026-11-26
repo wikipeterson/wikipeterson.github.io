@@ -6387,10 +6387,10 @@
     "title": "Roasted Brussels Sprouts and Butternut Squash",
     "category": "Side dishes",
     "method": "Oven",
-    "overview": "Trim and halve or quarter Brussels sprouts. Peel squash and cut into 1-inch cubes. Roast at 425°F for 20–25 minutes until caramelized.",
+    "overview": "Trim and halve or quarter the Brussels sprouts; peel and cube the squash. Roast with thyme at 425°F, adding maple near the end. Finish with balsamic, crisp bacon, roasted pecans, and Craisins.",
     "ingredients": [
       {
-        "text": "3 tbsp Extra Virgin Olive Oil",
+        "text": "2 tbsp Extra Virgin Olive Oil",
         "heading": false,
         "prepGroup": "a"
       },
@@ -6410,11 +6410,6 @@
         "prepGroup": "a"
       },
       {
-        "text": "1/2 cup RAW Pecans",
-        "heading": false,
-        "prepGroup": "a"
-      },
-      {
         "text": "Salt",
         "heading": false,
         "prepGroup": "a"
@@ -6423,6 +6418,31 @@
         "text": "Pepper",
         "heading": false,
         "prepGroup": "a"
+      },
+      {
+        "text": "4 oz thick-cut bacon, diced",
+        "heading": false,
+        "prepGroup": "separate"
+      },
+      {
+        "text": "1/2 cup roasted pecans",
+        "heading": false,
+        "prepGroup": "separate"
+      },
+      {
+        "text": "1 tbsp pure maple syrup",
+        "heading": false,
+        "prepGroup": "separate"
+      },
+      {
+        "text": "1 tbsp balsamic vinegar",
+        "heading": false,
+        "prepGroup": "separate"
+      },
+      {
+        "text": "1/3 cup Craisins (dried cranberries)",
+        "heading": false,
+        "prepGroup": "separate"
       }
     ],
     "stages": [
@@ -6431,12 +6451,12 @@
         "steps": [
           "Trim and halve or quarter 1 lb Brussels sprouts. Peel and cut 1 lb butternut squash into 1-inch cubes.",
           "Spread the prepared vegetables on a baking sheet.",
-          "Drizzle with 3 tbsp extra-virgin olive oil.",
-          "Add ½ cup raw pecans.",
+          "Cook 4 oz diced bacon in a skillet over medium heat until crisp. Transfer to paper towels and reserve 1 tbsp rendered bacon fat.",
+          "Drizzle the vegetables with 2 tbsp olive oil and 1 tbsp reserved bacon fat.",
           "Add 2 sprigs fresh thyme and salt and pepper to taste.",
-          "Mix",
-          "Roast at 425°F for 20–25 minutes.",
-          "Let everything roast until caramelized! YUM"
+          "Toss to coat and spread the vegetables into a single layer.",
+          "Roast at 425°F for 15 minutes. Drizzle with 1 tbsp maple syrup and toss; roast 5–10 minutes more, until tender and caramelized.",
+          "Remove from the oven. Toss with 1 tbsp balsamic vinegar, the crisp bacon, 1/2 cup roasted pecans, and 1/3 cup Craisins. Serve warm."
         ]
       }
     ],
@@ -6444,7 +6464,8 @@
     "source": "https://docs.google.com/document/d/0B2P2_PV0jCAtTGJkaTB1VWNtQTA/edit?resourcekey=0-R4VrZEvF8vRLeKAuO-8iSw",
     "docUrl": "https://docs.google.com/document/d/1WWSRjC6j7etAitPwTXJ8BCrNUJVYlUwAg86QLBavOyE/edit?tab=t.0",
     "prepGroups": {
-      "a": "Vegetables, oil, thyme, pecans, salt, and pepper"
+      "a": "Vegetables, oil, thyme, salt, and pepper",
+      "separate": "Bacon and finishing ingredients; keep separate until their step"
     }
   },
   {
